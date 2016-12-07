@@ -1,5 +1,5 @@
 # mitosis
-A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, etc.
+A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, Kafka, etc.
 
 <img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
 <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4b/Ansible_logo.png/120px-Ansible_logo.png" height="40" />
@@ -13,6 +13,7 @@ A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, etc.
 <img src="https://nodeblog.files.wordpress.com/2011/07/nodejs.png" height="40"/>
 <img src="http://www.logospike.com/wp-content/uploads/2014/11/Java_logo-2.jpg" height="40"/>
 <img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" height="40"/>
+<img src="https://angular.io/resources/images/logos/angular2/angular.svg" height="40"/>
 </br>
 <img src="http://www.sonarqube.org/wp-content/themes/sonarsource.org/images/sonar.png" height="40"/>
 <img src="https://www.jfrog.com/wp-content/uploads/2015/09/Artifactory_HEX1.png" height="40"/>
