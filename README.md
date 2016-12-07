@@ -11,7 +11,7 @@ A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, Kafka, etc.
 <img src="http://airisdata.com/wp-content/uploads/2016/01/kafka-logo-600x390.jpg" height="40"/>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Tomcat-logo.svg/2000px-Tomcat-logo.svg.png" height="40"/>
 <img src="https://nodeblog.files.wordpress.com/2011/07/nodejs.png" height="40"/>
-<img src="http://www.logospike.com/wp-content/uploads/2014/11/Java_logo-2.jpg" height="40"/>
+<img src="https://redhatmiddleware.files.wordpress.com/2016/06/microprofile-black.jpg" height="40"/>
 <img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" height="40"/>
 <img src="https://angular.io/resources/images/logos/angular2/angular.svg" height="40"/>
 </br>
