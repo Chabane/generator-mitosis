@@ -1,5 +1,5 @@
 # mitosis
-A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, Kafka, etc.
+A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, Kafka, Spark Streaming, etc.
 
 <img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
 <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4b/Ansible_logo.png/120px-Ansible_logo.png" height="40" />
