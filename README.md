@@ -3,6 +3,7 @@ A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, Kafka, Spar
 
 <h3>Infrastructure </h3> 
 <img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
+<img src="https://www.vagrantup.com/assets/images/logo-header-53d0bd25.png" height="40" />
 <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4b/Ansible_logo.png/120px-Ansible_logo.png" height="40" />
 <img src="https://www.docker.com/sites/default/files/moby.svg" height="40" />
 <img src="https://jenkins.io/images/226px-Jenkins_logo.svg.png" height="40" />
