@@ -20,7 +20,7 @@ A micro-service generator based on Yoeman, Docker, Ansible, Jenkins, Kafka, Spar
 <img src="https://angular.io/resources/images/logos/angular2/angular.svg" height="40"/>
 </br>
 <h3>Tools </h3>  
-<img src="http://www.sonarqube.org/wp-content/themes/sonarsource.org/images/sonar.png" height="40"/>
+<img src="https://www.sonarqube.org/assets/logo-31ad3115b1b4b120f3d1efd63e6b13ac9f1f89437f0cf6881cc4d8b5603a52b4.svg" height="40"/>
 <img src="https://www.jfrog.com/wp-content/uploads/2015/09/Artifactory_HEX1.png" height="40"/>
 <img src="https://s3.amazonaws.com/satisfaction-production/s3_images/592380/gradle_logo.gif" height="40"/>
 <img src="https://maven.apache.org/images/maven-logo-black-on-white.png" height="40"/>
