@@ -1,5 +1,5 @@
 # mitosis
-A micro-service generator based on Yeoman, Docker, Ansible, Jenkins, Kafka, Spark Streaming, etc.
+A micro-service generator based on Yeoman, Kubernetes, Docker, Ansible, Jenkins, Kafka, Spark Streaming, etc.
 
 <h3>Infrastructure </h3> 
 <img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
@@ -8,7 +8,6 @@ A micro-service generator based on Yeoman, Docker, Ansible, Jenkins, Kafka, Spar
 <img src="https://www.docker.com/sites/default/files/moby.svg" height="40" />
 <img src="https://jenkins.io/images/226px-Jenkins_logo.svg.png" height="40" />
 <img src="https://opencredo.com/wp-content/uploads/2015/12/kubernetes.png" height="40" />
-<img src="http://18pct.com/blog/assets/img/consul.png" height="40" />
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/2000px-Nginx_logo.svg.png" height="40"/>
 <br/>
 <h3>Micro services </h3>  
