@@ -1,4 +1,4 @@
-# Kubernetes Playground
+# Kubernetes/Docker Swarm Playground
 This project contains a `Vagrantfile` and associated `Ansible` playbook scripts
 to provisioning a 2 nodes Kubernetes/Docker Swarm cluster using `VirtualBox` and `Ubuntu
 16.04`.
