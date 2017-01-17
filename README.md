@@ -17,6 +17,7 @@ To bring up the cluster, clone this repository to a working directory.
 
 ```
 git clone http://github.com/nirby/mitosis
+git checkout demo
 ```
 
 Change into the working directory and `vagrant --caas-mode=swarm up` or `vagrant --caas-mode=k8s up`
