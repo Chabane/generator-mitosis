@@ -1,0 +1,29 @@
+---
+
+- name: Ensure Google Cloud Apt Key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  tags:
+    - mitosis
+
+- name: Ensure Kubernetes Repository
+  apt_repository:
+    repo: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+    state: present
+    update_cache: yes
+  tags:
+    - mitosis
+
+- name: Ensure Base Kubernetes
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - docker.io
+    - kubelet
+    - kubeadm
+    - kubectl
+    - kubernetes-cni
+  tags:
+    - mitosis

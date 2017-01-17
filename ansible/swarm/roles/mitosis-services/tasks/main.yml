@@ -1,0 +1,28 @@
+---
+
+- name: "Create service sonar"
+  shell: >
+         docker service create \
+           --name sonar \
+           --publish 9000:9000 \
+           --network mitosis-net \
+           --replicas 2 \
+           mitosis/sonarqube \  
+- name: "Create service artifactory"
+  shell: >
+         docker service create \
+           --name artifactory \
+           --publish 9999:8080 \
+           --network mitosis-net \
+           --replicas 2 \
+           mitosis/artifactory \  
+- name: "Create service jenkins master"
+  shell: >
+         docker service create \
+           --name jenkins-master \
+           --mount type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock \
+           --publish 50000:50000 \
+           --publish 8080:8080 \
+           --network mitosis-net \
+           --replicas 2 \
+           mitosis/jenkins \  

@@ -1,0 +1,27 @@
+---
+
+- name: "Starting primary swarm manager"
+  shell: >
+        docker swarm init --advertise-addr {{ manager_ip }}
+  register: init_result
+
+- debug: var=init_result
+
+- name: "Retrieve manager token"
+  shell: >
+    docker swarm join-token manager --quiet
+  register: manager_token_result
+
+- set_fact:
+    manager_token: "{{ manager_token_result.stdout }}"
+
+- name: "Retrieve worker token"
+  shell: >
+    docker swarm join-token worker --quiet
+  register: worker_token_result
+
+- set_fact:
+    worker_token: "{{ worker_token_result.stdout }}"      
+
+#- name : "Run manager-only nodes "
+#  command : "docker node update --availability drain mitosis-manager1"

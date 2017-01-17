@@ -1,0 +1,17 @@
+---
+
+- name: Check existence of docker
+  stat: path={{ docker_service }}
+  register: install_result
+
+- name: Install docker 1.12
+  shell: >
+    curl -fsSL https://get.docker.com/ | sh
+  when: not install_result.stat.exists
+
+- name: Start docker service
+  service: name=docker state=started enabled=true
+
+
+
+

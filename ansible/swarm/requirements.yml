@@ -1,0 +1,2 @@
+---
+- name: ansible.secure-docker-daemon

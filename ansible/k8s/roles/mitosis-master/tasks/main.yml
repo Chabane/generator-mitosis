@@ -1,0 +1,86 @@
+---
+- name: Ensure kubeadm initialization
+  command: "kubeadm init --token {{worker_token}} --api-advertise-addresses={{manager_ip}}"
+  tags:
+    - mitosis
+
+- name: Ensure Network Start Script
+  copy:
+    src: files/{{ item }}
+    dest: /usr/local/bin/{{ item }}
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "start-weave"
+    - "start-calico"
+    - "start-canal"
+
+- name: Ensure jq package is installed
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - jq
+  tags:
+    - mitosis
+
+- name: Set --advertise-address flag in kube-apiserver static pod manifest (workaround for https://github.com/kubernetes/kubernetes/issues/34101)
+  shell: "jq '.spec.containers[0].command |= .+ [\"--advertise-address={{manager_ip}}\"]' /etc/kubernetes/manifests/kube-apiserver.json > /tmp/kube-apiserver.json && mv /tmp/kube-apiserver.json /etc/kubernetes/manifests/kube-apiserver.json"
+  tags:
+    - mitosis    
+    
+- name: Set --proxy-mode flag in kube-proxy daemonset (workaround for https://github.com/kubernetes/kubernetes/issues/34101)
+  
+  shell: "kubectl -n kube-system get ds -l 'component=kube-proxy' -o json | jq '.items[0].spec.template.spec.containers[0].command |= .+ [\"--proxy-mode=userspace\"]' | kubectl apply -f - && kubectl -n kube-system delete pods -l 'component=kube-proxy'"
+  register: proxy
+  until: proxy.rc == 0
+  retries: 20
+  delay: 10
+  tags:
+    - mitosis
+
+- name: Kubectl config
+  command: "kubectl config set-cluster mitosis-cluster --server=http://localhost:8080 && kubectl config set-context mitosis --cluster=mitosis-cluster && kubectl config use-context mitosis"
+  tags:
+    - mitosis
+
+- name: Start weave
+  command : "start-weave"
+  delay: 10
+
+- name: Ensure Mitosis namespaces
+  file:
+    path: "{{mitosis_home}}/namespaces"
+    state: directory
+    mode: 0700
+
+- name: Copy Mitosis namespaces 
+  copy:
+    src: files/k8s/{{ item }}
+    dest: "{{mitosis_home}}/namespaces/{{ item }}"
+    mode: 0700
+  with_items:
+    - mitosis-namespace.yml
+
+- name: Create namespace mitosis
+  command: "kubectl create -f {{mitosis_home}}/namespaces/"  
+
+- name: Ensure Mitosis applications
+  file:
+    path: "{{mitosis_home}}/applications"
+    state: directory
+    mode: 0700
+
+- name: Copy Mitosis applications 
+  copy:
+    src: files/k8s/{{ item }}
+    dest: "{{mitosis_home}}/applications/{{ item }}"
+    mode: 0700
+  with_items:
+    - artifactory.yml
+    - jenkinsmaster.yml
+    - sonar.yml
+
+- name: Launch the Kubernetes applications
+  command : "kubectl create -f {{mitosis_home}}/applications"

@@ -1,0 +1,22 @@
+jenkinsmaster:
+ image: mitosis/jenkins
+ volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+  - /usr/bin/docker:/usr/bin/docker  
+ ports:
+  - "50000:50000"
+nginx:
+ image: mitosis/nginx
+ ports:
+  - "80:80"
+ links:
+  - jenkinsmaster:jenkins-master
+artifactory:
+    image: mitosis/artifactory
+    ports:
+        - "9999:8080"   
+sonar: 
+    image: mitosis/sonarqube
+    ports:
+    - "9000:9000"
+

@@ -1,0 +1,58 @@
+---
+#- name: Configure primary swarm manager
+#  hosts: mitosis_managers[0]
+#  become: yes
+#  become_user: root
+#  roles:
+#    - role: ansible.secure-docker-daemon
+#      dds_host: "192.168.77.21"
+#      dds_server_cert_path: /etc/default/docker
+#      dds_restart_docker: no
+#      when: docker_secure | default(false) == true
+
+- hosts: mitosis_managers[0]
+  name: "** Mitosis Manager **"
+  become: yes
+  become_user: root
+  vars:
+    docker_service: /usr/lib/systemd/system/docker.service
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+    swarm_bind_port: 2377
+  roles:
+    - mitosis-manager
+
+- hosts: mitosis_workers
+  name: "** Mitosis Worker **"
+  become: yes
+  become_user: root
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+    swarm_bind_port: 2377
+    docker_service: /usr/lib/systemd/system/docker.service
+  roles:
+    - mitosis-worker       
+
+#- hosts: all
+#  serial: 1
+#  become: yes
+#  become_user: root
+#  tasks:
+#    - name: "Label nodes"
+#      shell: >
+#        docker node update --label-add {{ item }}=true {{ inventory_hostname }}
+#      when: "item != 'all_groups'"
+#      with_items:
+#        - "{{ group_names }}"
+#      delegate_to: "{{ groups['mitosis-manager1'][0] }}"
+#      tags:
+#        - label
+
+- hosts: mitosis_managers[0]
+  name: "** Mitosis Network **"
+  become: yes
+  become_user: root
+  roles:
+    - mitosis-network         
+  

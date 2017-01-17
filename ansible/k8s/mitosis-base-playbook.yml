@@ -1,0 +1,15 @@
+- hosts: all
+  name: "** Mitosis k8s base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+    worker1_ip: 192.168.77.31
+  pre_tasks:
+   - name: 'Installing python2'
+     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)    
+  roles:
+    - mitosis-base

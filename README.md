@@ -1,28 +1,97 @@
-# mitosis
-A micro-service generator based on Yeoman, Kubernetes, Docker, Ansible, Jenkins, Kafka, Spark Streaming, etc.
+# Kubernetes Playground
+This project contains a `Vagrantfile` and associated `Ansible` playbook scripts
+to provisioning a 2 nodes Kubernetes/Docker Swarm cluster using `VirtualBox` and `Ubuntu
+16.04`.
 
-<h3>Infrastructure </h3> 
-<img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
-<img src="https://www.vagrantup.com/assets/images/logo-header-53d0bd25.png" height="40" />
-<img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4b/Ansible_logo.png/120px-Ansible_logo.png" height="40" />
-<img src="https://www.docker.com/sites/default/files/moby.svg" height="40" />
-<img src="https://jenkins.io/images/226px-Jenkins_logo.svg.png" height="40" />
-<img src="https://opencredo.com/wp-content/uploads/2015/12/kubernetes.png" height="40" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/2000px-Nginx_logo.svg.png" height="40"/>
-<br/>
-<h3>Micro services </h3>  
-<img src="http://airisdata.com/wp-content/uploads/2016/01/kafka-logo-600x390.jpg" height="40"/>
-<img src="http://spark.apache.org/images/spark-logo-trademark.png" height="40"/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Tomcat-logo.svg/2000px-Tomcat-logo.svg.png" height="40"/>
-<img src="https://nodeblog.files.wordpress.com/2011/07/nodejs.png" height="40"/>
-<img src="https://redhatmiddleware.files.wordpress.com/2016/06/microprofile-black.jpg" height="40"/>
-<img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" height="40"/>
-<img src="https://angular.io/resources/images/logos/angular2/angular.svg" height="40"/>
-</br>
-<h3>Tools </h3>  
-<img src="https://www.sonarqube.org/assets/logo-31ad3115b1b4b120f3d1efd63e6b13ac9f1f89437f0cf6881cc4d8b5603a52b4.svg" height="40"/>
-<img src="https://www.jfrog.com/wp-content/uploads/2015/09/Artifactory_HEX1.png" height="40"/>
-<img src="https://s3.amazonaws.com/satisfaction-production/s3_images/592380/gradle_logo.gif" height="40"/>
+### Prerequisites
+You need the following installed to use this playground.
+- `Vagrant`, version 1.8.6 or better. Earlier versions of vagrant may not work
+with the Vagrant Ubuntu 16.04 box and network configuration.
+- `VirtualBox`, tested with Version 5.0.26 r108824
+- `Ansible`, tested with Version 2.2.0
+- Internet access, this playground pulls Vagrant boxes from the Internet as well
+as installs Ubuntu application packages from the Internet.
 
+### Bringing Up The cluster
+To bring up the cluster, clone this repository to a working directory.
 
+```
+git clone http://github.com/nirby/mitosis
+```
+
+Change into the working directory and `vagrant --caas-mode=swarm up` or `vagrant --caas-mode=k8s up`
+
+```
+cd mitosis
+vagrant --caas-mode=swarm up
+```
+
+Vagrant will start two machines. Each machine will have a NAT-ed network
+interface, through which it can access the Internet, and a `private-network`
+interface in the subnet 192.168.77.0/24. The private network is used for
+intra-cluster communication.
+
+The machines created are:
+
+| NAME | IP ADDRESS | ROLE |
+| --- | --- | --- |
+| k8s1 | 192.168.77.21 | Cluster/Node Manager |
+| k8s2 | 192.168.77.31 | Cluster/Node Worker |
+
+After the `vagrant up` is complete, the following command and output should be
+visible on the cluster/node manager (**mitosis-manager1**).
+
+For Kubernetes
+```
+vagrant ssh mitosis-manager1
+kubectl -n mitosis get service 
+
+NAME             CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+artifactory      10.108.148.112   <nodes>       9999:30003/TCP   35m
+jenkins-master   10.105.77.103    <nodes>       8080:30001/TCP   35m
+sonar            10.102.141.79    <nodes>       9000:30002/TCP   35m
+```
+```
+kubectl describe svc artifactory -n mitosis 
+
+Name:                   artifactory
+Namespace:              mitosis
+Labels:                 name=artifactory
+Selector:               name=artifactory
+Type:                   NodePort
+IP:                     10.108.148.112
+Port:                   <unset> 8080/TCP
+NodePort:               <unset> 9999/TCP
+Endpoints:              <none>
+Session Affinity:       None
+```
+
+For Docker-swarm
+```
+vagrant ssh mitosis-manager1
+docker service ls 
+ID            NAME            REPLICAS  IMAGE                COMMAND
+18a8rdjywe8q  sonar           0/2       mitosis/sonarqube    
+1idkoq92bb3x  jenkins-master  0/2       mitosis/jenkins      
+3ou58zc7xlrw  artifactory     0/2       mitosis/artifactory  
+```
+```
+docker service inspect --pretty artifactory 
+ID:		3ou58zc7xlrwwegyh40xxcuq0
+Name:		artifactory
+Mode:		Replicated
+ Replicas:	2
+Placement:
+UpdateConfig:
+ Parallelism:	1
+ On failure:	pause
+ContainerSpec:
+ Image:		mitosis/artifactory
+Resources:
+Networks: atqmyyz6jctr34t64o69tyolu
+Ports:
+ Protocol = tcp
+ TargetPort = 8080
+ PublishedPort = 9999
+```
 
