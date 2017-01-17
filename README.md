@@ -5,9 +5,9 @@ to provisioning a 2 nodes Kubernetes/Docker Swarm cluster using `VirtualBox` and
 
 ### Prerequisites
 You need the following installed to use this playground.
-- `Vagrant`, version 1.8.6 or better. Earlier versions of vagrant may not work
+- `Vagrant`, version 1.9.1 or better. Earlier versions of vagrant may not work
 with the Vagrant Ubuntu 16.04 box and network configuration.
-- `VirtualBox`, tested with Version 5.0.26 r108824
+- `VirtualBox`, tested with Version 5.1.14 r112924
 - `Ansible`, tested with Version 2.2.0
 - Internet access, this playground pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
