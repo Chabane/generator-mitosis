@@ -36,8 +36,8 @@ The machines created are:
 
 | NAME | IP ADDRESS | ROLE |
 | --- | --- | --- |
-| k8s1 | 192.168.77.21 | Cluster/Node Manager |
-| k8s2 | 192.168.77.31 | Cluster/Node Worker |
+| mitosis-manager1 | 192.168.77.21 | Cluster/Node Manager |
+| mitosis-worker1 | 192.168.77.31 | Cluster/Node Worker |
 
 After the `vagrant up` is complete, the following command and output should be
 visible on the cluster/node manager (**mitosis-manager1**).
