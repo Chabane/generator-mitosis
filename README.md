@@ -13,11 +13,13 @@ And It takes advantage of the following solutions/technologies :
 - sonarqube for the quality
 
 To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka and drived by spark streaming
+
 2 consumers & 2 producers
-Microprofile/Apache Tomcat/Gradle/MongoDB
-NodeJS express/Redis
-Angular2 - Material 2
-iOT - Raspberry
+
+- Microprofile/Apache Tomcat/Gradle/MongoDB
+- NodeJS express/Redis
+- Angular2 - Material 2
+- iOT - Raspberry
 
 <h3>Infrastructure </h3> 
 <img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
