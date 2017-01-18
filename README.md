@@ -9,7 +9,7 @@ A micro-service generator based on Yeoman, Kubernetes, Docker, Ansible, Jenkins,
 <img src="https://jenkins.io/images/226px-Jenkins_logo.svg.png" height="40" />
 <img src="https://www.docker.com/sites/default/files/docker-swarm-hero2.png" height="40" />
 <img src="https://opencredo.com/wp-content/uploads/2015/12/kubernetes.png" height="40" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/2000px-Nginx_logo.svg.png" height="40"/>
+<img src="https://traefik.io/traefik.logo.png" height="40"/>
 <br/>
 <h3>Micro services </h3>  
 <img src="http://airisdata.com/wp-content/uploads/2016/01/kafka-logo-600x390.jpg" height="40"/>
