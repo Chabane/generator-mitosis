@@ -1,5 +1,23 @@
 # mitosis
-A micro-service generator based on Yeoman, Kubernetes, Docker, Ansible, Jenkins, Kafka, Spark Streaming, etc.
+
+It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.
+
+And It takes advantage of the following solutions/technologies :
+
+- Vagrant for the development mode
+- Ansible for provisionning
+- kubernetes/docker swarm to orchestrate and replicate docker containers
+- Jenkins 2 for continuous deployments of micro-services using Job DSL and Pipeline Job
+- Consul/etcd for registering/unregistering the micro-services
+- aritfactory for artefacts deployment
+- sonarqube for the quality
+
+To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka and drived by spark streaming
+2 consumers & 2 producers
+Microprofile/Apache Tomcat/Gradle/MongoDB
+NodeJS express/Redis
+Angular2 - Material 2
+iOT - Raspberry
 
 <h3>Infrastructure </h3> 
 <img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
