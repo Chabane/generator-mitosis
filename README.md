@@ -17,7 +17,7 @@ A micro-service generator based on Yeoman, Kubernetes, Docker, Ansible, Jenkins,
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Tomcat-logo.svg/2000px-Tomcat-logo.svg.png" height="40"/>
 <img src="https://nodeblog.files.wordpress.com/2011/07/nodejs.png" height="40"/>
 <img src="https://redhatmiddleware.files.wordpress.com/2016/06/microprofile-black.jpg" height="40"/>
-<img src="https://redis.io/images/redis-white.png" height="40"/>
+<img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Redis_Logo.svg/1280px-Redis_Logo.svg.png" height="40"/>
 <img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" height="40"/>
 <img src="https://angular.io/resources/images/logos/angular2/angular.svg" height="40"/>
 </br>
