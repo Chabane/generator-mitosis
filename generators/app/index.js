@@ -42,6 +42,16 @@ class gen extends Generator {
                     }
                     return true;
                 }
+    },
+    {
+      type    : 'list',
+      name    : 'os',
+      choices : [
+              { value: 'ubuntu', name:'Ubuntu'} 
+           //   ,{ value: 'centos', name:'CentOS'}
+          ],
+      message : 'Select the OS (dev)',
+      default : 'ubuntu',
     }, 
     {
       type    : 'list',
@@ -54,14 +64,10 @@ class gen extends Generator {
       default : 'swarm',
     }, 
     {
-      type    : 'list',
-      name    : 'os',
-      choices : [
-              { value: 'ubuntu', name:'Ubuntu'} 
-           //   ,{ value: 'centos', name:'CentOS'}
-          ],
-      message : 'Select the OS',
-      default : 'ubuntu',
+      type    : 'confirm',
+      name    : 'scheduleManager',
+      message : 'Do you want to schedule the manager?',
+      default : false 
     },
     {
       type    : 'input',
@@ -182,7 +188,8 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/tasks/main.yml'),
         {
           appName: this.answers.appName,
-          os: this.answers.os
+          os: this.answers.os,
+          scheduleManager: this.answers.scheduleManager
         }
       );
       this.fs.copyTpl(
@@ -272,7 +279,8 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/roles/mitosis-manager/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-manager/tasks/main.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          scheduleManager: this.answers.scheduleManager
         }
       );
       this.fs.copyTpl(

@@ -23,5 +23,7 @@
 - set_fact:
     worker_token: "{{ worker_token_result.stdout }}"      
 
+<% if (!scheduleManager) { %>
 - name : "Run manager-only nodes "
   command : "docker node update --availability drain <%= appName %>-manager1"
+<% } %>  

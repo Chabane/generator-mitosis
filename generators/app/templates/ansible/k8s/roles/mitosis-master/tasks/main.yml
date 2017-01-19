@@ -2,6 +2,11 @@
 - name: Ensure kubeadm initialization
   command: "kubeadm init --token {{worker_token}} --api-advertise-addresses={{manager_ip}} --pod-network-cidr=10.244.0.0/16"
 
+<% if (scheduleManager) { %>
+- name: Schedule the manager
+  command: "kubectl taint nodes --all dedicated-"
+<% } %>
+
 <% if (os === "ubuntu") { %>
 - name: Ensure jq package is installed
   apt:
