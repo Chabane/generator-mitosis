@@ -5,3 +5,11 @@
 
 * **Yeoman** init yeoman generator
 * **Vagrant** add forwarded_port
+
+<a name="1.0.0-alpha.2"></a>
+1.0.0-alpha.2  (2017-01-19)
+
+### Bugs
+
+* **K8s** replace network weave by flannel 
+* **Swarm** correct bug with jenkins image

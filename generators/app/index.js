@@ -158,13 +158,14 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/'+this.answers.appName+'-base-playbook.yml'),
         {
           appName: this.answers.appName,
+          os: this.answers.os
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/mitosis-k8s-playbook.yml'),
         this.destinationPath('ansible/k8s/'+this.answers.appName+'-k8s-playbook.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       /** k8s roles */
@@ -173,6 +174,7 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-base/tasks/main.yml'),
         {
           appName: this.answers.appName,
+          os: this.answers.os
         }
       );
       this.fs.copyTpl(
@@ -180,13 +182,14 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/tasks/main.yml'),
         {
           appName: this.answers.appName,
+          os: this.answers.os
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/roles/mitosis-worker/tasks/main.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-worker/tasks/main.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       /** k8s networks */
@@ -194,7 +197,7 @@ class gen extends Generator {
         this.templatePath('ansible/k8s/roles/mitosis-master/files/networks', '*'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/networks'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       /** k8s services*/
@@ -202,28 +205,28 @@ class gen extends Generator {
         this.templatePath('ansible/k8s/roles/mitosis-master/files/services/sonar.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/sonar.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/roles/mitosis-master/files/services/artifactory.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/artifactory.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/roles/mitosis-master/files/services/jenkinsmaster.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/jenkinsmaster.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/roles/mitosis-master/files/services/namespace.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/namespace.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       /*
@@ -233,21 +236,21 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/mitosis-base-playbook.yml'),
         this.destinationPath('ansible/swarm/'+this.answers.appName+'-base-playbook.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/mitosis-swarm-playbook.yml'),
         this.destinationPath('ansible/swarm/'+this.answers.appName+'-swarm-playbook.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/mitosis-services-playbook.yml'),
         this.destinationPath('ansible/swarm/'+this.answers.appName+'-services-playbook.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       /** swarm roles */
@@ -255,42 +258,42 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/roles/mitosis-base/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-base/tasks/main.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-common/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-common/tasks/main.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-manager/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-manager/tasks/main.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-network/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-network/tasks/main.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-services/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-services/tasks/main.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-worker/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-worker/tasks/main.yml'),
         {
-          appName: this.answers.appName,
+          appName: this.answers.appName
         }
       );
 

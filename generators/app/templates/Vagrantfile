@@ -87,9 +87,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # when all the workers are up and ready.
       if worker_id == workers
 
-        # Install any ansible galaxy roles   
-#        system("ansible-galaxy install -r ansible/requirements.yml -p roles --ignore-errors")
-
         if caasModeParameter == "swarm"
             worker.vm.provision "base", type: "ansible" do |ansible|
               ansible.playbook = "ansible/swarm/<%= appName %>-base-playbook.yml"

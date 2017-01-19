@@ -36,6 +36,6 @@
            -p 9888:9000/tcp \
            --network <%= appName %>-net \
            --mode global \
-           uifd/ui-for-docker \
+           uifd/ui-for-docker
   tags:
         - docker-ui            

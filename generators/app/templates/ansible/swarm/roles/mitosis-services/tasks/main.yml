@@ -7,7 +7,7 @@
            --publish 9000:9000 \
            --network <%= appName %>-net \
            --replicas 2 \
-           mitosis/sonarqube \  
+           mitosis/sonarqube
 - name: "Create service artifactory"
   shell: >
          docker service create \
@@ -15,7 +15,7 @@
            --publish 9999:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
-           mitosis/artifactory \  
+           mitosis/artifactory
 - name: "Create service jenkins master"
   shell: >
          docker service create \
@@ -25,4 +25,4 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
-           mitosis/jenkins \  
+           mitosis/jenkins
