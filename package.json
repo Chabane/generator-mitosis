@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NirbyApp/mitosis.git"
+    "url": "git+https://github.com/NirbyApp/generator-mitosis.git"
   },
   "keywords": [
     "yeoman-generator",
@@ -26,9 +26,9 @@
   "author": "nirby",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NirbyApp/mitosis/issues"
+    "url": "https://github.com/NirbyApp/generator-mitosis/issues"
   },
-  "homepage": "https://github.com/NirbyApp/mitosis#readme",
+  "homepage": "https://github.com/NirbyApp/generator-mitosis#readme",
   "dependencies": {
     "chalk": "^1.1.3",
     "yeoman-generator": "^1.0.0",
