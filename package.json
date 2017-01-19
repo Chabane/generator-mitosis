@@ -1,7 +1,7 @@
 {
   "name": "generator-mitosis",
   "version": "1.0.0-alpha.0",
-  "description": "A micro-service generator",
+  "description": "A micro services yeoman generator via an 'as code' infrastructure",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
