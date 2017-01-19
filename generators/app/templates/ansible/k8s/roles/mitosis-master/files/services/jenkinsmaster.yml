@@ -1,0 +1,50 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins-master
+  labels:
+    name: jenkins-master
+  namespace: <%= appName %>
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: jenkins-master
+    spec:
+      containers:
+      - name: jenkins-master
+        image: mitosis/jenkins
+        ports:
+        - name: jenkins
+          containerPort: 8080
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-sock
+        - mountPath: /usr/bin/docker
+          name: docker-bin
+      volumes:
+       - name: docker-sock
+         hostPath:
+            path: /var/run/docker.sock
+       - name: docker-bin
+         hostPath:
+            path: /usr/bin/docker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-master
+  labels:
+    name: jenkins-master
+  namespace: <%= appName %>
+spec:
+  type: NodePort
+  ports:
+    # the port that this service should serve on
+  - port: 8080
+    targetPort: 8082
+    nodePort: 30001
+  selector:
+    name: jenkins-master

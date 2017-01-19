@@ -1,0 +1,14 @@
+- hosts: all
+  name: "** <%= appName %> k8s base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: 192.168.77.21
+  pre_tasks:
+   - name: 'Installing python2'
+     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)    
+  roles:
+    - <%= appName %>-base

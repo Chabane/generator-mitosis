@@ -1,0 +1,7 @@
+<a name="1.0.0-alpha.0"></a>
+1.0.0-alpha.0  (2017-01-19)
+
+### Feature
+
+* **Yeoman** init yeoman generator
+* **Vagrant** add forwarded_port

@@ -1,0 +1,42 @@
+{
+  "name": "generator-mitosis",
+  "version": "1.0.0-alpha.0",
+  "description": "A micro-service generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NirbyApp/mitosis.git"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "VAGRANT",
+    "ANSIBLE",
+    "DOCKER",
+    "KUBERNETES",
+    "SWARM",
+    "JAVA",
+    "ANGULAR",
+    "JENKINS",
+    "SONAR",
+    "ARTIFACTORY"
+  ],
+  "author": "nirby",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NirbyApp/mitosis/issues"
+  },
+  "homepage": "https://github.com/NirbyApp/mitosis#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "yeoman-generator": "^1.0.0",
+    "yosay": "^1.2.1",
+    "date-util": "^1.2.1",
+    "lodash": "^4.17.4"
+  },
+  "files": [
+    "generators"
+  ]
+}

@@ -1,0 +1,41 @@
+
+#- name: Examine the swarm
+  #no_log: true
+#  shell: >
+#        echo -e "GET /info HTTP/1.0\r\n" | nc -U /var/run/docker.sock | tail -n +6 | python -m json.tool
+#  ignore_errors: yes
+#  register: docker_swarm_result
+
+#- set_fact:
+#    docker_swarm_info: "{{ docker_swarm_result.stdout | from_json }}"
+#- debug: var=docker_swarm_info.Swarm
+
+- name: Get networks
+  shell: >
+        docker network ls --filter name={{ item }}$ | tail -n +2
+  with_items:
+     - <%= appName %>-net 
+  register: network_result
+
+- set_fact:
+    docker_current_networks: "{{ network_result.results | map(attribute='stdout') | list | join(' ') }}"
+
+- name: Create overlay networks
+  shell: >
+        docker network create -d overlay {{ item }}
+  when: item not in docker_current_networks
+  with_items:
+     - <%= appName %>-net      
+
+- name: Start docker-ui globally
+  run_once: true
+  shell: >
+         docker service create \
+           --name docker-ui \
+           --mount type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock \
+           -p 9888:9000/tcp \
+           --network <%= appName %>-net \
+           --mode global \
+           uifd/ui-for-docker \
+  tags:
+        - docker-ui            

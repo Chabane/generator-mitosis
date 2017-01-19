@@ -1,31 +1,47 @@
-# Kubernetes/Docker Swarm Playground
-This project contains a `Vagrantfile` and associated `Ansible` playbook scripts
-to provisioning a 2 nodes Kubernetes/Docker Swarm cluster using `VirtualBox` and `Ubuntu
-16.04`.
+# Mitosis
+A micro services yeoman generator via an "as code" infrastructure. Mitosis is inspired from CAAS solutions like EC2 and GKE.
+
+It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.
+
+And It takes advantage of the following solutions/technologies :
+
+- Vagrant for the development mode
+- Ansible for provisionning
+- kubernetes/docker swarm to orchestrate and replicate docker containers
+- Jenkins 2 for continuous deployments of micro-services using Job DSL and Pipeline Job
+- Consul/etcd for registering/unregistering the micro-services (Available soon)
+- aritfactory for artefacts deployment
+- sonarqube for the quality
+
+### Available soon
+To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka and drived by spark streaming
+
+2 consumers & 2 producers
+
+- Microprofile/Apache Tomcat/Gradle/MongoDB
+- NodeJS express/Redis
+- Angular2 - Material 2
+- iOT - Raspberry
 
 ### Prerequisites
 You need the following installed to use this playground.
-- `Vagrant`, version 1.8.6 or better. Earlier versions of vagrant may not work
+- `NodeJS`, Node 4 or higher, together with NPM 3 or higher
+- `Vagrant`, version 1.9.1 or better. Earlier versions of vagrant may not work
 with the Vagrant Ubuntu 16.04 box and network configuration.
-- `VirtualBox`, tested with Version 5.0.26 r108824
+- `VirtualBox`, tested with Version 5.1.14 r112924
 - `Ansible`, tested with Version 2.2.0
 - Internet access, this playground pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
 
-### Bringing Up The cluster
-To bring up the cluster, clone this repository to a working directory.
-
+### Generate the project
 ```
-git clone http://github.com/nirby/mitosis
-git checkout demo
+npm install -g yo
+yo mitosis
 ```
 
-Change into the working directory and `vagrant --caas-mode=swarm up` or `vagrant --caas-mode=k8s up`
-
-```
-cd mitosis
-vagrant --caas-mode=swarm up
-```
+The code generated contains a `Vagrantfile` and associated `Ansible` playbook scripts
+to provisioning a nodes Kubernetes/Docker Swarm cluster using `VirtualBox` and `Ubuntu
+16.04`.
 
 Vagrant will start two machines. Each machine will have a NAT-ed network
 interface, through which it can access the Internet, and a `private-network`
@@ -36,16 +52,17 @@ The machines created are:
 
 | NAME | IP ADDRESS | ROLE |
 | --- | --- | --- |
-| mitosis-manager1 | 192.168.77.21 | Cluster/Node Manager |
-| mitosis-worker1 | 192.168.77.31 | Cluster/Node Worker |
+| appname-manager1 | 192.168.77.21 | Cluster/Node Manager |
+| appname-worker1 | 192.168.77.31 | Cluster/Node Worker |
+| appname-workern | 192.168.77.3n | Cluster/Node Worker |
 
 After the `vagrant up` is complete, the following command and output should be
-visible on the cluster/node manager (**mitosis-manager1**).
+visible on the cluster/node manager (**appname-manager1**).
 
 For Kubernetes
 ```
-vagrant ssh mitosis-manager1
-kubectl -n mitosis get service 
+vagrant ssh appname-manager1
+kubectl -n appname get service 
 
 NAME             CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
 artifactory      10.108.148.112   <nodes>       9999:30003/TCP   35m
@@ -53,10 +70,10 @@ jenkins-master   10.105.77.103    <nodes>       8080:30001/TCP   35m
 sonar            10.102.141.79    <nodes>       9000:30002/TCP   35m
 ```
 ```
-kubectl describe svc artifactory -n mitosis 
+kubectl describe svc artifactory -n appname 
 
 Name:                   artifactory
-Namespace:              mitosis
+Namespace:              appname
 Labels:                 name=artifactory
 Selector:               name=artifactory
 Type:                   NodePort
@@ -72,9 +89,9 @@ For Docker-swarm
 vagrant ssh mitosis-manager1
 docker service ls 
 ID            NAME            REPLICAS  IMAGE                COMMAND
-18a8rdjywe8q  sonar           0/2       mitosis/sonarqube    
-1idkoq92bb3x  jenkins-master  0/2       mitosis/jenkins      
-3ou58zc7xlrw  artifactory     0/2       mitosis/artifactory  
+18a8rdjywe8q  sonar           2/2       mitosis/sonarqube    
+1idkoq92bb3x  jenkins-master  2/2       mitosis/jenkins      
+3ou58zc7xlrw  artifactory     2/2       mitosis/artifactory  
 ```
 ```
 docker service inspect --pretty artifactory 
@@ -96,3 +113,7 @@ Ports:
  PublishedPort = 9999
 ```
 
+### Switch to another orchestrator
+```
+vagrant destroy -f && vagrant --caas-mode=swarm up // or vagrant --caas-mode=k8s up
+```

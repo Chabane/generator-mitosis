@@ -1,0 +1,36 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: artifactory
+  labels:
+    name: artifactory
+  namespace: <%= appName %>
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: artifactory
+    spec:
+      containers:
+      - name: sonar
+        image: mitosis/artifactory
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: artifactory
+  labels:
+    name: artifactory
+  namespace: <%= appName %>
+spec:
+  type: NodePort
+  ports:
+    # the port that this service should serve on
+  - port: 9999
+    targetPort: 9999
+    nodePort: 30003
+  selector:

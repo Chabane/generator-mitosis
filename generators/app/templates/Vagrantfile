@@ -1,0 +1,136 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+require 'getoptlong'
+
+VAGRANTFILE_API_VERSION = "2"
+MANAGERS = 1
+workers = <%= workers %>
+
+opts = GetoptLong.new(
+     # Native Vagrant options
+     [ '--force', '-f', GetoptLong::NO_ARGUMENT ],
+     [ '--provision', '-p', GetoptLong::NO_ARGUMENT ],
+     [ '--provision-with', GetoptLong::NO_ARGUMENT ],
+     [ '--provider', GetoptLong::OPTIONAL_ARGUMENT ],
+     [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+     [ '--check', GetoptLong::NO_ARGUMENT ],
+     [ '--logout', GetoptLong::NO_ARGUMENT ],
+     [ '--token', GetoptLong::NO_ARGUMENT ],
+     [ '--disable-http', GetoptLong::NO_ARGUMENT ],
+     [ '--http', GetoptLong::NO_ARGUMENT ],
+     [ '--https', GetoptLong::NO_ARGUMENT ],
+     [ '--ssh-no-password', GetoptLong::NO_ARGUMENT ],
+     [ '--ssh', GetoptLong::NO_ARGUMENT ],
+     [ '--ssh-port', GetoptLong::NO_ARGUMENT ],
+     [ '--ssh-once', GetoptLong::NO_ARGUMENT ],
+     [ '--host', GetoptLong::NO_ARGUMENT ],
+     [ '--entry-point', GetoptLong::NO_ARGUMENT ],
+     [ '--plugin-source', GetoptLong::NO_ARGUMENT ],
+     [ '--plugin-version', GetoptLong::NO_ARGUMENT ],
+     [ '--debug', GetoptLong::NO_ARGUMENT ],
+
+    # custom options
+    ['--caas-mode', GetoptLong::OPTIONAL_ARGUMENT],
+    ['--workers', GetoptLong::OPTIONAL_ARGUMENT]
+)
+
+caasModeParameter='<%= caasMode %>'
+
+opts.each do |opt, arg|
+  case opt
+    when '--caas-mode'
+      caasModeParameter=arg
+    when '--workers'
+      workers=Integer(arg) 
+  end
+end
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "<% if (os === "ubuntu") { %>ubuntu/xenial64<% } %><% if (os === "centos") { %>tsihosting/centos7<% } %>"
+
+  config.vm.provider 'virtualbox' do |v|
+    v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
+  end
+
+  config.ssh.insert_key = false
+
+  (1..MANAGERS).each do |manager_id|
+    config.vm.define "<%= appName %>-manager#{manager_id}" do |manager|
+      manager.vm.hostname = "<%= appName %>-manager#{manager_id}"
+      manager.ssh.forward_agent = true
+      manager.ssh.insert_key = true
+      manager.vm.network "private_network", ip: "192.168.77.#{20+manager_id}"
+      manager.vm.network :forwarded_port, guest: 22, host: "122#{20+manager_id}", id: 'ssh'
+      manager.vm.provider "virtualbox" do |v|
+        v.memory = <%= memoryManager %>
+        v.cpus = 2
+        v.name = "<%= appName %>-manager#{manager_id}"
+      end
+    end
+  end
+
+  (1..workers).each do |worker_id|
+    config.vm.define "<%= appName %>-worker#{worker_id}" do |worker|
+      worker.vm.hostname = "<%= appName %>-worker#{worker_id}"
+      worker.ssh.forward_agent = true
+      worker.ssh.insert_key = true
+      worker.vm.network "private_network", ip: "192.168.77.#{30+worker_id}"
+      worker.vm.network :forwarded_port, guest: 22, host: "122#{30+worker_id}", id: 'ssh'
+      worker.vm.provider "virtualbox" do |v|
+        v.memory = <%= memoryWorkers %>
+        v.name = "<%= appName %>-worker#{worker_id}"
+      end
+
+      # Only execute once the Ansible provisioner,
+      # when all the workers are up and ready.
+      if worker_id == workers
+
+        # Install any ansible galaxy roles   
+#        system("ansible-galaxy install -r ansible/requirements.yml -p roles --ignore-errors")
+
+        if caasModeParameter == "swarm"
+            worker.vm.provision "base", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/swarm/<%= appName %>-base-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
+
+            worker.vm.provision "swarm", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/swarm/<%= appName %>-swarm-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
+
+            worker.vm.provision "services", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/swarm/<%= appName %>-services-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
+        end
+
+        if caasModeParameter == "k8s"
+            worker.vm.provision "base", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/k8s/<%= appName %>-base-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
+
+            worker.vm.provision "k8s", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/k8s/<%= appName %>-k8s-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
+
+        end
+      end
+    end
+  end
+end
+
