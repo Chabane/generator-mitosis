@@ -13,7 +13,7 @@ And It takes advantage of the following solutions/technologies :
 - aritfactory for artefacts deployment
 - sonarqube for the quality
 
-### Available soon
+### Availables soon
 To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka and drived by spark streaming
 
 2 consumers & 2 producers
@@ -33,9 +33,10 @@ with the Vagrant Ubuntu 16.04 box and network configuration.
 - Internet access, this playground pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
 
-### Generate the project
+### Generate a project
 ```
 npm install -g yo
+npm install -g generator-mitosis
 yo mitosis
 ```
 
