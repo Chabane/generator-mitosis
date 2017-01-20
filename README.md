@@ -1,4 +1,5 @@
 # mitosis
+A micro services yeoman generator via an "as code" infrastructure. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
 It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.
 
