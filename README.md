@@ -1,6 +1,8 @@
 # mitosis
 A micro services yeoman generator via an "as code" infrastructure. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
+[Demonstartion](https://github.com/NirbyApp/generator-mitosis/tree/demo)
+
 It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.
 
 And It takes advantage of the following solutions/technologies :
