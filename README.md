@@ -6,11 +6,12 @@ And It takes advantage of the following solutions/technologies :
 
 - Vagrant for the development mode
 - Ansible for provisionning
-- kubernetes/docker swarm to orchestrate and replicate docker containers
+- Kubernetes/docker swarm to orchestrate and replicate docker containers
+- Traefik for HTTP reverse proxy
 - Jenkins 2 for continuous deployments of micro-services using Job DSL and Pipeline Job
 - Consul/etcd for registering/unregistering the micro-services
-- aritfactory for artefacts deployment
-- sonarqube for the quality
+- Aritfactory for artefacts deployment
+- Sonarqube for quality
 
 To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka and drived by spark streaming
 
