@@ -34,9 +34,13 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 <img src="https://www.docker.com/sites/default/files/docker-swarm-hero2.png" height="40" />
 <img src="https://opencredo.com/wp-content/uploads/2015/12/kubernetes.png" height="40" />
 <img src="https://traefik.io/traefik.logo.png" height="40"/>
-<img src="https://raw.githubusercontent.com/CloudCoreo/etcd-cluster/master/images/icon.png" height="40"/>
+<img src="https://blog.osones.com/images/docker/etcd.png" height="40"/>
 <img src="http://blog.soat.fr/wp-content/uploads/2016/06/consul.png" height="40"/>
-
+<br/>
+<h3>OS </h3> 
+<img src="https://blog.osones.com/images/docker/coreos.png" height="40"/>
+<img src="http://design.ubuntu.com/wp-content/uploads/ubuntu-logo112.png" height="40"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Centos-logo-light.svg/2000px-Centos-logo-light.svg.png" height="40"/>
 <br/>
 <h3>Micro services </h3>  
 <img src="http://airisdata.com/wp-content/uploads/2016/01/kafka-logo-600x390.jpg" height="40"/>
