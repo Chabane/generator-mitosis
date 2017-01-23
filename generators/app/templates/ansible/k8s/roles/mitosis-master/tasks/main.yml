@@ -96,5 +96,7 @@
     - jenkinsmaster.yml
     - sonar.yml
 
+<% if (replicateTools) { %>
 - name: Launch the Kubernetes applications
   command : "kubectl create -f {{<%= appName %>_home}}/applications"
+<% } %>

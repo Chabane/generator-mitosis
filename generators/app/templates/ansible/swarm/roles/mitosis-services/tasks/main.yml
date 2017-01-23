@@ -1,5 +1,6 @@
 ---
 
+<% if (replicateTools) { %>
 - name: "Create service sonar"
   shell: >
          docker service create \
@@ -20,9 +21,11 @@
   shell: >
          docker service create \
            --name jenkins-master \
-           --mount type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock \
+           --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
+           --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
            mitosis/jenkins
+<% } %>           
