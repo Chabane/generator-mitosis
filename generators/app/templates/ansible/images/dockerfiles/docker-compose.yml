@@ -1,0 +1,15 @@
+jenkins:
+ build: jenkins
+ volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+  - /usr/bin/docker:/usr/bin/docker  
+ ports:
+  - "50000:50000"
+artifactory:
+    build: artifactory
+    ports:
+        - "9999:8080"   
+sonarqube: 
+    build: sonarqube
+    ports:
+    - "9000:9000"

@@ -1,0 +1,79 @@
+- hosts: all
+  name: "** <%= appName %> images base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+  tasks:
+  - name: Ensure <%= appName %> dockerfiles
+    file:
+      path: "{{<%= appName %>_home}}/dockerfiles"
+      state: directory
+      mode: 0700
+
+  - name: Copy directory
+    copy: src=dockerfiles dest={{<%= appName %>_home}}
+
+<% if (ownRegistry) { %>
+  - name: Login to docker registry
+    command : docker login --username <%= docker_registry_username %> --password <%= docker_registry_password %> <%= docker_registry_server %> 
+    no_log: True
+
+  - name: Build images with docker-compose
+    command: docker-compose -p <%= docker_registry_repository_name %> build
+    args:
+      chdir: "{{<%= appName %>_home}}/dockerfiles"
+
+  - name: Tag jenkins image
+    command: docker tag <%= docker_registry_repository_name %>_jenkins <%= docker_registry_repository_name %>/jenkins
+
+  - name: Push jenkins image to docker registry
+    command: docker push <%= docker_registry_repository_name %>/jenkins
+
+  - name: Tag sonarqube image
+    command: docker tag <%= docker_registry_repository_name %>_sonarqube <%= docker_registry_repository_name %>/sonarqube
+ 
+  - name: Push sonarqube image to docker registry
+    command: docker push <%= docker_registry_repository_name %>/sonarqube
+
+  - name: Tag artifactory image
+    command: docker tag <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory      
+
+  - name: Push artifactory image to docker registry
+    command: docker push <%= docker_registry_repository_name %>/artifactory            
+    
+<% } %>
+<% if (!ownRegistry) { %>
+  - name: Create local registry
+    command : docker run -d -p 5000:5000 --restart always --name mitosis_registry registry:2 
+
+  - name: Build jenkins image
+    command: docker build -t "mitosis_jenkins" .
+    args:
+      chdir: "{{<%= appName %>_home}}/dockerfiles/jenkins"
+
+  - name: Tag jenkins image
+    command: docker tag mitosis_jenkins localhost:5000/jenkins
+
+  - name: Push jenkins image to local registry
+    command: docker push localhost:5000/jenkins
+<% } %>
+<% if (!replicateTools && !ownRegistry) { %>
+  - name: Run sonarqube container
+    command: docker run -d -p 9000:9000 mitosis/sonarqube mitosis_sonarqube
+  - name: Run artifactory container
+    command: docker run -d -p 9999:8080 mitosis/artifactory mitosis_artifactory         
+  - name: Run jenkins container
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 8082:8080 localhost:5000/jenkins mitosis_jenkins     
+<% } %>
+<% if (replicateTools && ownRegistry) { %>
+  - name: Run sonarqube container
+    command: docker run -d -p 9000:9000 <%= docker_registry_repository_name %>/sonarqube <%= docker_registry_repository_name %>_sonarqube
+  - name: Run artifactory container
+    command: docker run -d -p 9999:8080 <%= docker_registry_repository_name %>/artifactory <%= docker_registry_repository_name %>_artifactory         
+  - name: Run jenkins container
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 8082:8080 <%= docker_registry_repository_name %>/jenkins <%= docker_registry_repository_name %>_jenkins     
+<% } %>
+
