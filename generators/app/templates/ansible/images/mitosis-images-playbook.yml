@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: <%= appName %>_managers[0]
   name: "** <%= appName %> images base **"
   gather_facts: false
   become: yes
