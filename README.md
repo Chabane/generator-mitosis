@@ -7,18 +7,19 @@ And It takes advantage of the following solutions/technologies :
 
 - Vagrant for the development mode
 - Ansible for provisionning
-- kubernetes/docker swarm to orchestrate and replicate docker containers
+- Kubernetes/docker swarm to orchestrate and replicate docker containers
+- Træfik for HTTP reverse proxy (Available soon)
 - Jenkins 2 for continuous deployments of micro-services using Job DSL and Pipeline Job
 - Consul/etcd for registering/unregistering the micro-services (Available soon)
-- aritfactory for artefacts deployment
-- sonarqube for the quality
+- Aritfactory for artefacts deployment
+- Sonarqube for quality
 
 ### Availables soon
 To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka and drived by spark streaming
 
 2 consumers & 2 producers
 
-- Microprofile/Apache Tomcat/Gradle/MongoDB
+- Spring 5/Apache Tomcat/Gradle/MongoDB
 - NodeJS express/Redis
 - Angular2 - Material 2
 - iOT - Raspberry
@@ -30,6 +31,7 @@ You need the following installed to use this playground.
 with the Vagrant Ubuntu 16.04 box and network configuration.
 - `VirtualBox`, tested with Version 5.1.14 r112924
 - `Ansible`, tested with Version 2.2.0
+- `Docker registry`, at least a docker hub account.
 - Internet access, this playground pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
 
@@ -42,7 +44,7 @@ yo mitosis
 
 The code generated contains a `Vagrantfile` and associated `Ansible` playbook scripts
 to provisioning a nodes Kubernetes/Docker Swarm cluster using `VirtualBox` and `Ubuntu
-16.04`.
+16.04` (CentOS7 & CoreOS soon).
 
 Vagrant will start two machines. Each machine will have a NAT-ed network
 interface, through which it can access the Internet, and a `private-network`
@@ -53,12 +55,12 @@ The machines created are:
 
 | NAME | IP ADDRESS | ROLE |
 | --- | --- | --- |
-| appname-manager1 | 192.168.77.21 | Cluster/Node Manager |
-| appname-worker1 | 192.168.77.31 | Cluster/Node Worker |
-| appname-workern | 192.168.77.3n | Cluster/Node Worker |
+| appname-manager1 | 192.168.77.21 | Cluster Manager |
+| appname-worker1 | 192.168.77.31 | Node Worker |
+| appname-workern | 192.168.77.3n | Node Worker |
 
 After the `vagrant up` is complete, the following command and output should be
-visible on the cluster/node manager (**appname-manager1**).
+visible on the cluster manager (**appname-manager1**).
 
 For Kubernetes
 ```
