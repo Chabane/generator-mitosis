@@ -95,6 +95,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               ansible.limit = "all"
             end
 
+            worker.vm.provision "images", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/images/<%= appName %>-images-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
+
             worker.vm.provision "swarm", type: "ansible" do |ansible|
               ansible.playbook = "ansible/swarm/<%= appName %>-swarm-playbook.yml"
               ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
@@ -118,6 +125,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               ansible.limit = "all"
             end
 
+            worker.vm.provision "images", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/images/<%= appName %>-images-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
+            
             worker.vm.provision "k8s", type: "ansible" do |ansible|
               ansible.playbook = "ansible/k8s/<%= appName %>-k8s-playbook.yml"
               ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
