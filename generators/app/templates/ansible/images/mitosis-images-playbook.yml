@@ -15,7 +15,6 @@
 
   - name: Copy directory
     copy: src=dockerfiles dest={{<%= appName %>_home}}
-
 <% if (ownRegistry) { %>
   - name: Login to docker registry
     command : docker login --username <%= docker_registry_username %> --password <%= docker_registry_password %> <%= docker_registry_server %> 
@@ -39,15 +38,14 @@
     command: docker push <%= docker_registry_repository_name %>/sonarqube
 
   - name: Tag artifactory image
-    command: docker tag <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory      
+    command: docker tag <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory
 
   - name: Push artifactory image to docker registry
-    command: docker push <%= docker_registry_repository_name %>/artifactory            
-    
+    command: docker push <%= docker_registry_repository_name %>/artifactory
 <% } %>
 <% if (!ownRegistry) { %>
   - name: Create local registry
-    command : docker run -d -p 5000:5000 --restart always --name mitosis_registry registry:2 
+    command : docker run -d -p 5000:5000 --restart always --name mitosis_registry registry:2
 
   - name: Build jenkins image
     command: docker build -t "mitosis_jenkins" .
@@ -62,18 +60,18 @@
 <% } %>
 <% if (!replicateTools && !ownRegistry) { %>
   - name: Run sonarqube container
-    command: docker run -d -p 9000:9000 mitosis/sonarqube mitosis_sonarqube
+    command: docker run -d -p 9000:9000 --name mitosis_sonarqube mitosis/sonarqube
   - name: Run artifactory container
-    command: docker run -d -p 9999:8080 mitosis/artifactory mitosis_artifactory         
+    command: docker run -d -p 9999:8080 --name mitosis_artifactory mitosis/artifactory
   - name: Run jenkins container
-    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 8082:8080 localhost:5000/jenkins mitosis_jenkins     
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name mitosis_jenkins localhost:5000/jenkins 
 <% } %>
 <% if (replicateTools && ownRegistry) { %>
   - name: Run sonarqube container
-    command: docker run -d -p 9000:9000 <%= docker_registry_repository_name %>/sonarqube <%= docker_registry_repository_name %>_sonarqube
+    command: docker run -d -p 9000:9000 --name <%= docker_registry_repository_name %>_sonarqube <%= docker_registry_repository_name %>/sonarqube
   - name: Run artifactory container
-    command: docker run -d -p 9999:8080 <%= docker_registry_repository_name %>/artifactory <%= docker_registry_repository_name %>_artifactory         
+    command: docker run -d -p 9999:8080 --name <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory
   - name: Run jenkins container
-    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 8082:8080 <%= docker_registry_repository_name %>/jenkins <%= docker_registry_repository_name %>_jenkins     
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name <%= docker_registry_repository_name %>_jenkins <%= docker_registry_repository_name %>/jenkins 
 <% } %>
 
