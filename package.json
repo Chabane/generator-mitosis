@@ -1,6 +1,6 @@
 {
   "name": "generator-mitosis",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "A micro services yeoman generator via an 'as code' infrastructure",
   "main": "index.js",
   "scripts": {
