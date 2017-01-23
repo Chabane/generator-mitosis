@@ -60,14 +60,14 @@ class gen extends Generator {
               { value: 'swarm', name:'Docker Swarm mode'}, 
               { value: 'k8s', name:'Kubernetes'}
           ],
-      message : 'Select the container cluster/node manager',
+      message : 'Select the container cluster manager',
       default : 'swarm',
     }, 
     {
       type    : 'confirm',
       name    : 'scheduleManager',
       message : 'Do you want to schedule the manager?',
-      default : false 
+      default : true 
     },
     {
       type    : 'input',
@@ -104,7 +104,71 @@ class gen extends Generator {
                      }
                     return true;
                 }
-    }
+    },
+    {
+      type    : 'confirm',
+      name    : 'ownRegistry',
+      message : 'Do you want to push the images to your own docker registry?',
+      default : true 
+    },
+    {
+      when: function (response) {
+        return response.ownRegistry;
+      },
+      type    : 'input',
+      name    : 'docker_registry_server',
+      message : 'Enter your docker registry server',
+      default : "hub.docker.com"
+    },
+    {
+      when: function (response) {
+        return response.ownRegistry;
+      },
+      type    : 'input',
+      name    : 'docker_registry_username',
+      message : 'Enter username of docker registry',
+      validate: name => {
+                    if (!name) {
+                        return 'Username cannot be empty';
+                    }
+                    return true;
+                }      
+    },
+    {
+      when: function (response) {
+        return response.ownRegistry;
+      },
+      type    : 'password',
+      name    : 'docker_registry_password',
+      message : 'Enter password of docker registry',
+      validate: name => {
+                    if (!name) {
+                        return 'Password cannot be empty';
+                    }
+                    return true;
+                }      
+    },
+    {
+      when: function (response) {
+        return response.ownRegistry;
+      },
+      type    : 'input',
+      name    : 'docker_registry_repository_name',
+      message : 'Enter your docker repository name',
+      validate: name => {
+                    if (!name) {
+                        return 'Repository name cannot be empty';
+                    }
+                    return true;
+                }   
+    },
+    {
+      type    : 'confirm',
+      name    : 'replicateTools',
+      message : 'Do you want to replicate Jenkins, Artifactory, Sonarqube?',
+      default : true 
+    },
+
     ]).then((answers) => {
       require('date-util');
       this.answers = answers;
@@ -141,7 +205,8 @@ class gen extends Generator {
           memoryWorkers: this.answers.memoryWorkers,
           memoryManager: this.answers.memoryManager,
           os: this.answers.os,
-          workers: this.answers.workers
+          workers: this.answers.workers,
+          ownRegistry: this.answers.ownRegistry
         }
       );
 
@@ -156,6 +221,31 @@ class gen extends Generator {
         }
       );
 
+      /**
+       * copy ansible images
+       */
+      this.fs.copyTpl(
+        this.templatePath('ansible/images/mitosis-images-playbook.yml'),
+        this.destinationPath('ansible/images/'+this.answers.appName+'-images-playbook.yml'),
+        {
+          appName: this.answers.appName,
+          docker_registry_server: this.answers.docker_registry_server === 'hub.docker.com'? '': this.answers.docker_registry_server,
+          docker_registry_username: this.answers.docker_registry_username,
+          docker_registry_password: this.answers.docker_registry_password,
+          docker_registry_repository_name: this.answers.docker_registry_repository_name,
+          ownRegistry: this.answers.ownRegistry,
+          replicateTools: this.answers.replicateTools
+        }
+      );
+
+       this.fs.copy(
+        this.templatePath('ansible/images/dockerfiles/**/*'),
+        this.destinationPath('ansible/images/dockerfiles'),
+        {
+          appName: this.answers.appName
+        }
+      );
+
       /*
        * copy ansible k8s 
        */
@@ -164,7 +254,7 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/'+this.answers.appName+'-base-playbook.yml'),
         {
           appName: this.answers.appName,
-          os: this.answers.os
+          os: this.answers.os 
         }
       );
       this.fs.copyTpl(
@@ -189,7 +279,8 @@ class gen extends Generator {
         {
           appName: this.answers.appName,
           os: this.answers.os,
-          scheduleManager: this.answers.scheduleManager
+          scheduleManager: this.answers.scheduleManager,
+          replicateTools: this.answers.replicateTools
         }
       );
       this.fs.copyTpl(
@@ -265,7 +356,8 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/roles/mitosis-base/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-base/tasks/main.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          os: this.answers.os 
         }
       );
       this.fs.copyTpl(
@@ -294,7 +386,8 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/roles/mitosis-services/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-services/tasks/main.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          replicateTools: this.answers.replicateTools
         }
       );
       this.fs.copyTpl(
