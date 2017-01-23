@@ -1,5 +1,5 @@
 <a name="1.0.0-alpha.3"></a>
-1.0.0-alpha.3  (2017-01-19)
+1.0.0-alpha.3  (2017-01-23)
 
 ### Features
 * **Yeoman** add possibility to schedule the manager
