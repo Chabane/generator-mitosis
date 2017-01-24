@@ -1,7 +1,7 @@
 {
   "name": "generator-mitosis",
-  "version": "1.0.0-alpha.3",
-  "description": "A micro services yeoman generator via an 'as code' infrastructure",
+  "version": "1.0.0-alpha.4",
+  "description": "A micro services yeoman generator via an 'as code' infrastructure. It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,15 +16,28 @@
     "ANSIBLE",
     "DOCKER",
     "KUBERNETES",
+    "TRAEFIK",
+    "CONSUL",
+    "ETCD",
     "SWARM",
     "JAVA",
     "ANGULAR",
+    "KAFKA",
+    "SPRING",
+    "NODEJS",
+    "TOMCAT",
+    "GRADLE",
+    "MONGODB",
+    "REDIS",
+    "IOT",
+    "RASPBERRY",
+    "MATERIAL",
     "JENKINS",
     "SONAR",
     "ARTIFACTORY"
   ],
   "author": "nirby",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/NirbyApp/generator-mitosis/issues"
   },
