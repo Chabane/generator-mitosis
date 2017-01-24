@@ -15,7 +15,12 @@ spec:
     spec:
       containers:
       - name: jenkins-master
-        image: mitosis/jenkins
+         <% if (!ownRegistry) { %>  
+        image: localhost:5000/jenkins
+        <% } %>  
+        <% if (ownRegistry) { %>  
+        image: <%= docker_registry_repository_name %>/jenkins
+        <% } %>   
         ports:
         - name: jenkins
           containerPort: 8080

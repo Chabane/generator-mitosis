@@ -15,7 +15,12 @@ spec:
     spec:
       containers:
       - name: sonar
+        <% if (!ownRegistry) { %>  
         image: mitosis/sonarqube
+        <% } %>  
+        <% if (ownRegistry) { %>  
+        image: <%= docker_registry_repository_name %>/sonarqube
+        <% } %>   
         ports:
         - containerPort: 9000
 ---

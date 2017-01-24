@@ -14,8 +14,13 @@ spec:
         name: artifactory
     spec:
       containers:
-      - name: sonar
+      - name: artifactory
+        <% if (!ownRegistry) { %>  
         image: mitosis/artifactory
+        <% } %>  
+        <% if (ownRegistry) { %>  
+        image: <%= docker_registry_repository_name %>/artifactory
+        <% } %>   
         ports:
         - containerPort: 8080
 ---

@@ -1,6 +1,37 @@
----
+---      
 
-<% if (replicateTools) { %>
+<% if (replicateTools && ownRegistry) { %>  
+- name: "Create service sonar"
+  shell: >
+         docker service create \
+           --name sonar \
+           --publish 9000:9000 \
+           --network <%= appName %>-net \
+           --replicas 2 \
+           <%= docker_registry_repository_name %>/sonarqube
+- name: "Create service artifactory"
+  shell: >
+         docker service create \
+           --name artifactory \
+           --publish 9999:8080 \
+           --network <%= appName %>-net \
+           --replicas 2 \
+           <%= docker_registry_repository_name %>/artifactory
+
+- name: "Create service jenkins master"
+  shell: >
+         docker service create \
+           --name jenkins-master \
+           --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
+           --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
+           --publish 50000:50000 \
+           --publish 8082:8080 \
+           --network <%= appName %>-net \
+           --replicas 2 \
+           <%= docker_registry_repository_name %>/jenkins
+<% } %>         
+
+<% if (replicateTools && !ownRegistry) { %>  
 - name: "Create service sonar"
   shell: >
          docker service create \
@@ -17,6 +48,7 @@
            --network <%= appName %>-net \
            --replicas 2 \
            mitosis/artifactory
+
 - name: "Create service jenkins master"
   shell: >
          docker service create \
@@ -27,5 +59,5 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
-           mitosis/jenkins
-<% } %>           
+           localhost:5000/jenkins
+<% } %>   

@@ -280,7 +280,9 @@ class gen extends Generator {
           appName: this.answers.appName,
           os: this.answers.os,
           scheduleManager: this.answers.scheduleManager,
-          replicateTools: this.answers.replicateTools
+          replicateTools: this.answers.replicateTools,
+          ownRegistry: this.answers.ownRegistry,
+          docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
       );
       this.fs.copyTpl(
@@ -303,21 +305,27 @@ class gen extends Generator {
         this.templatePath('ansible/k8s/roles/mitosis-master/files/services/sonar.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/sonar.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          ownRegistry: this.answers.ownRegistry,
+          docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/roles/mitosis-master/files/services/artifactory.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/artifactory.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          ownRegistry: this.answers.ownRegistry,
+          docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/roles/mitosis-master/files/services/jenkinsmaster.yml'),
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/jenkinsmaster.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          ownRegistry: this.answers.ownRegistry,
+          docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
       );
       this.fs.copyTpl(
@@ -387,7 +395,9 @@ class gen extends Generator {
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-services/tasks/main.yml'),
         {
           appName: this.answers.appName,
-          replicateTools: this.answers.replicateTools
+          replicateTools: this.answers.replicateTools,
+          ownRegistry: this.answers.ownRegistry,
+          docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
       );
       this.fs.copyTpl(
