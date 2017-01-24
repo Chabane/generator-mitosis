@@ -1,3 +1,9 @@
+<a name="1.0.0-alpha.4"></a>
+1.0.0-alpha.4  (2017-01-24)
+
+### Features
+* **Docker** add possibility to the user to maintain its own images
+
 <a name="1.0.0-alpha.3"></a>
 1.0.0-alpha.3  (2017-01-23)
 
@@ -13,7 +19,7 @@
 ### Bugs
 
 * **K8s** replace network weave by flannel 
-* **Swarm** correct bug with jenkins image
+* **Swarm** fix bug with jenkins image
 
 <a name="1.0.0-alpha.0"></a>
 1.0.0-alpha.0  (2017-01-19)
