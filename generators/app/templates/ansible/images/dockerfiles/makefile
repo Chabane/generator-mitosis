@@ -1,10 +1,10 @@
 build:
-	@docker-compose -p mitosis build 
+	@docker-compose -p <%= docker_registry_repository_name %> build 
 run:
-	@docker-compose -p mitosis up -d jenkins sonarqube artifactory
+	@docker-compose -p <%= docker_registry_repository_name %> up -d jenkins sonarqube artifactory
 stop:
-	@docker-compose -p mitosis stop
+	@docker-compose -p <%= docker_registry_repository_name %> stop
 clean:	stop
-	@docker-compose -p mitosis rm jenkins sonarqube artifactory
+	@docker-compose -p <%= docker_registry_repository_name %> rm jenkins sonarqube artifactory
 clean-images:
 	@docker rmi `docker images -q -f "dangling=true"`

@@ -1,5 +1,5 @@
 FROM sonarqube
-MAINTAINER Nirby
+MAINTAINER <%= appName %>
 
 VOLUME ["$SONARQUBE_HOME/data", "$SONARQUBE_HOME/extensions"]
 

@@ -1,5 +1,5 @@
 FROM jenkins:2.19.1
-MAINTAINER Nirby
+MAINTAINER <%= appName %>
 
 USER root
 # Install Docker client

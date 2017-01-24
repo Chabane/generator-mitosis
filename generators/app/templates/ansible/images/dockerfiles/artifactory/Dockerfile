@@ -1,5 +1,5 @@
 FROM tomcat:8-jre8
-MAINTAINER Nirby
+MAINTAINER <%= appName %>
 
 # To update, check https://bintray.com/jfrog/artifactory/artifactory/view
 
