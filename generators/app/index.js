@@ -238,11 +238,43 @@ class gen extends Generator {
         }
       );
 
+      /**
+       * copy dockerfiles
+       */
        this.fs.copy(
         this.templatePath('ansible/images/dockerfiles/**/*'),
-        this.destinationPath('ansible/images/dockerfiles'),
+        this.destinationPath('ansible/images/dockerfiles')
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('ansible/images/dockerfiles/artifactory/Dockerfile'),
+        this.destinationPath('ansible/images/dockerfiles/artifactory/Dockerfile'),
         {
           appName: this.answers.appName
+        }
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('ansible/images/dockerfiles/sonarqube/Dockerfile'),
+        this.destinationPath('ansible/images/dockerfiles/sonarqube/Dockerfile'),
+        {
+          appName: this.answers.appName
+        }
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('ansible/images/dockerfiles/jenkins/Dockerfile'),
+        this.destinationPath('ansible/images/dockerfiles/jenkins/Dockerfile'),
+        {
+          appName: this.answers.appName
+        }
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('ansible/images/dockerfiles/makefile'),
+        this.destinationPath('ansible/images/dockerfiles/makefile'),
+        {
+          docker_registry_repository_name: this.answers.docker_registry_repository_name ? this.answers.docker_registry_repository_name : 'mitosis'
         }
       );
 
