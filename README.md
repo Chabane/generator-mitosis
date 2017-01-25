@@ -23,7 +23,7 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 - Spring 5/Apache Tomcat/Gradle/MongoDB
 - NodeJS express/Redis
 - Angular2 - Material 2
-- iOT - Raspberry
+- iOT - Akka Actors - Raspberry Pi
 
 <h3>Infrastructure </h3> 
 <img src="https://avatars2.githubusercontent.com/u/1714870?v=3&s=200" height="40" />
@@ -51,6 +51,8 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Redis_Logo.svg/1280px-Redis_Logo.svg.png" height="40"/>
 <img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" height="40"/>
 <img src="https://angular.io/resources/images/logos/angular2/angular.svg" height="40"/>
+<img src="http://akka.io/resources/images/akka_full_color.svg" height="40"/>
+<img src="http://www.geektouch.fr/wp-content/uploads/2013/05/media_raspberry_pi.jpg" height="40"/>
 </br>
 <h3>Tools </h3>  
 <img src="https://www.sonarqube.org/assets/logo-31ad3115b1b4b120f3d1efd63e6b13ac9f1f89437f0cf6881cc4d8b5603a52b4.svg" height="40"/>
