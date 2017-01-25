@@ -1,3 +1,7 @@
+<a name="1.0.0-alpha.5"></a>
+1.0.0-alpha.5  (2017-01-25)
+* **Yeoman** check if vagrant, ansible, virtualbox are installed
+
 <a name="1.0.0-alpha.4"></a>
 1.0.0-alpha.4  (2017-01-24)
 
