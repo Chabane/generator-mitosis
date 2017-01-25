@@ -21,8 +21,8 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 
 - Spring 5/Apache Tomcat/Gradle/MongoDB
 - NodeJS express/Redis
-- Angular2 - Material 2
-- iOT - Raspberry
+- Angular - Material 
+- iOT - Akka Actors - Raspberry
 
 ### Prerequisites
 You need the following installed to use this playground.
