@@ -1,6 +1,8 @@
-var Generator = require('yeoman-generator');
-var yosay = require('yosay');
-var chalk = require('chalk');
+var Generator = require('yeoman-generator'),
+ util = require('util'),
+ yosay = require('yosay'),
+ chalk = require('chalk'),
+ exec = require('child_process').exec;
 
 class gen extends Generator {
   constructor(args, opts) {
@@ -8,11 +10,33 @@ class gen extends Generator {
   }
 
   initializing() {
-        try {
-            this.username = process.env.USER || process.env.USERPROFILE.split(require('path').sep)[2];
-        } catch (e) {
-            this.username = '';
-        }
+      var virtualBoxInstalled = true;
+      exec('vboxmanage --version', function (err, stdout, stderr) {
+        if (err) {
+           this.log.error('Virtualbox is not found on your computer. Download and install : https://www.virtualbox.org/wiki/Downloads');
+           virtualBoxInstalled = false;
+        } 
+      }.bind(this));
+
+      var vagrantInstalled = true;
+      exec('vagrant --version', function (err, stdout, stderr) {
+        if (err) {
+           this.log.error('Vagrant is not found on your computer. Download and install: https://www.vagrantup.com/docs/installation/');
+           virtualBoxInstalled = false;
+        } 
+      }.bind(this));
+
+      var ansibleInstalled = true;
+      exec('ansible --version', function (err, stdout, stderr) {
+        if (err) {
+           this.log.error('Ansible is not found on your computer. Download and install : http://docs.ansible.com/ansible/intro_installation.html');
+           virtualBoxInstalled = false;
+        } 
+      }.bind(this));
+
+     if(!virtualBoxInstalled || !vagrantInstalled || !ansibleInstalled) {
+      process.exit(1);
+     }
    }
 
   prompting() {
