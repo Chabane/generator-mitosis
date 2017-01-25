@@ -26,11 +26,11 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 
 ### Prerequisites
 You need the following installed to use this playground.
-- [`NodeJS`](https://nodejs.org/en/download/), Node 4 or higher, together with NPM 3 or higher.
-- [`VirtualBox`](https://www.virtualbox.org/wiki/Downloads), tested with Version 5.1.14 r112924.
-- [`Vagrant`](https://www.vagrantup.com/docs/installation/), version 1.9.1 or better. Earlier versions of vagrant may not work.
+- [`NodeJS`](https://nodejs.org/en/download/){:target="_blank"}, Node 4 or higher, together with NPM 3 or higher.
+- [`VirtualBox`](https://www.virtualbox.org/wiki/Downloads){:target="_blank"}, tested with Version 5.1.14 r112924.
+- [`Vagrant`](https://www.vagrantup.com/docs/installation/){:target="_blank"}, version 1.9.1 or better. Earlier versions of vagrant may not work.
 with the Vagrant Ubuntu 16.04 box and network configuration.
-- [`Ansible`](http://docs.ansible.com/ansible/intro_installation.html), tested with Version 2.2.0. 
+- [`Ansible`](http://docs.ansible.com/ansible/intro_installation.html){:target="_blank"}, tested with Version 2.2.0. 
 - `Docker registry` (optional), at least a docker hub account.
 - Internet access, this demonstartion pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
