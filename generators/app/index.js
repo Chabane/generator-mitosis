@@ -10,6 +10,8 @@ class gen extends Generator {
   }
 
   initializing() {
+
+      // check if virtualbox is installed
       var virtualBoxInstalled = true;
       exec('vboxmanage --version', function (err, stdout, stderr) {
         if (err) {
@@ -18,6 +20,7 @@ class gen extends Generator {
         } 
       }.bind(this));
 
+      // check if vagrant is installed
       var vagrantInstalled = true;
       exec('vagrant --version', function (err, stdout, stderr) {
         if (err) {
@@ -26,6 +29,7 @@ class gen extends Generator {
         } 
       }.bind(this));
 
+      // check if ansible is installed
       var ansibleInstalled = true;
       exec('ansible --version', function (err, stdout, stderr) {
         if (err) {
@@ -34,6 +38,7 @@ class gen extends Generator {
         } 
       }.bind(this));
 
+     // if any one not installed then exit the process
      if(!virtualBoxInstalled || !vagrantInstalled || !ansibleInstalled) {
       process.exit(1);
      }
@@ -41,15 +46,25 @@ class gen extends Generator {
 
   prompting() {
 
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the ' + chalk.red('Mitosis') + ' generator!'
-    ));
+    var name =
+ "\n#     #                                   "+
+ "\n##   ## # #####  ####   ####  #  ####     "+
+ "\n# # # # #   #   #    # #      # #         "+
+ "\n#  #  # #   #   #    #  ####  #  ####     "+
+ "\n#     # #   #   #    #      # #      #    "+
+ "\n#     # #   #   #    # #    # # #    #    "+
+ "\n#     # #   #    ####   ####  #  ####     "
+ "\n \n"
+    this.log(name);
+  
+    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.7! \n');
+    this.log('Documentation for creating an application: https://github.com/NirbyApp/generator-mitosis');
+    this.log('Application files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
     return this.prompt([{
       type    : 'input',
       name    : 'appName',
-      message : 'Your project name',
+      message : '(1/7) What is the name of your infrastructure',
       validate: name => {
                     if (!name) {
                         return 'Project name cannot be empty';
@@ -74,7 +89,7 @@ class gen extends Generator {
               { value: 'ubuntu', name:'Ubuntu'} 
            //   ,{ value: 'centos', name:'CentOS'}
           ],
-      message : 'Select the OS (dev)',
+      message : '(2/7) Select the Operating System of your infrastructure',
       default : 'ubuntu',
     }, 
     {
@@ -84,55 +99,19 @@ class gen extends Generator {
               { value: 'swarm', name:'Docker Swarm mode'}, 
               { value: 'k8s', name:'Kubernetes'}
           ],
-      message : 'Select the container cluster manager',
+      message : '(3/7) Select the container cluster manager',
       default : 'swarm',
     }, 
     {
       type    : 'confirm',
       name    : 'scheduleManager',
-      message : 'Do you want to schedule the manager?',
+      message : '(4/7) Do you want to schedule the manager?',
       default : true 
-    },
-    {
-      type    : 'input',
-      name    : 'workers',
-      message : 'Number of workers',
-      default : 1,
-      validate: name => {
-                    if (name && !/\d+/.test(name)) {
-                        return 'Worker number should only consist of 0~9';
-                    }
-                    return true;
-                }
-    },
-    {
-      type    : 'input',
-      name    : 'memoryWorkers',
-      message : 'Memory of worker node',
-      default : 1024,
-      validate: name => {
-                    if (name && !/\d+/.test(name)) {
-                        return 'Memory should only consist of 0~9';
-                     }
-                    return true;
-                }
-    },
-    {
-      type    : 'input',
-      name    : 'memoryManager',
-      message : 'Memory of cluster manager',
-      default : 2048,
-      validate: name => {
-                    if (name && !/\d+/.test(name)) {
-                        return 'Memory should only consist of 0~9';
-                     }
-                    return true;
-                }
     },
     {
       type    : 'confirm',
       name    : 'ownRegistry',
-      message : 'Do you want to push the images to your own docker registry?',
+      message : '(5/7) Do you want to push the images to your own docker registry?',
       default : true 
     },
     {
@@ -189,10 +168,60 @@ class gen extends Generator {
     {
       type    : 'confirm',
       name    : 'replicateTools',
-      message : 'Do you want to replicate Jenkins, Artifactory, Sonarqube?',
+      message : '(6/7) Do you want to replicate Jenkins, Artifactory, Sonarqube?',
       default : true 
     },
-
+    {
+      type    : 'confirm',
+      name    : 'initVms',
+      message : '(7/7) Would you want to initialize a virtual machines?',
+      default : true,
+    },
+    {
+      type    : 'input',
+      name    : 'workers',
+      message : 'Number of workers',
+      default : 1,
+      when: function (response) {
+        return response.initVms;
+      },
+      validate: name => {
+                    if (name && !/\d+/.test(name)) {
+                        return 'Worker number should only consist of 0~9';
+                    }
+                    return true;
+                }
+    },
+    {
+      type    : 'input',
+      name    : 'memoryWorkers',
+      message : 'Memory of worker node',
+      default : 1024,
+      when: function (response) {
+        return response.initVms;
+      },
+      validate: name => {
+                    if (name && !/\d+/.test(name)) {
+                        return 'Memory should only consist of 0~9';
+                     }
+                    return true;
+                }
+    },
+    {
+      type    : 'input',
+      name    : 'memoryManager',
+      message : 'Memory of cluster manager',
+      default : 2048,
+      when: function (response) {
+        return response.initVms;
+      },
+      validate: name => {
+                    if (name && !/\d+/.test(name)) {
+                        return 'Memory should only consist of 0~9';
+                     }
+                    return true;
+                }
+    },
     ]).then((answers) => {
       require('date-util');
       this.answers = answers;
@@ -226,10 +255,10 @@ class gen extends Generator {
         {
           appName: this.answers.appName,
           caasMode: this.answers.caasMode,
-          memoryWorkers: this.answers.memoryWorkers,
-          memoryManager: this.answers.memoryManager,
+          memoryWorkers: this.answers.memoryWorkers ? this.answers.memoryWorkers : 1024,
+          memoryManager: this.answers.memoryManager ? this.answers.memoryWorkers : 2048,
           os: this.answers.os,
-          workers: this.answers.workers,
+          workers: this.answers.workers ? this.answers.workers : 2,
           ownRegistry: this.answers.ownRegistry
         }
       );
@@ -241,7 +270,7 @@ class gen extends Generator {
         {
           appName: this.answers.appName,
           os: this.answers.os,
-          workers: this.answers.workers
+          workers: this.answers.workers ? this.answers.workers : 2,
         }
       );
 
@@ -465,12 +494,17 @@ class gen extends Generator {
       );
 
       // create the vm
-      this.spawnCommand('vagrant', ['up']);
+      if(this.answers.initVms) {
+        this.spawnCommand('vagrant', ['up']);
+      }
   };
 
    end() {
-        this.log.ok(`Project ${this.answers.appName} generated `);
-        this.log.ok(`Installing the virtuals machines...`);
+        this.log.ok(`Infrastructure ${this.answers.appName} generated `);
+
+        if(this.answers.initVms) {
+          this.log.ok(`Installing the virtuals machines...`);
+        }
     }
 }
 
