@@ -58,8 +58,8 @@ class gen extends Generator {
     this.log(name);
   
     this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.7! \n');
-    this.log('Documentation for creating an application: https://github.com/NirbyApp/generator-mitosis');
-    this.log('Application files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
+    this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
+    this.log('Infrastructure files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
     return this.prompt([{
       type    : 'input',
