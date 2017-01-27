@@ -174,7 +174,7 @@ class gen extends Generator {
     {
       type    : 'confirm',
       name    : 'initVms',
-      message : '(7/7) Would you want to initialize a virtual machines?',
+      message : '(7/7) Do you want to test your infrastructure locally in a virtual machines?',
       default : true,
     },
     {
@@ -195,7 +195,7 @@ class gen extends Generator {
     {
       type    : 'input',
       name    : 'memoryWorkers',
-      message : 'Memory of worker node',
+      message : 'Memory of worker node (Mo)',
       default : 1024,
       when: function (response) {
         return response.initVms;
@@ -210,7 +210,7 @@ class gen extends Generator {
     {
       type    : 'input',
       name    : 'memoryManager',
-      message : 'Memory of cluster manager',
+      message : 'Memory of cluster manager (Mo)',
       default : 2048,
       when: function (response) {
         return response.initVms;
