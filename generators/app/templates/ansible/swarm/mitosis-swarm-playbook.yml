@@ -6,7 +6,7 @@
   vars:
     docker_service: /usr/lib/systemd/system/docker.service
     <%= appName %>_home: /opt/<%= appName %>
-    manager_ip: 192.168.77.21
+    manager_ip: <%= defaultIp %>.21
     swarm_bind_port: 2377
   roles:
     - <%= appName %>-manager
@@ -17,7 +17,7 @@
   become_user: root
   vars:
     <%= appName %>_home: /opt/<%= appName %>
-    manager_ip: 192.168.77.21
+    manager_ip: <%= defaultIp %>.21
     swarm_bind_port: 2377
     docker_service: /usr/lib/systemd/system/docker.service
   roles:

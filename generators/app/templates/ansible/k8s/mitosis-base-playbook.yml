@@ -6,7 +6,7 @@
   serial: 1
   vars:
     <%= appName %>_home: /opt/<%= appName %>
-    manager_ip: 192.168.77.21
+    manager_ip: <%= defaultIp %>.21
   pre_tasks:
   <% if (os === "ubuntu") { %>
    - name: 'Installing python2'

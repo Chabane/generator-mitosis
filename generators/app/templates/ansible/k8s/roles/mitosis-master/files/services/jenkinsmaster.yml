@@ -15,8 +15,11 @@ spec:
     spec:
       containers:
       - name: jenkins-master
-         <% if (!ownRegistry) { %>  
+        <% if (!ownRegistry && defaultMicroService) { %>  
         image: localhost:5000/jenkins
+        <% } %>  
+        <% if (!ownRegistry && !defaultMicroService) { %>  
+        image: mitosis/jenkins
         <% } %>  
         <% if (ownRegistry) { %>  
         image: <%= docker_registry_repository_name %>/jenkins

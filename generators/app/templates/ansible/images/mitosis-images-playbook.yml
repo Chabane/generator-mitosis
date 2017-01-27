@@ -6,6 +6,7 @@
   serial: 1
   vars:
     <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
   tasks:
   - name: Ensure <%= appName %> dockerfiles
     file:
@@ -46,7 +47,8 @@
 <% if (!ownRegistry) { %>
   - name: Create local registry
     command : docker run -d -p 5000:5000 --restart always --name mitosis_registry registry:2
-
+<% } %>
+<% if (defaultMicroService && !ownRegistry) { %>
   - name: Build jenkins image
     command: docker build -t "mitosis_jenkins" .
     args:
@@ -63,8 +65,14 @@
     command: docker run -d -p 9000:9000 --name mitosis_sonarqube mitosis/sonarqube
   - name: Run artifactory container
     command: docker run -d -p 9999:8080 --name mitosis_artifactory mitosis/artifactory
+<% } %>    
+<% if (!replicateTools && !ownRegistry && defaultMicroService) { %>
   - name: Run jenkins container
     command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name mitosis_jenkins localhost:5000/jenkins 
+<% } %>
+<% if (!replicateTools && !ownRegistry && !defaultMicroService) { %>
+  - name: Run jenkins container
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name mitosis_jenkins mitosis/jenkins 
 <% } %>
 <% if (!replicateTools && ownRegistry) { %>
   - name: Run sonarqube container

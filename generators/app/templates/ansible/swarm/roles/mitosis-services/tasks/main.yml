@@ -59,5 +59,10 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
+           <% if (defaultMicroService) { %>  
            localhost:5000/jenkins
+           <% } %> 
+           <% if (!defaultMicroService) { %>  
+           mitosis/jenkins
+           <% } %> 
 <% } %>   
