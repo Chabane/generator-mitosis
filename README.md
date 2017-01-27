@@ -8,7 +8,7 @@ It allows developers to load, organize, execute, evolve, administrate and stop m
 And It takes advantage of the following solutions/technologies :
 
 - `Vagrant` development mode 
-- `Ansible provisionning
+- `Ansible` provisionning
 - `Kubernetes/docker` swarm to orchestrate and replicate docker containers
 - `ELK Stack` log analytics
 - `Traefik` HTTP reverse proxy
