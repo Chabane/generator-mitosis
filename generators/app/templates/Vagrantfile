@@ -48,7 +48,11 @@ end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "<% if (os === "ubuntu") { %>ubuntu/xenial64<% } %><% if (os === "centos") { %>tsihosting/centos7<% } %>"
+  config.vm.box = "<% if (os === "ubuntu") { %>bento/ubuntu-16.04<% } %><% if (os === "centos") { %>tsihosting/centos7<% } %>"
+#  config.vm.network :forwarded_port, host: 8082, guest: 8082
+#  config.vm.network :forwarded_port, host: 9000, guest: 9000
+#  config.vm.network :forwarded_port, host: 9999, guest: 9999
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.provider 'virtualbox' do |v|
     v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
@@ -61,8 +65,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       manager.vm.hostname = "<%= appName %>-manager#{manager_id}"
       manager.ssh.forward_agent = true
       manager.ssh.insert_key = true
-      manager.vm.network "private_network", ip: "192.168.77.#{20+manager_id}"
+      manager.vm.provision :shell, :path => "scripts/setup_ubuntu.sh"
+      manager.vm.network "private_network", ip: "<%= defaultIp %>.#{20+manager_id}"
       manager.vm.network :forwarded_port, guest: 22, host: "122#{20+manager_id}", id: 'ssh'
+      manager.vm.network :forwarded_port, host: 8082, guest: 8082
+      manager.vm.network :forwarded_port, host: 9000, guest: 9000
+      manager.vm.network :forwarded_port, host: 9999, guest: 9999
+      manager.vm.synced_folder '.', '/vagrant', disabled: true
       manager.vm.provider "virtualbox" do |v|
         v.memory = <%= memoryManager %>
         v.cpus = 2
@@ -76,8 +85,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       worker.vm.hostname = "<%= appName %>-worker#{worker_id}"
       worker.ssh.forward_agent = true
       worker.ssh.insert_key = true
-      worker.vm.network "private_network", ip: "192.168.77.#{30+worker_id}"
+      worker.vm.provision :shell, :path => "scripts/setup_ubuntu.sh"
+      worker.vm.network "private_network", ip: "<%= defaultIp %>.#{30+worker_id}"
       worker.vm.network :forwarded_port, guest: 22, host: "122#{30+worker_id}", id: 'ssh'
+      worker.vm.synced_folder '.', '/vagrant', disabled: true
       worker.vm.provider "virtualbox" do |v|
         v.memory = <%= memoryWorkers %>
         v.name = "<%= appName %>-worker#{worker_id}"
