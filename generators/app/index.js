@@ -64,7 +64,7 @@ class gen extends Generator {
     return this.prompt([{
       type    : 'input',
       name    : 'appName',
-      message : '(1/7) What is the name of your infrastructure',
+      message : '(1/8) Name of my infrastructure',
       validate: name => {
                     if (!name) {
                         return 'Project name cannot be empty';
@@ -89,7 +89,7 @@ class gen extends Generator {
               { value: 'ubuntu', name:'Ubuntu'} 
            //   ,{ value: 'centos', name:'CentOS'}
           ],
-      message : '(2/7) Select the Operating System of your infrastructure',
+      message : '(2/8) Operating System of my infrastructure',
       default : 'ubuntu',
     }, 
     {
@@ -99,19 +99,19 @@ class gen extends Generator {
               { value: 'swarm', name:'Docker Swarm mode'}, 
               { value: 'k8s', name:'Kubernetes'}
           ],
-      message : '(3/7) Select the container cluster manager',
+      message : '(3/8) Container cluster manager',
       default : 'swarm',
     }, 
     {
       type    : 'confirm',
       name    : 'scheduleManager',
-      message : '(4/7) Do you want to schedule the manager?',
+      message : '(4/8) Schedule the manager',
       default : true 
     },
     {
       type    : 'confirm',
       name    : 'ownRegistry',
-      message : '(5/7) Do you want to push the images to your own docker registry?',
+      message : '(5/8) Push the images to my own docker registry',
       default : true 
     },
     {
@@ -120,7 +120,7 @@ class gen extends Generator {
       },
       type    : 'input',
       name    : 'docker_registry_server',
-      message : 'Enter your docker registry server',
+      message : 'Docker registry server',
       default : "hub.docker.com"
     },
     {
@@ -129,7 +129,7 @@ class gen extends Generator {
       },
       type    : 'input',
       name    : 'docker_registry_username',
-      message : 'Enter username of docker registry',
+      message : 'Username of docker registry',
       validate: name => {
                     if (!name) {
                         return 'Username cannot be empty';
@@ -143,7 +143,7 @@ class gen extends Generator {
       },
       type    : 'password',
       name    : 'docker_registry_password',
-      message : 'Enter password of docker registry',
+      message : 'Password of docker registry',
       validate: name => {
                     if (!name) {
                         return 'Password cannot be empty';
@@ -157,7 +157,7 @@ class gen extends Generator {
       },
       type    : 'input',
       name    : 'docker_registry_repository_name',
-      message : 'Enter your docker repository name',
+      message : 'Docker repository name',
       validate: name => {
                     if (!name) {
                         return 'Repository name cannot be empty';
@@ -168,13 +168,19 @@ class gen extends Generator {
     {
       type    : 'confirm',
       name    : 'replicateTools',
-      message : '(6/7) Do you want to replicate Jenkins, Artifactory, Sonarqube?',
+      message : '(6/8) Replicate Jenkins, Artifactory, Sonarqube',
+      default : true 
+    },
+    {
+      type    : 'confirm',
+      name    : 'defaultMicroService',
+      message : '(7/8) Deploy the defaults micro-services',
       default : true 
     },
     {
       type    : 'confirm',
       name    : 'initVms',
-      message : '(7/7) Do you want to test your infrastructure locally in a virtual machines?',
+      message : '(8/8) Test my infrastructure locally in a virtual machines',
       default : true,
     },
     {
@@ -247,6 +253,8 @@ class gen extends Generator {
     writing() {
 
       const _ = require('lodash');
+      const defaultIp = "192.168.77";
+      const defaultManagerIp = "192.168.77.21";
 
       // copy vagrantfile
       this.fs.copyTpl(
@@ -259,8 +267,17 @@ class gen extends Generator {
           memoryManager: this.answers.memoryManager ? this.answers.memoryWorkers : 2048,
           os: this.answers.os,
           workers: this.answers.workers ? this.answers.workers : 2,
-          ownRegistry: this.answers.ownRegistry
+          ownRegistry: this.answers.ownRegistry,
+          defaultIp: defaultIp
         }
+      );
+
+      /**
+       * copy scripts shell
+       */
+       this.fs.copy(
+        this.templatePath('scripts/**'),
+        this.destinationPath('scripts')
       );
 
       // copy ansible hosts
@@ -271,6 +288,7 @@ class gen extends Generator {
           appName: this.answers.appName,
           os: this.answers.os,
           workers: this.answers.workers ? this.answers.workers : 2,
+          defaultIp: defaultIp
         }
       );
 
@@ -287,7 +305,9 @@ class gen extends Generator {
           docker_registry_password: this.answers.docker_registry_password,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
           ownRegistry: this.answers.ownRegistry,
-          replicateTools: this.answers.replicateTools
+          replicateTools: this.answers.replicateTools,
+          defaultMicroService: this.answers.defaultMicroService,
+          defaultIp: defaultIp
         }
       );
 
@@ -339,14 +359,16 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/'+this.answers.appName+'-base-playbook.yml'),
         {
           appName: this.answers.appName,
-          os: this.answers.os 
+          os: this.answers.os,
+          defaultIp: defaultIp 
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/k8s/mitosis-k8s-playbook.yml'),
         this.destinationPath('ansible/k8s/'+this.answers.appName+'-k8s-playbook.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          defaultIp: defaultIp
         }
       );
       /** k8s roles */
@@ -410,7 +432,9 @@ class gen extends Generator {
         {
           appName: this.answers.appName,
           ownRegistry: this.answers.ownRegistry,
-          docker_registry_repository_name: this.answers.docker_registry_repository_name
+          docker_registry_repository_name: this.answers.docker_registry_repository_name,
+          defaultMicroService: this.answers.defaultMicroService,
+          defaultIp: defaultManagerIp
         }
       );
       this.fs.copyTpl(
@@ -434,7 +458,8 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/mitosis-swarm-playbook.yml'),
         this.destinationPath('ansible/swarm/'+this.answers.appName+'-swarm-playbook.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          defaultIp: defaultIp
         }
       );
       this.fs.copyTpl(
@@ -482,7 +507,8 @@ class gen extends Generator {
           appName: this.answers.appName,
           replicateTools: this.answers.replicateTools,
           ownRegistry: this.answers.ownRegistry,
-          docker_registry_repository_name: this.answers.docker_registry_repository_name
+          docker_registry_repository_name: this.answers.docker_registry_repository_name,
+          defaultMicroService: this.answers.defaultMicroService
         }
       );
       this.fs.copyTpl(
