@@ -4,11 +4,11 @@ A micro services yeoman generator via an "as code" infrastructure. Mitosis is in
 
 It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.
 
-And It takes advantage of the following solutions/technologies :
+And It takes advantage of the following solutions/technologies (alpha):
 
 - `Vagrant` development mode 
 - `Ansible` provisionning
-- `Kubernetes/docker swarm` to orchestrate and replicate docker containers
+- `Kubernetes/docker swarm` orchestrate and replicate docker containers
 - `ELK Stack` log analytics
 - `Traefik` HTTP reverse proxy
 - `Jenkins 2` CI/CD of micro-services using Job DSL and Pipeline Job

@@ -1,3 +1,11 @@
+<a name="1.0.0-alpha.7"></a>
+1.0.0-alpha.7  (2017-01-26)
+
+#### Features
+* **Docker** Fix version of docker images
+* **Vagrant** Change default box to bento/ubuntu-16.04
+* **Yeoman** Add new question : Deploy the defaults micro-services
+
 <a name="1.0.0-alpha.6"></a>
 1.0.0-alpha.6  (2017-01-26)
 
