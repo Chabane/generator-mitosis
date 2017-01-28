@@ -264,7 +264,7 @@ class gen extends Generator {
           appName: this.answers.appName,
           caasMode: this.answers.caasMode,
           memoryWorkers: this.answers.memoryWorkers ? this.answers.memoryWorkers : 1024,
-          memoryManager: this.answers.memoryManager ? this.answers.memoryWorkers : 2048,
+          memoryManager: this.answers.memoryManager ? this.answers.memoryManager : 2048,
           os: this.answers.os,
           workers: this.answers.workers ? this.answers.workers : 2,
           ownRegistry: this.answers.ownRegistry,
@@ -339,7 +339,8 @@ class gen extends Generator {
         this.templatePath('ansible/images/dockerfiles/jenkins/Dockerfile'),
         this.destinationPath('ansible/images/dockerfiles/jenkins/Dockerfile'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          defaultMicroService: this.answers.defaultMicroService
         }
       );
 
