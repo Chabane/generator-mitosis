@@ -16,7 +16,7 @@ spec:
       containers:
       - name: sonar
         <% if (!ownRegistry) { %>  
-        image: mitosis/sonarqube
+        image: mitosis/sonarqube:1.0.0-alpha.0
         <% } %>  
         <% if (ownRegistry) { %>  
         image: <%= docker_registry_repository_name %>/sonarqube

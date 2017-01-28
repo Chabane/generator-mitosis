@@ -19,7 +19,7 @@ spec:
         image: localhost:5000/jenkins
         <% } %>  
         <% if (!ownRegistry && !defaultMicroService) { %>  
-        image: mitosis/jenkins
+        image: mitosis/jenkins:default1.0.0-alpha.0
         <% } %>  
         <% if (ownRegistry) { %>  
         image: <%= docker_registry_repository_name %>/jenkins

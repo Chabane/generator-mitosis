@@ -16,7 +16,7 @@ spec:
       containers:
       - name: artifactory
         <% if (!ownRegistry) { %>  
-        image: mitosis/artifactory
+        image: mitosis/artifactory:1.0.0-alpha.0
         <% } %>  
         <% if (ownRegistry) { %>  
         image: <%= docker_registry_repository_name %>/artifactory

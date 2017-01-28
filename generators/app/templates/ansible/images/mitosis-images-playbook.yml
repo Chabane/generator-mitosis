@@ -62,17 +62,17 @@
 <% } %>
 <% if (!replicateTools && !ownRegistry) { %>
   - name: Run sonarqube container
-    command: docker run -d -p 9000:9000 --name mitosis_sonarqube mitosis/sonarqube
+    command: docker run -d -p 9000:9000 --name mitosis_sonarqube mitosis/sonarqube:1.0.0-alpha.0
   - name: Run artifactory container
-    command: docker run -d -p 9999:8080 --name mitosis_artifactory mitosis/artifactory
+    command: docker run -d -p 9999:8080 --name mitosis_artifactory mitosis/artifactory:1.0.0-alpha.0
 <% } %>    
 <% if (!replicateTools && !ownRegistry && defaultMicroService) { %>
   - name: Run jenkins container
-    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name mitosis_jenkins localhost:5000/jenkins 
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name mitosis_jenkins localhost:5000/jenkins
 <% } %>
 <% if (!replicateTools && !ownRegistry && !defaultMicroService) { %>
   - name: Run jenkins container
-    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name mitosis_jenkins mitosis/jenkins 
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name mitosis_jenkins mitosis/jenkins:default1.0.0-alpha.0
 <% } %>
 <% if (!replicateTools && ownRegistry) { %>
   - name: Run sonarqube container
