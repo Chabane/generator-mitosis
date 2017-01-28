@@ -1,4 +1,4 @@
-# mitosis
+<img src="logo.png" height="40" />
 A micro services yeoman generator via an "as code" infrastructure. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
 [Demonstartion](https://github.com/NirbyApp/generator-mitosis/tree/demo)
