@@ -1,11 +1,11 @@
-FROM jenkins:2.19.1
+FROM jenkins:2.32.1
 MAINTAINER <%= appName %>
 
 USER root
 # Install Docker client
 ENV DOCKER_BUCKET get.docker.com
-ENV DOCKER_VERSION 1.12.1
-ENV DOCKER_SHA256 05ceec7fd937e1416e5dce12b0b6e1c655907d349d52574319a1e875077ccb79
+ENV DOCKER_VERSION 1.13.0
+ENV DOCKER_SHA256 fc194bb95640b1396283e5b23b5ff9d1b69a5e418b5b3d774f303a7642162ad6
 
 RUN set -x \
 	&& curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz" -o docker.tgz \
@@ -27,13 +27,14 @@ ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 
 # Copy default user
 COPY init/default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
-
+<% if (defaultMicroService) { %>
 # The place where to put the DSL files for the Seed Job to run
 RUN mkdir -p /usr/share/jenkins/ref/jobs/MitosisGeneratorJob/workspace/
 # Groovy script to create the "MitosisGeneratorJob" (the standard way, not with DSL)
 COPY build/create-seed-job.groovy /usr/share/jenkins/ref/init.groovy.d/
 # COPY Seed Job DSL script
 COPY dsl/*.groovy /usr/share/jenkins/ref/jobs/MitosisGeneratorJob/workspace/
+<% } %>
 # COPY config
 COPY config/*.xml /usr/share/jenkins/ref/
 
