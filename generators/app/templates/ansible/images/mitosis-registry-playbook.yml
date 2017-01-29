@@ -1,0 +1,90 @@
+- hosts: <%= appName %>_managers[0]
+  name: "** <%= appName %> registry base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
+  tasks:
+
+<% if (!ownRegistry && caasMode === 'swarm') { %>
+  - name: Create local registry
+    run_once: true
+    shell: >
+         docker service create \
+           --name registry \
+           -p 5000:5000/tcp \
+           --network <%= appName %>-net \
+           --mode global \
+           registry:2
+<% } %>
+<% if (!ownRegistry && caasMode === 'k8s') { %>
+  - name: Ensure <%= appName %> registry
+    file:
+      path: "{{<%= appName %>_home}}/registry/k8s"
+      state: directory
+      mode: 0700
+
+  - name: Copy <%= appName %> registry 
+    copy:
+      src: registry/k8s/{{ item }}
+      dest: "{{<%= appName %>_home}}/registry/k8s/{{ item }}"
+      mode: 0700
+    with_items:
+      - registry.yml
+      - registry-pvc.yml
+      - registry-daemon.yml
+      - registry-rc.yml
+      - registry-svc.yml
+      
+  - name: Launch the Kubernetes registry
+    command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s/registry.yml"
+
+#  - name: Launch the Kubernetes registry
+#    command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s"
+
+#  - name: set up a port-forward from our local node to a running Pod
+#    script : registry/port-forward.sh
+
+#  - name: set up a port-forward from our local node to a running Pod
+#    shell : kubectl port-forward --namespace kube-system $POD 5000:5000 &        
+<% } %>
+<% if (defaultMicroService && !ownRegistry) { %>
+  - name: Build jenkins image
+    command: docker build -t "<%= appName %>_jenkins" .
+    args:
+      chdir: "{{<%= appName %>_home}}/dockerfiles/jenkins"
+
+  - name: Tag jenkins image
+    command: docker tag <%= appName %>_jenkins localhost:5000/jenkins
+
+  - name: Push jenkins image to local registry
+    command: docker push localhost:5000/jenkins
+    args:
+      chdir: "{{nirby_home}}/dockerfiles/jenkins"    
+<% } %>
+<% if (!replicateTools && !ownRegistry && defaultMicroService) { %>
+  - name: Run jenkins container
+    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name <%= appName %>_jenkins localhost:5000/jenkins
+<% } %>
+<% if (replicateTools && !ownRegistry && caasMode === 'swarm' && defaultMicroService) { %> 
+  - name: "Create service jenkins master"
+    shell: >
+         docker service create \
+           --name jenkins-master \
+           --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
+           --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
+           --publish 50000:50000 \
+           --publish 8082:8080 \
+           --network <%= appName %>-net \
+           --replicas 2 localhost:5000/jenkins
+<% } %>
+
+<% if (caasMode === 'k8s' && replicateTools) { %>
+  - name: Launch the Kubernetes jenkins
+    command : "kubectl create -f {{<%= appName %>_home}}/applications/jenkinsmaster.yml"
+<% } %>
+
+
