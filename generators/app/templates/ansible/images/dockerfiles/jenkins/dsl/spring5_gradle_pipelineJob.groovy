@@ -1,4 +1,4 @@
-pipelineJob("microprofile-pipeline") {
+pipelineJob("spring5-gradle-pipeline") {
     definition {
         cps {
             sandbox()
