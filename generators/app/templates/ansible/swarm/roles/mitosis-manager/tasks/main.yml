@@ -27,3 +27,4 @@
 - name : "Run manager-only nodes "
   command : "docker node update --availability drain <%= appName %>-manager1"
 <% } %>  
+

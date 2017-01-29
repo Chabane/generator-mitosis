@@ -48,7 +48,8 @@
            --network <%= appName %>-net \
            --replicas 2 \
            mitosis/artifactory:1.0.0-alpha.0
-
+<% } %>  
+<% if (!defaultMicroService && replicateTools && !ownRegistry) { %>
 - name: "Create service jenkins master"
   shell: >
          docker service create \
@@ -58,5 +59,5 @@
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
-           --replicas 2 <% if (defaultMicroService) { %>localhost:5000/jenkins<% } %><% if (!defaultMicroService) { %>mitosis/jenkins:default1.0.0-alpha.0<% } %>
+           --replicas 2 mitosis/jenkins:default1.0.0-alpha.0
 <% } %>   

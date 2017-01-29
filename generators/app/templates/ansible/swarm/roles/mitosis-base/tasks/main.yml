@@ -4,7 +4,7 @@
   stat: path={{ docker_service }}
   register: install_result
 
-- name: Install docker 1.12
+- name: Install docker 1.13
   shell: >
     curl -fsSL https://get.docker.com/ | sh
   when: not install_result.stat.exists

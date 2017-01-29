@@ -93,10 +93,17 @@
     mode: 0700
   with_items:
     - artifactory.yml
-    - jenkinsmaster.yml
     - sonar.yml
 
 <% if (replicateTools) { %>
 - name: Launch the Kubernetes applications
   command : "kubectl create -f {{<%= appName %>_home}}/applications"
 <% } %>
+
+- name: Copy <%= appName %> jenkins applications 
+  copy:
+    src: files/services/{{ item }}
+    dest: "{{<%= appName %>_home}}/applications/{{ item }}"
+    mode: 0700
+  with_items:
+    - jenkinsmaster.yml
