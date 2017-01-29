@@ -126,6 +126,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               ansible.verbose = "vv"
               ansible.limit = "all"
             end
+
+            worker.vm.provision "registry", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/images/<%= appName %>-registry-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
         end
 
         if caasModeParameter == "k8s"
@@ -150,6 +157,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               ansible.limit = "all"
             end
 
+            worker.vm.provision "registry", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/images/<%= appName %>-registry-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
         end
       end
     end
