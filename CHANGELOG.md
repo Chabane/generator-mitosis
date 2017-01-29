@@ -1,5 +1,12 @@
+<a name="1.0.0-alpha.8"></a>
+1.0.0-alpha.8  (2017-01-30)
+#### Features
+* **Docker** Add local registry
+
+#### Features
+
 <a name="1.0.0-alpha.7"></a>
-1.0.0-alpha.7  (2017-01-26)
+1.0.0-alpha.7  (2017-01-28)
 
 #### Features
 * **Docker** Fix version of docker images
