@@ -1,4 +1,4 @@
-<img src="logo.png" height="40" />
+<img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
 
 A micro services yeoman generator via an "as code" infrastructure. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
