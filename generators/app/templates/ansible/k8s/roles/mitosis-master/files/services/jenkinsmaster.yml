@@ -16,7 +16,7 @@ spec:
       containers:
       - name: jenkins-master
         <% if (!ownRegistry && defaultMicroService) { %>  
-        image: localhost:5000/jenkins
+        image: mitosis/jenkins:1.0.0-alpha.0
         <% } %>  
         <% if (!ownRegistry && !defaultMicroService) { %>  
         image: mitosis/jenkins:default1.0.0-alpha.0

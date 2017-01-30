@@ -1,4 +1,4 @@
-pipelineJob("spring5-gradle-pipeline") {
+pipelineJob("nodejs-pipeline") {
     definition {
         cps {
             sandbox()

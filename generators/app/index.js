@@ -70,14 +70,14 @@ class gen extends Generator {
 
     this.log(name);
   
-    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.8! (Do not use in Production) \n');
+    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.9! (Do not use in Production) \n');
     this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
     this.log('Infrastructure files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
     return this.prompt([{
       type    : 'input',
       name    : 'appName',
-      message : '(1/7) Name of my infrastructure',
+      message : '(1/8) Name of my infrastructure',
       validate: name => {
                     if (!name) {
                         return 'Project name cannot be empty';
@@ -102,7 +102,7 @@ class gen extends Generator {
               { value: 'ubuntu', name:'Ubuntu'} 
            //   ,{ value: 'centos', name:'CentOS'}
           ],
-      message : '(2/7) Operating System of my infrastructure',
+      message : '(2/8) Operating System of my infrastructure',
       default : 'ubuntu',
     }, 
     {
@@ -112,19 +112,19 @@ class gen extends Generator {
               { value: 'swarm', name:'Docker Swarm mode'}, 
               { value: 'k8s', name:'Kubernetes'}
           ],
-      message : '(3/7) Container cluster manager',
+      message : '(3/8) Container cluster manager',
       default : 'swarm',
     }, 
     {
       type    : 'confirm',
       name    : 'scheduleManager',
-      message : '(4/7) Schedule the manager',
+      message : '(4/8) Schedule the manager',
       default : true 
     },
     {
       type    : 'confirm',
       name    : 'ownRegistry',
-      message : '(5/7) Push the images to my own docker registry',
+      message : '(5/8) Push the images to my own docker registry',
       default : true 
     },
     {
@@ -181,19 +181,19 @@ class gen extends Generator {
     {
       type    : 'confirm',
       name    : 'replicateTools',
-      message : '(6/7) Replicate Jenkins, Artifactory, Sonarqube',
+      message : '(6/8) Replicate Jenkins, Artifactory, Sonarqube',
       default : true 
     },
-  //  {
-  //    type    : 'confirm',
-  //    name    : 'defaultMicroService',
-  //    message : '(7/7) Deploy the defaults micro-services',
-  //    default : true 
-  //  },
+    {
+        type    : 'confirm',
+        name    : 'defaultMicroService',
+        message : '(7/8) Deploy the defaults micro-services',
+        default : true 
+    },
     {
       type    : 'confirm',
       name    : 'initVms',
-      message : '(7/7) Test my infrastructure locally in a virtual machines',
+      message : '(8/8) Test my infrastructure locally in a virtual machines',
       default : true,
     },
     {
@@ -268,8 +268,7 @@ class gen extends Generator {
       const _ = require('lodash');
       const defaultIp = "192.168.77";
       const defaultManagerIp = "192.168.77.21";
-      this.answers.defaultMicroService = false;
-      
+
       // copy vagrantfile
       this.fs.copyTpl(
         this.templatePath('Vagrantfile'),
