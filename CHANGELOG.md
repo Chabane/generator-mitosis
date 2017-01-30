@@ -1,9 +1,14 @@
-<a name="1.0.0-alpha.8"></a>
-1.0.0-alpha.8  (2017-01-30)
-#### Features
-* **Docker** Add local registry
+<a name="1.0.0-alpha.9"></a>
+1.0.0-alpha.9  (2017-01-31)
 
 #### Features
+* **Yeoman** Add default micro-services
+
+<a name="1.0.0-alpha.8"></a>
+1.0.0-alpha.8  (2017-01-30)
+
+#### Features
+* **Docker** Add local registry
 
 <a name="1.0.0-alpha.7"></a>
 1.0.0-alpha.7  (2017-01-28)
