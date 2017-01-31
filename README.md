@@ -121,3 +121,6 @@ Ports:
 ```
 vagrant destroy -f && vagrant --caas-mode=swarm up // or vagrant --caas-mode=k8s up
 ```
+
+### Follow the development
+You can follow the development of Mitosis via the public Mitosis board on [Trello](`https://trello.com/b/TCgfbNXK/mitosis`) : 
