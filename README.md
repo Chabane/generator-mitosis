@@ -39,6 +39,7 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 <img src="https://blog.osones.com/images/docker/etcd.png" height="40"/>
 <img src="http://blog.soat.fr/wp-content/uploads/2016/06/consul.png" height="40"/>
 <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/05/1462437187elk-logo.png" height="40"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Logo_der_Software_collectd.svg/2000px-Logo_der_Software_collectd.svg.png" height="40"/>
 <br/>
 <h3>OS </h3> 
 <img src="https://blog.osones.com/images/docker/coreos.png" height="40"/>
