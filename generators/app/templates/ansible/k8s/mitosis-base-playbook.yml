@@ -1,0 +1,20 @@
+- hosts: all
+  name: "** <%= appName %> k8s base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
+  pre_tasks:
+  <% if (os === "ubuntu") { %>
+   - name: 'Installing python2'
+     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)    
+  <% } %>
+  <% if (os === "centos") { %>
+   - name: 'Installing python2'
+     raw: test -e /usr/bin/python || (yum -y update && yum install -y python-minimal)    
+  <% } %>
+  roles:
+    - <%= appName %>-base

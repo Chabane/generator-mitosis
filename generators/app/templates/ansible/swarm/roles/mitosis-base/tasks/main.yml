@@ -1,0 +1,37 @@
+---
+
+- name: Check existence of docker
+  stat: path={{ docker_service }}
+  register: install_result
+
+- name: Install docker 1.13
+  shell: >
+    curl -fsSL https://get.docker.com/ | sh
+  when: not install_result.stat.exists
+
+<% if (os === "ubuntu") { %>
+- name: Install docker-compose
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - docker-compose
+<% } %>
+
+<% if (os === "centos") { %>
+- name: Install docker-compose
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - docker-compose
+<% } %>
+
+- name: Start docker service
+  service: name=docker state=started enabled=true
+
+
+
+
+
+

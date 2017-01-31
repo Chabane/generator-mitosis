@@ -1,0 +1,17 @@
+---
+- hosts: all
+  name: "** <%= appName %> Base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+    docker_service: /usr/lib/systemd/system/docker.service
+  pre_tasks:
+   - name: 'Installing python2'
+     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  roles:
+    - <%= appName %>-common
+    - <%= appName %>-base
+
+  

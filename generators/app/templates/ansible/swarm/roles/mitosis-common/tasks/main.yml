@@ -1,0 +1,20 @@
+---
+#- name: Install epel
+#  apt: name=epel-release state=latest
+
+- name: Install required packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - build-essential
+    - python-pip
+    - jq # Json formatting
+  tags:
+    - packages
+
+- name: install docker python dependencies
+  pip: name={{ item.name }} version={{ item.version | default(omit) }}
+  with_items:
+    - { name: pyyaml }
+    - { name: docker-py, version: 1.9.0 }
+  tags:
+    - packages

@@ -1,0 +1,8 @@
+<urlrewrite>
+    <rule>
+        <name>redirect from  / to artifactory url</name>
+        <condition name="path-translated" operator="notequal">artifactory</condition>
+        <from>^/(.*)$</from>
+        <to type="permanent-redirect" last="true">/artifactory/$1</to>
+    </rule>
+</urlrewrite>

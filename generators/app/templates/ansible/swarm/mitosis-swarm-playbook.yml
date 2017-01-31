@@ -1,0 +1,32 @@
+---
+- hosts: <%= appName %>_managers[0]
+  name: "** <%= appName %> Manager **"
+  become: yes
+  become_user: root
+  vars:
+    docker_service: /usr/lib/systemd/system/docker.service
+    <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
+    swarm_bind_port: 2377
+  roles:
+    - <%= appName %>-swarm-manager
+
+- hosts: <%= appName %>_workers
+  name: "** <%= appName %> Worker **"
+  become: yes
+  become_user: root
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
+    swarm_bind_port: 2377
+    docker_service: /usr/lib/systemd/system/docker.service
+  roles:
+    - <%= appName %>-swarm-worker       
+
+- hosts: <%= appName %>_managers[0]
+  name: "** <%= appName %> Network **"
+  become: yes
+  become_user: root
+  roles:
+    - <%= appName %>-swarm-network         
+  
