@@ -14,7 +14,6 @@ And It takes advantage of the following solutions/technologies :
 - `ELK Stack` log analytics
 - `Traefik` HTTP reverse proxy
 - `Jenkins 2` CI/CD of micro-services using Job DSL and Pipeline Job
-- `Consul/etcd` registering/unregistering the micro-services
 - `Aritfactory` artefacts deployment
 - `Sonarqube` quality
 
@@ -36,8 +35,6 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 <img src="https://www.docker.com/sites/default/files/docker-swarm-hero2.png" height="40" />
 <img src="https://opencredo.com/wp-content/uploads/2015/12/kubernetes.png" height="40" />
 <img src="https://traefik.io/traefik.logo.png" height="40"/>
-<img src="https://blog.osones.com/images/docker/etcd.png" height="40"/>
-<img src="http://blog.soat.fr/wp-content/uploads/2016/06/consul.png" height="40"/>
 <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/05/1462437187elk-logo.png" height="40"/>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Logo_der_Software_collectd.svg/2000px-Logo_der_Software_collectd.svg.png" height="40"/>
 <br/>
