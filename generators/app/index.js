@@ -70,7 +70,7 @@ class gen extends Generator {
 
     this.log(name);
   
-    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.9! (Do not use in Production) \n');
+    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.10! (Do not use in Production) \n');
     this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
     this.log('Infrastructure files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
@@ -533,16 +533,16 @@ class gen extends Generator {
         }
       );
       this.fs.copyTpl(
-        this.templatePath('ansible/swarm/roles/mitosis-manager/tasks/main.yml'),
-        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-manager/tasks/main.yml'),
+        this.templatePath('ansible/swarm/roles/mitosis-swarm-manager/tasks/main.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-manager/tasks/main.yml'),
         {
           appName: this.answers.appName,
           scheduleManager: this.answers.scheduleManager
         }
       );
       this.fs.copyTpl(
-        this.templatePath('ansible/swarm/roles/mitosis-network/tasks/main.yml'),
-        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-network/tasks/main.yml'),
+        this.templatePath('ansible/swarm/roles/mitosis-swarm-network/tasks/main.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-network/tasks/main.yml'),
         {
           appName: this.answers.appName
         }
@@ -559,8 +559,8 @@ class gen extends Generator {
         }
       );
       this.fs.copyTpl(
-        this.templatePath('ansible/swarm/roles/mitosis-worker/tasks/main.yml'),
-        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-worker/tasks/main.yml'),
+        this.templatePath('ansible/swarm/roles/mitosis-swarm-worker/tasks/main.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-worker/tasks/main.yml'),
         {
           appName: this.answers.appName
         }
