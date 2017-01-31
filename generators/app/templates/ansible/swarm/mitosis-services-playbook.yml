@@ -1,7 +1,6 @@
 ---
 - name: Create swarm services
   hosts: <%= appName %>_managers[0]
-  name: "** <%= appName %> Services **"
   become: yes
   become_user: root
   roles:
