@@ -27,15 +27,14 @@
   with_items:
      - <%= appName %>-net      
 
-- name: Start docker-ui globally
+- name: Start vizualizer only on managers
   run_once: true
   shell: >
-         docker service create \
-           --name docker-ui \
-           --mount type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock \
-           -p 9888:9000/tcp \
-           --network <%= appName %>-net \
-           --mode global \
-           uifd/ui-for-docker
+       docker service create  \ 
+       --name=viz \
+       --publish=5050:8080/tcp \
+       --constraint=node.role==manager \
+       --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+       manomarks/visualizer
   tags:
         - docker-ui            

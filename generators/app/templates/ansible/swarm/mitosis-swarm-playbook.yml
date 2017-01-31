@@ -9,7 +9,7 @@
     manager_ip: <%= defaultIp %>.21
     swarm_bind_port: 2377
   roles:
-    - <%= appName %>-manager
+    - <%= appName %>-swarm-manager
 
 - hosts: <%= appName %>_workers
   name: "** <%= appName %> Worker **"
@@ -21,12 +21,12 @@
     swarm_bind_port: 2377
     docker_service: /usr/lib/systemd/system/docker.service
   roles:
-    - <%= appName %>-worker       
+    - <%= appName %>-swarm-worker       
 
 - hosts: <%= appName %>_managers[0]
   name: "** <%= appName %> Network **"
   become: yes
   become_user: root
   roles:
-    - <%= appName %>-network         
+    - <%= appName %>-swarm-network         
   
