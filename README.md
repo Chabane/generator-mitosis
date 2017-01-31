@@ -123,4 +123,4 @@ vagrant destroy -f && vagrant --caas-mode=swarm up // or vagrant --caas-mode=k8s
 ```
 
 ### Follow the development
-You can follow the development of Mitosis via the public Mitosis board on [Trello](`https://trello.com/b/TCgfbNXK/mitosis`) : 
+You can follow the development of Mitosis via the public Mitosis board on [`Trello`](https://trello.com/b/TCgfbNXK/mitosis) : 
