@@ -1,3 +1,9 @@
+<a name="1.0.0-alpha.10"></a>
+1.0.0-alpha.10  (2017-02-01)
+
+#### Features
+* **Docker** Add visualizer
+
 <a name="1.0.0-alpha.9"></a>
 1.0.0-alpha.9  (2017-01-31)
 
