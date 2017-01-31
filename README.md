@@ -1,6 +1,6 @@
 <img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
 
-A micro services yeoman generator via an "as code" infrastructure. Mitosis is inspired from CAAS solutions like EC2 and GKE.
+A micro services infrastructure yeoman generator. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
 It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.
 
@@ -12,7 +12,6 @@ And It takes advantage of the following solutions/technologies (alpha):
 - `ELK Stack` log analytics
 - `Traefik` HTTP reverse proxy
 - `Jenkins 2` CI/CD of micro-services using Job DSL and Pipeline Job
-- `Consul/etcd` registering/unregistering the micro-services
 - `Aritfactory` artefacts deployment
 - `Sonarqube` quality
 
