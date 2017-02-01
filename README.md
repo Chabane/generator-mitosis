@@ -25,6 +25,8 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 - Angular - Material 
 - iOT - Akka Actors - Raspberry Pi
 
+<img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
+
 ### Prerequisites
 You need the following installed to use this playground.
 - [`NodeJS`](https://nodejs.org/en/download/), Node 4 or higher, together with NPM 3 or higher.
