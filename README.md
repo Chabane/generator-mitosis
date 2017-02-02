@@ -25,6 +25,19 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 - Angular - Material 
 - iOT - Akka Actors - Raspberry Pi
 
+Expected for the beta version :
+ - Provisionning of a single server (Docker-compose/MiniKube)
+ - Deployment on AWS, GCE, OpenStack, CloudStack, etc.
+ - Registering/unregistering of micro services 
+ ```
+ mi create my_micro_service.yml
+ mi delete my_micro_service.yml
+ ```
+ - Add security (SSL/TLS, SELinux, etc.)
+ - Integration of Hadoop solution
+ - UI Responsiveness Monitoring
+ - Add new solutions like : Apache Mesos, Chef, Puppet, Terraform, Travis, etc.
+
 ### Prerequisites
 You need the following installed to use this playground.
 - [`NodeJS`](https://nodejs.org/en/download/), Node 4 or higher, together with NPM 3 or higher.
