@@ -22,7 +22,7 @@ spec:
         image: mitosis/jenkins:default1.0.0-alpha.0
         <% } %>  
         <% if (ownRegistry) { %>  
-        image: <%= docker_registry_repository_name %>/jenkins
+        image: <%= docker_registry_repository_name %>/jenkins:1.0.0
         <% } %>   
         ports:
         - name: jenkins

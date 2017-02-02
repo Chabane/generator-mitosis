@@ -8,7 +8,7 @@
            --publish 9000:9000 \
            --network <%= appName %>-net \
            --replicas 2 \
-           <%= docker_registry_repository_name %>/sonarqube
+           <%= docker_registry_repository_name %>/sonarqube:1.0.0
 - name: "Create service artifactory"
   shell: >
          docker service create \
@@ -16,7 +16,7 @@
            --publish 9999:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
-           <%= docker_registry_repository_name %>/artifactory
+           <%= docker_registry_repository_name %>/artifactory:1.0.0
 
 - name: "Create service jenkins master"
   shell: >
@@ -28,7 +28,7 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
-           <%= docker_registry_repository_name %>/jenkins
+           <%= docker_registry_repository_name %>/jenkins:1.0.0
 <% } %>         
 
 <% if (replicateTools && !ownRegistry) { %>  

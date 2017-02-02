@@ -19,7 +19,7 @@ spec:
         image: mitosis/sonarqube:1.0.0-alpha.0
         <% } %>  
         <% if (ownRegistry) { %>  
-        image: <%= docker_registry_repository_name %>/sonarqube
+        image: <%= docker_registry_repository_name %>/sonarqube:1.0.0
         <% } %>   
         ports:
         - containerPort: 9000
