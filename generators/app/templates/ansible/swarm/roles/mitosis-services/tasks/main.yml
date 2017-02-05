@@ -1,10 +1,12 @@
 ---      
 
-<% if (replicateTools && ownRegistry) { %>  
-- name: "Create service sonar"
+<% if (ownRegistry) { %>  
+- name: "Create service sonarqube"
   shell: >
          docker service create \
-           --name sonar \
+           --name sonarqube \
+           --label traefik.port=80 \
+           --label traefik.frontend.rule=Host:sonarqube.<%= appName %> \
            --publish 9000:9000 \
            --network <%= appName %>-net \
            --replicas 2 \
@@ -13,6 +15,8 @@
   shell: >
          docker service create \
            --name artifactory \
+           --label traefik.frontend.rule=Host:artifactory.<%= appName %> \
+           --label traefik.port=80 \
            --publish 9999:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
@@ -21,7 +25,9 @@
 - name: "Create service jenkins master"
   shell: >
          docker service create \
-           --name jenkins-master \
+           --name jenkins \
+           --label traefik.port=80 \
+           --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
            --publish 50000:50000 \
@@ -31,11 +37,13 @@
            <%= docker_registry_repository_name %>/jenkins:1.0.0
 <% } %>         
 
-<% if (replicateTools && !ownRegistry) { %>  
-- name: "Create service sonar"
+<% if (!ownRegistry) { %>  
+- name: "Create service sonarqube"
   shell: >
          docker service create \
-           --name sonar \
+           --name sonarqube \
+           --label traefik.port=80 \
+           --label traefik.frontend.rule=Host:sonarqube.<%= appName %> \
            --publish 9000:9000 \
            --network <%= appName %>-net \
            --replicas 2 \
@@ -44,16 +52,20 @@
   shell: >
          docker service create \
            --name artifactory \
+           --label traefik.port=80 \
+           --label traefik.frontend.rule=Host:artifactory.<%= appName %> \
            --publish 9999:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
            mitosis/artifactory:1.0.0-alpha.0
 <% } %>  
-<% if (!defaultMicroService && replicateTools && !ownRegistry) { %>
+<% if (!defaultMicroService && !ownRegistry) { %>
 - name: "Create service jenkins master"
   shell: >
          docker service create \
-           --name jenkins-master \
+           --name jenkins \
+           --label traefik.port=80 \
+           --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
            --publish 50000:50000 \
@@ -61,3 +73,17 @@
            --network <%= appName %>-net \
            --replicas 2 mitosis/jenkins:default1.0.0-alpha.0
 <% } %>   
+<% if (!ownRegistry && defaultMicroService) { %> 
+- name: "Create service jenkins master"
+  shell: >
+         docker service create \
+           --name jenkins \
+           --label traefik.port=80 \
+           --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
+           --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
+           --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
+           --publish 50000:50000 \
+           --publish 8082:8080 \
+           --network <%= appName %>-net \
+           --replicas 2 mitosis/jenkins:1.0.0-alpha.0
+<% } %>
