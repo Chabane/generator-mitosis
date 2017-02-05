@@ -15,6 +15,8 @@
     shell: >
          docker service create \
            --name registry \
+           --label traefik.port=80 \
+           --label traefik.frontend.rule=Host:registry.<%= appName %> \
            -p 5000:5000/tcp \
            --network <%= appName %>-net \
            --mode global \
@@ -33,23 +35,23 @@
       dest: "{{<%= appName %>_home}}/registry/k8s/{{ item }}"
       mode: 0700
     with_items:
-      - registry.yml
+#     - registry.yml
       - registry-pvc.yml
       - registry-daemon.yml
       - registry-rc.yml
       - registry-svc.yml
       
-  - name: Launch the Kubernetes registry
-    command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s/registry.yml"
-
 #  - name: Launch the Kubernetes registry
-#    command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s"
+#    command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s/registry.yml"
 
-#  - name: set up a port-forward from our local node to a running Pod
-#    script : registry/port-forward.sh
+  - name: Launch the Kubernetes registry
+    command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s"
 
-#  - name: set up a port-forward from our local node to a running Pod
-#    shell : kubectl port-forward --namespace kube-system $POD 5000:5000 &        
+  - name: set up a port-forward from our local node to a running Pod
+    script : registry/port-forward.sh
+
+  - name: set up a port-forward from our local node to a running Pod
+    shell : kubectl port-forward --namespace kube-system $POD 5000:5000 &        
 <% } %>
 <% if (defaultMicroService && !ownRegistry) { %>
 #  - name: Build jenkins image
@@ -63,28 +65,7 @@
 #  - name: Push jenkins image to local registry
 #    command: docker push localhost:5000/jenkins
 #    args:
-#      chdir: "{{nirby_home}}/dockerfiles/jenkins"    
-<% } %>
-<% if (!replicateTools && !ownRegistry && defaultMicroService) { %>
-  - name: Run jenkins container
-    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name <%= appName %>_jenkins mitosis/jenkins:1.0.0-alpha.0
-<% } %>
-<% if (replicateTools && !ownRegistry && caasMode === 'swarm' && defaultMicroService) { %> 
-  - name: "Create service jenkins master"
-    shell: >
-         docker service create \
-           --name jenkins-master \
-           --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
-           --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
-           --publish 50000:50000 \
-           --publish 8082:8080 \
-           --network <%= appName %>-net \
-           --replicas 2 mitosis/jenkins:1.0.0-alpha.0
-<% } %>
-
-<% if (caasMode === 'k8s' && replicateTools) { %>
-  - name: Launch the Kubernetes jenkins
-    command : "kubectl create -f {{<%= appName %>_home}}/applications/jenkinsmaster.yml"
+#      chdir: "{{<%= appName %>_home}}/dockerfiles/jenkins"    
 <% } %>
 
 
