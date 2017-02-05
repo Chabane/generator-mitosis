@@ -1,3 +1,11 @@
+<a name="1.0.0-alpha.11"></a>
+1.0.0-alpha.11  (2017-02-05)
+
+#### Features
+* **Traefik** Add Traefik with swarm/kubernetes
+* **ELK** Add Elastic search, logstash & kibana for Swarm
+* **Docker** Add portainer
+
 <a name="1.0.0-alpha.10"></a>
 1.0.0-alpha.10  (2017-02-01)
 
