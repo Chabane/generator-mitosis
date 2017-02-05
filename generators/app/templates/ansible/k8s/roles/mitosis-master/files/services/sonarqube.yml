@@ -2,19 +2,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: sonar
+  name: sonarqube
   labels:
-    name: sonar
+    name: sonarqube
   namespace: <%= appName %>
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        name: sonar
+        name: sonarqube
     spec:
       containers:
-      - name: sonar
+      - name: sonarqube
         <% if (!ownRegistry) { %>  
         image: mitosis/sonarqube:1.0.0-alpha.0
         <% } %>  
@@ -27,9 +27,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: sonar
+  name: sonarqube
   labels:
-    name: sonar
+    name: sonarqube
   namespace: <%= appName %>
 spec:
   type: NodePort

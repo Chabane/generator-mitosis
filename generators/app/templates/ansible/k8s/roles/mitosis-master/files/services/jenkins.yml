@@ -2,19 +2,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: jenkins-master
+  name: jenkins
   labels:
-    name: jenkins-master
+    name: jenkins
   namespace: <%= appName %>
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        name: jenkins-master
+        name: jenkins
     spec:
       containers:
-      - name: jenkins-master
+      - name: jenkins
         <% if (!ownRegistry && defaultMicroService) { %>  
         image: mitosis/jenkins:1.0.0-alpha.0
         <% } %>  
@@ -43,9 +43,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins-master
+  name: jenkins
   labels:
-    name: jenkins-master
+    name: jenkins
   namespace: <%= appName %>
 spec:
   type: NodePort
@@ -55,4 +55,4 @@ spec:
     targetPort: 8082
     nodePort: 30001
   selector:
-    name: jenkins-master
+    name: jenkins
