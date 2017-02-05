@@ -1,0 +1,49 @@
+---
+ - name: Copy elk configuration directory
+   copy: src="{{ role_path }}/files/elk" dest={{<%= appName %>_home}}
+
+# --mount type=volume,src=/opt/<%= appName %>/elk/elasticsearch/elasticsearch.yml,dst=/usr/share/elasticsearch/config/elasticsearch.yml \
+ - name: Create Elasticsearch service
+   shell: >
+           docker service create \
+            --name elasticsearch \
+            --label traefik.frontend.rule=Host:elasticsearch.<%= appName %> \
+            --label traefik.port=80 \
+            --constraint=node.role==manager \
+            --publish 9200:9200 \
+            --publish 9300:9300 \
+            --network <%= appName %>-net \
+            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch.<%= appName %>:9200 \
+            --reserve-memory 500m \
+            elasticsearch:5.2.0
+
+ - name: Create Logstash service
+   shell: >
+           docker service create \
+            --name logstash \
+            --label traefik.frontend.rule=Host:logstash.<%= appName %> \
+            --label traefik.port=80 \
+             --mount "type=bind,source=/opt/<%= appName %>/elk/logstash,target=/conf" \
+            --constraint=node.role==manager \
+            --publish 5555:5555 \
+            --network <%= appName %>-net \
+            --network elk-net -e LOGSPOUT=ignore \
+            --reserve-memory 100m \
+            logstash:5.2.0 -f /conf/logstash.conf
+
+ - name: Create Kibana service
+   shell: >
+           docker service create \
+            --name kibana \
+            --label traefik.frontend.rule=Host:kibana.<%= appName %> \
+            --label traefik.port=80 \
+            --constraint=node.role==manager \
+            --publish 5601:5601 \
+            --network <%= appName %>-net \
+            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch.<%= appName %>:9200 \
+            --reserve-memory 50m \
+            --label com.df.notify=true \
+            --label com.df.distribute=true \
+            --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch,/api,/plugins,/app/timelion \
+            --label com.df.port=5601 \
+            kibana:5.2.0
