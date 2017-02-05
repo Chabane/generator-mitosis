@@ -81,8 +81,9 @@ kubectl -n appname get service
 
 NAME             CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
 artifactory      10.108.148.112   <nodes>       9999:30003/TCP   35m
-jenkins          10.105.77.103    <nodes>       8080:30001/TCP   35m
+jenkins          10.105.77.103    <nodes>       8082:30001/TCP   35m
 sonarqube        10.102.141.79    <nodes>       9000:30002/TCP   35m
+traefik          10.107.95.12     <nodes>       8080:30004/TCP   35m
 ```
 ```
 kubectl describe svc artifactory -n appname 
