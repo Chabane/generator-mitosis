@@ -8,6 +8,10 @@
     <%= appName %>_home: /opt/<%= appName %>
     manager_ip: <%= defaultIp %>.21
   tasks:
+
+  - name: Configure docker group 
+    command : usermod -aG docker vagrant
+
   - name: Ensure <%= appName %> dockerfiles
     file:
       path: "{{<%= appName %>_home}}/dockerfiles"
@@ -27,45 +31,28 @@
       chdir: "{{<%= appName %>_home}}/dockerfiles"
 
   - name: Tag jenkins image
-    command: docker tag <%= docker_registry_repository_name %>_jenkins <%= docker_registry_repository_name %>/jenkins
+    command: docker tag <%= docker_registry_repository_name %>_jenkins <%= docker_registry_repository_name %>/jenkins:1.0.0
 
   - name: Push jenkins image to docker registry
-    command: docker push <%= docker_registry_repository_name %>/jenkins
+    command: docker push <%= docker_registry_repository_name %>/jenkins:1.0.0
     args:
       chdir: "{{<%= appName %>_home}}/dockerfiles/jenkins"
 
   - name: Tag sonarqube image
-    command: docker tag <%= docker_registry_repository_name %>_sonarqube <%= docker_registry_repository_name %>/sonarqube
+    command: docker tag <%= docker_registry_repository_name %>_sonarqube <%= docker_registry_repository_name %>/sonarqube:1.0.0
  
   - name: Push sonarqube image to docker registry
-    command: docker push <%= docker_registry_repository_name %>/sonarqube
+    command: docker push <%= docker_registry_repository_name %>/sonarqube:1.0.0
     args:
       chdir: "{{<%= appName %>_home}}/dockerfiles/sonarqube"
 
   - name: Tag artifactory image
-    command: docker tag <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory
+    command: docker tag <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory:1.0.0
 
   - name: Push artifactory image to docker registry
-    command: docker push <%= docker_registry_repository_name %>/artifactory
+    command: docker push <%= docker_registry_repository_name %>/artifactory:1.0.0
     args:
       chdir: "{{<%= appName %>_home}}/dockerfiles/artifactory"    
 <% } %>
-<% if (!replicateTools && !ownRegistry) { %>
-  - name: Run sonarqube container
-    command: docker run -d -p 9000:9000 --name <%= appName %>_sonarqube mitosis/sonarqube:1.0.0-alpha.0
-  - name: Run artifactory container
-    command: docker run -d -p 9999:8080 --name <%= appName %>_artifactory mitosis/artifactory:1.0.0-alpha.0
-<% } %>    
-<% if (!replicateTools && !ownRegistry && !defaultMicroService) { %>
-  - name: Run jenkins container
-    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name <%= appName %>_jenkins mitosis/jenkins:default1.0.0-alpha.0
-<% } %>
-<% if (!replicateTools && ownRegistry) { %>
-  - name: Run sonarqube container
-    command: docker run -d -p 9000:9000 --name <%= docker_registry_repository_name %>_sonarqube <%= docker_registry_repository_name %>/sonarqube
-  - name: Run artifactory container
-    command: docker run -d -p 9999:8080 --name <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory
-  - name: Run jenkins container
-    command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -p 8082:8080 --name <%= docker_registry_repository_name %>_jenkins <%= docker_registry_repository_name %>/jenkins 
-<% } %>
+
 

@@ -1,0 +1,20 @@
+---
+- hosts: <%= appName %>_managers[0]
+  name: Create consul services registry manager
+  become: yes
+  become_user: root
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
+  roles:
+    - <%= appName %>-consul-manager
+
+- hosts: <%= appName %>_workers
+  name: Create consul services registry workers
+  become: yes
+  become_user: root
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
+  roles:
+    - <%= appName %>-consul-worker

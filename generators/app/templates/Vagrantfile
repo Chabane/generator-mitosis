@@ -49,10 +49,6 @@ end
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "<% if (os === "ubuntu") { %>bento/ubuntu-16.04<% } %><% if (os === "centos") { %>tsihosting/centos7<% } %>"
-#  config.vm.network :forwarded_port, host: 8082, guest: 8082
-#  config.vm.network :forwarded_port, host: 9000, guest: 9000
-#  config.vm.network :forwarded_port, host: 9999, guest: 9999
-  config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.provider 'virtualbox' do |v|
     v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
@@ -76,6 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.memory = <%= memoryManager %>
         v.cpus = 2
         v.name = "<%= appName %>-manager#{manager_id}"
+        v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       end
     end
   end
@@ -119,13 +116,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               ansible.verbose = "vv"
               ansible.limit = "all"
             end
+            
+            worker.vm.provision "traefik", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/swarm/<%= appName %>-traefik-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end
 
+            worker.vm.provision "elk", type: "ansible" do |ansible|
+              ansible.playbook = "ansible/swarm/<%= appName %>-elk-playbook.yml"
+              ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
+              ansible.verbose = "vv"
+              ansible.limit = "all"
+            end    
+                  
             worker.vm.provision "services", type: "ansible" do |ansible|
               ansible.playbook = "ansible/swarm/<%= appName %>-services-playbook.yml"
               ansible.raw_arguments = ["--inventory=ansible/<%= appName %>-hosts"]
               ansible.verbose = "vv"
               ansible.limit = "all"
             end
+
 
             worker.vm.provision "registry", type: "ansible" do |ansible|
               ansible.playbook = "ansible/images/<%= appName %>-registry-playbook.yml"

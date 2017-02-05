@@ -70,14 +70,14 @@ class gen extends Generator {
 
     this.log(name);
   
-    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.10! (Do not use in Production) \n');
+    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.11! (Do not use in Production) \n');
     this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
     this.log('Infrastructure files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
     return this.prompt([{
       type    : 'input',
       name    : 'appName',
-      message : '(1/8) Name of my infrastructure',
+      message : '(1/7) Name of my infrastructure',
       validate: name => {
                     if (!name) {
                         return 'Project name cannot be empty';
@@ -102,29 +102,29 @@ class gen extends Generator {
               { value: 'ubuntu', name:'Ubuntu'} 
            //   ,{ value: 'centos', name:'CentOS'}
           ],
-      message : '(2/8) Operating System of my infrastructure',
+      message : '(2/7) Operating System of my infrastructure',
       default : 'ubuntu',
     }, 
     {
       type    : 'list',
       name    : 'caasMode',
       choices : [
-              { value: 'swarm', name:'Docker Swarm mode'}, 
+              { value: 'swarm', name:'Docker Swarm mode (Recommended)'}, 
               { value: 'k8s', name:'Kubernetes'}
           ],
-      message : '(3/8) Container cluster manager',
+      message : '(3/7) Container cluster manager',
       default : 'swarm',
     }, 
     {
       type    : 'confirm',
       name    : 'scheduleManager',
-      message : '(4/8) Schedule the manager',
+      message : '(4/7) Schedule the manager',
       default : true 
     },
     {
       type    : 'confirm',
       name    : 'ownRegistry',
-      message : '(5/8) Push the images to my own docker registry',
+      message : '(5/7) Push the images to my own docker registry',
       default : true 
     },
     {
@@ -179,21 +179,15 @@ class gen extends Generator {
                 }   
     },
     {
-      type    : 'confirm',
-      name    : 'replicateTools',
-      message : '(6/8) Replicate Jenkins, Artifactory, Sonarqube',
-      default : true 
-    },
-    {
         type    : 'confirm',
         name    : 'defaultMicroService',
-        message : '(7/8) Deploy the defaults micro-services',
+        message : '(6/7) Deploy the defaults micro-services',
         default : true 
     },
     {
       type    : 'confirm',
       name    : 'initVms',
-      message : '(8/8) Test my infrastructure locally in a virtual machines',
+      message : '(7/7) Test my infrastructure locally in a virtual machines',
       default : true,
     },
     {
@@ -318,7 +312,6 @@ class gen extends Generator {
           docker_registry_password: this.answers.docker_registry_password,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
           ownRegistry: this.answers.ownRegistry,
-          replicateTools: this.answers.replicateTools,
           defaultMicroService: this.answers.defaultMicroService,
           defaultIp: defaultIp,
           caasMode: this.answers.caasMode
@@ -334,7 +327,6 @@ class gen extends Generator {
         {
           appName: this.answers.appName,
           ownRegistry: this.answers.ownRegistry,
-          replicateTools: this.answers.replicateTools,
           defaultMicroService: this.answers.defaultMicroService,
           defaultIp: defaultIp,
           caasMode: this.answers.caasMode
@@ -434,7 +426,6 @@ class gen extends Generator {
           appName: this.answers.appName,
           os: this.answers.os,
           scheduleManager: this.answers.scheduleManager,
-          replicateTools: this.answers.replicateTools,
           ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
@@ -456,12 +447,19 @@ class gen extends Generator {
       );
       /** k8s services*/
       this.fs.copyTpl(
-        this.templatePath('ansible/k8s/roles/mitosis-master/files/services/sonar.yml'),
-        this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/sonar.yml'),
+        this.templatePath('ansible/k8s/roles/mitosis-master/files/services/sonarqube.yml'),
+        this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/sonarqube.yml'),
         {
           appName: this.answers.appName,
           ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name
+        }
+      );
+       this.fs.copyTpl(
+        this.templatePath('ansible/k8s/roles/mitosis-master/files/services/traefik.yml'),
+        this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/traefik.yml'),
+        {
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
@@ -474,8 +472,8 @@ class gen extends Generator {
         }
       );
       this.fs.copyTpl(
-        this.templatePath('ansible/k8s/roles/mitosis-master/files/services/jenkinsmaster.yml'),
-        this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/jenkinsmaster.yml'),
+        this.templatePath('ansible/k8s/roles/mitosis-master/files/services/jenkins.yml'),
+        this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/jenkins.yml'),
         {
           appName: this.answers.appName,
           ownRegistry: this.answers.ownRegistry,
@@ -516,6 +514,20 @@ class gen extends Generator {
           appName: this.answers.appName
         }
       );
+       this.fs.copyTpl(
+        this.templatePath('ansible/swarm/mitosis-traefik-playbook.yml'),
+        this.destinationPath('ansible/swarm/'+this.answers.appName+'-traefik-playbook.yml'),
+        {
+          appName: this.answers.appName
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('ansible/swarm/mitosis-elk-playbook.yml'),
+        this.destinationPath('ansible/swarm/'+this.answers.appName+'-elk-playbook.yml'),
+        {
+          appName: this.answers.appName
+        }
+      );
       /** swarm roles */
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-base/tasks/main.yml'),
@@ -552,10 +564,37 @@ class gen extends Generator {
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-services/tasks/main.yml'),
         {
           appName: this.answers.appName,
-          replicateTools: this.answers.replicateTools,
           ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
           defaultMicroService: this.answers.defaultMicroService
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('ansible/swarm/roles/mitosis-traefik/tasks/main.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-traefik/tasks/main.yml'),
+        {
+          appName: this.answers.appName
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('ansible/swarm/roles/mitosis-elk/tasks/main.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/tasks/main.yml'),
+        {
+          appName: this.answers.appName
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/logstash.conf'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/logstash/logstash.conf'),
+        {
+          appName: this.answers.appName
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/kibana/kibana.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/kibana/kibana.yml'),
+        {
+          appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
@@ -569,6 +608,10 @@ class gen extends Generator {
       // create the vm
       if(this.answers.initVms) {
         this.spawnCommand('vagrant', ['up']);
+        // vagrant dns --install
+        // this.spawnCommand('vagrant', ['dns', '--install']);
+        // run the DNS server:
+        // this.spawnCommand('vagrant', ['dns', '--start']);
       }
   };
 

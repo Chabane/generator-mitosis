@@ -16,7 +16,7 @@ And It takes advantage of the following solutions/technologies (alpha):
 - `Sonarqube` quality
 
 ### Availables soon
-To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka and drived by spark streaming
+To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka
 
 2 consumers & 2 producers
 
@@ -26,6 +26,17 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 - iOT - Akka Actors - Raspberry Pi
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
+
+Expected for the beta version :
+ - Provisioning of a single server (Docker-compose/MiniKube)
+ - Deployment on AWS, GCE, OpenStack, CloudStack, etc.
+ - Registering/unregistering of micro services 
+ ```
+ mi create/delete my_micro_service.yml
+ ```
+ - Add security (SSL/TLS, SELinux, etc.)
+ - UI Responsiveness Monitoring
+ - Add new solutions like : Apache Mesos, Chef, Puppet, Terraform, Travis, etc.
 
 ### Prerequisites
 You need the following installed to use this playground.
@@ -65,39 +76,21 @@ The machines created are:
 After the `vagrant up` is complete, the following command and output should be
 visible on the cluster manager (**appname-manager1**).
 
-For Kubernetes
-```
-vagrant ssh appname-manager1
-kubectl -n appname get service 
-
-NAME             CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-artifactory      10.108.148.112   <nodes>       9999:30003/TCP   35m
-jenkins-master   10.105.77.103    <nodes>       8080:30001/TCP   35m
-sonar            10.102.141.79    <nodes>       9000:30002/TCP   35m
-```
-```
-kubectl describe svc artifactory -n appname 
-
-Name:                   artifactory
-Namespace:              appname
-Labels:                 name=artifactory
-Selector:               name=artifactory
-Type:                   NodePort
-IP:                     10.108.148.112
-Port:                   <unset> 8080/TCP
-NodePort:               <unset> 9999/TCP
-Endpoints:              <none>
-Session Affinity:       None
-```
-
 For Docker-swarm
 ```
-vagrant ssh mitosis-manager1
+vagrant ssh appname-manager1
 docker service ls 
 ID            NAME            REPLICAS  IMAGE                COMMAND
-18a8rdjywe8q  sonar           2/2       mitosis/sonarqube    
-1idkoq92bb3x  jenkins-master  2/2       mitosis/jenkins      
-3ou58zc7xlrw  artifactory     2/2       mitosis/artifactory  
+654jtwzg8n8k  jenkins        replicated  2/2       mitosis/jenkins:1.0.0-alpha.0
+7xrhx2d74b3l  sonarqube      replicated  2/2       mitosis/sonarqube:1.0.0-alpha.0
+9y8ycnri8e3s  kibana         replicated  1/1       kibana:5.2.0
+m4n86is529p0  viz            replicated  1/1       manomarks/visualizer:latest
+n49nex6feeh8  artifactory    replicated  2/2       mitosis/artifactory:1.0.0-alpha.0
+ncccc0wi7j2l  registry       global      2/2       registry:2
+p7znkv9p41sx  portainer      replicated  1/1       portainer/portainer:1.11.3
+r8dznb7p4dpj  logstash       replicated  1/1       logstash:5.2.0
+vxlnldtnrdlh  traefik        replicated  1/1       traefik:v1.1.2
+wmgihhys4z9j  elasticsearch  replicated  1/1       elasticsearch:5.2.0
 ```
 ```
 docker service inspect --pretty artifactory 
@@ -117,6 +110,32 @@ Ports:
  Protocol = tcp
  TargetPort = 8080
  PublishedPort = 9999
+```
+
+For Kubernetes
+```
+vagrant ssh appname-manager1
+kubectl -n appname get service 
+
+NAME             CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+artifactory      10.108.148.112   <nodes>       9999:30003/TCP   35m
+jenkins          10.105.77.103    <nodes>       8082:30001/TCP   35m
+sonarqube        10.102.141.79    <nodes>       9000:30002/TCP   35m
+traefik          10.107.95.12     <nodes>       8080:30004/TCP   35m
+```
+```
+kubectl describe svc artifactory -n appname 
+
+Name:                   artifactory
+Namespace:              appname
+Labels:                 name=artifactory
+Selector:               name=artifactory
+Type:                   NodePort
+IP:                     10.108.148.112
+Port:                   <unset> 8080/TCP
+NodePort:               <unset> 9999/TCP
+Endpoints:              <none>
+Session Affinity:       None
 ```
 
 ### Switch to another orchestrator

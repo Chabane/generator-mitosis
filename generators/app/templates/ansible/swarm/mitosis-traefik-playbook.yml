@@ -1,0 +1,8 @@
+---
+- name: Deploy traefik
+  hosts: <%= appName %>_managers[0]
+  become: yes
+  become_user: root
+  roles:
+    - <%= appName %>-traefik
+

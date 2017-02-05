@@ -1,0 +1,9 @@
+---
+- name: Deploy elk
+  hosts: <%= appName %>_managers[0]
+  become: yes
+  become_user: root
+  vars:
+    <%= appName %>_home: /opt/<%= appName %>
+  roles:
+    - <%= appName %>-elk
