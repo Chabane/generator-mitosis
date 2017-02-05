@@ -27,14 +27,33 @@
   with_items:
      - <%= appName %>-net      
 
+- name: Create overlay networks elk
+  shell: >
+        docker network create -d overlay elk-net
+#  when: item not in docker_current_networks
+
 - name: Start vizualizer only on managers
   run_once: true
   shell: >
        docker service create  \ 
        --name=viz \
+       --label traefik.port=80 \
+       --label traefik.frontend.rule=Host:viz.<%= appName %> \
        --publish=5050:8080/tcp \
        --constraint=node.role==manager \
        --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
        manomarks/visualizer
   tags:
-        - docker-ui            
+        - viz          
+
+- name: Start portainer on manager
+  run_once: true
+  shell: >
+      docker service create \
+      --label traefik.port=80 \
+      --label traefik.frontend.rule=Host:portainer.<%= appName %> \
+      --publish 9008:9000 \
+      --name portainer \
+      --constraint=node.role==manager \
+      --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+      portainer/portainer:1.11.3
