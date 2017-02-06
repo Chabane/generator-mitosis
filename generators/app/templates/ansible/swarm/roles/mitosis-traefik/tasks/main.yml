@@ -8,6 +8,7 @@
             --publish 80:80 --publish 8080:8080 \
             --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
             --network <%= appName %>-net \
+            --network elk-net \
             traefik:v1.1.2 \
             --docker \
             --docker.swarmmode \
