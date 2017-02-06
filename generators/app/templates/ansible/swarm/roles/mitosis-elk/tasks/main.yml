@@ -13,7 +13,7 @@
             --publish 9200:9200 \
             --publish 9300:9300 \
             --network <%= appName %>-net \
-            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch.<%= appName %>:9200 \
+            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch.<%= appName %> \
             --reserve-memory 500m \
             elasticsearch:5.2.0
 
@@ -23,7 +23,7 @@
             --name logstash \
             --label traefik.frontend.rule=Host:logstash.<%= appName %> \
             --label traefik.port=80 \
-             --mount "type=bind,source=/opt/<%= appName %>/elk/logstash,target=/conf" \
+            --mount "type=bind,source=/opt/<%= appName %>/elk/logstash,target=/conf" \
             --constraint=node.role==manager \
             --publish 5555:5555 \
             --network <%= appName %>-net \
@@ -40,7 +40,7 @@
             --constraint=node.role==manager \
             --publish 5601:5601 \
             --network <%= appName %>-net \
-            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch.<%= appName %>:9200 \
+            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch.<%= appName %> \
             --reserve-memory 50m \
             --label com.df.notify=true \
             --label com.df.distribute=true \
