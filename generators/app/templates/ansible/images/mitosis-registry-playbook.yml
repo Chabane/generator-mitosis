@@ -15,7 +15,7 @@
     shell: >
          docker service create \
            --name registry \
-           --label traefik.port=80 \
+           --label traefik.port=5000 \
            --label traefik.frontend.rule=Host:registry.<%= appName %> \
            -p 5000:5000/tcp \
            --network <%= appName %>-net \
