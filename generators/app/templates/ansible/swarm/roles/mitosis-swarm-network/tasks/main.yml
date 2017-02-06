@@ -37,7 +37,7 @@
   shell: >
        docker service create  \ 
        --name=viz \
-       --label traefik.port=80 \
+       --label traefik.port=5050 \
        --label traefik.frontend.rule=Host:viz.<%= appName %> \
        --publish=5050:8080/tcp \
        --constraint=node.role==manager \
@@ -50,7 +50,7 @@
   run_once: true
   shell: >
       docker service create \
-      --label traefik.port=80 \
+      --label traefik.port=9008 \
       --label traefik.frontend.rule=Host:portainer.<%= appName %> \
       --publish 9008:9000 \
       --name portainer \
