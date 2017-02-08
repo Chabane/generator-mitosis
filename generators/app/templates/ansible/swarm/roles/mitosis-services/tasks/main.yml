@@ -1,6 +1,6 @@
 ---      
 
-<% if (ownRegistry) { %>  
+<% if (ownRegistry && tools.indexOf("sonarqube") > -1) { %>  
 - name: "Create service sonarqube"
   shell: >
          docker service create \
@@ -10,7 +10,11 @@
            --publish 9000:9000 \
            --network <%= appName %>-net \
            --replicas 2 \
+           --reserve-memory 50m \
            <%= docker_registry_repository_name %>/sonarqube:1.0.0
+<% } %>   
+
+<% if (ownRegistry && tools.indexOf("artifactory") > -1) { %>             
 - name: "Create service artifactory"
   shell: >
          docker service create \
@@ -20,8 +24,11 @@
            --publish 9999:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
+           --reserve-memory 50m \
            <%= docker_registry_repository_name %>/artifactory:1.0.0
+<% } %>   
 
+<% if (ownRegistry && tools.indexOf("jenkins") > -1) { %>  
 - name: "Create service jenkins master"
   shell: >
          docker service create \
@@ -34,10 +41,11 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
+           --reserve-memory 100m \
            <%= docker_registry_repository_name %>/jenkins:1.0.0
 <% } %>         
 
-<% if (!ownRegistry) { %>  
+<% if (!ownRegistry && tools.indexOf("sonarqube") > -1) { %>  
 - name: "Create service sonarqube"
   shell: >
          docker service create \
@@ -47,7 +55,11 @@
            --publish 9000:9000 \
            --network <%= appName %>-net \
            --replicas 2 \
+           --reserve-memory 50m \
            mitosis/sonarqube:1.0.0-alpha.0
+<% } %>     
+
+<% if (!ownRegistry && tools.indexOf("artifactory") > -1) { %>                        
 - name: "Create service artifactory"
   shell: >
          docker service create \
@@ -57,9 +69,11 @@
            --publish 9999:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
+           --reserve-memory 50m \
            mitosis/artifactory:1.0.0-alpha.0
 <% } %>  
-<% if (!defaultMicroService && !ownRegistry) { %>
+
+<% if (!defaultMicroService && !ownRegistry && tools.indexOf("jenkins") > -1) { %>
 - name: "Create service jenkins master"
   shell: >
          docker service create \
@@ -71,9 +85,10 @@
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
+           --reserve-memory 100m \
            --replicas 2 mitosis/jenkins:default1.0.0-alpha.0
 <% } %>   
-<% if (!ownRegistry && defaultMicroService) { %> 
+<% if (!ownRegistry && defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
 - name: "Create service jenkins master"
   shell: >
          docker service create \
@@ -85,5 +100,6 @@
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
+           --reserve-memory 100m \
            --replicas 2 mitosis/jenkins:1.0.0-alpha.0
 <% } %>

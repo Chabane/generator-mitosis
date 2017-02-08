@@ -97,6 +97,24 @@
     - jenkins.yml
     - traefik.yml
 
-- name: Launch the Kubernetes applications
-  command : "kubectl create -f {{<%= appName %>_home}}/applications"
+<% if (tools.indexOf("traefik") > -1) { %> 
+- name: Launch traefik
+  command : "kubectl create -f {{<%= appName %>_home}}/applications/traefik.yml"
+<% } %>   
+
+<% if (tools.indexOf("sonarqube") > -1) { %>  
+- name: Launch sonarqube
+  command : "kubectl create -f {{<%= appName %>_home}}/applications/sonarqube.yml"
+<% } %>   
+  
+<% if (tools.indexOf("artifactory") > -1) { %> 
+- name: Launch artifactory
+  command : "kubectl create -f {{<%= appName %>_home}}/applications/artifactory.yml"
+<% } %>   
+
+<% if (tools.indexOf("jenkins") > -1) { %> 
+- name: Launch jenkins
+  command : "kubectl create -f {{<%= appName %>_home}}/applications/jenkins.yml"
+<% } %>   
+
 

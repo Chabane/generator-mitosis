@@ -9,7 +9,7 @@
     manager_ip: <%= defaultIp %>.21
   tasks:
 
-<% if (!ownRegistry && caasMode === 'swarm') { %>
+<% if (!ownRegistry && caasMode === 'swarm' && tools.indexOf("registry") > -1) { %>
   - name: Create local registry
     run_once: true
     shell: >
@@ -22,7 +22,7 @@
            --mode global \
            registry:2
 <% } %>
-<% if (!ownRegistry && caasMode === 'k8s') { %>
+<% if (!ownRegistry && caasMode === 'k8s' && tools.indexOf("registry") > -1) { %>
   - name: Ensure <%= appName %> registry
     file:
       path: "{{<%= appName %>_home}}/registry/k8s"
@@ -35,15 +35,11 @@
       dest: "{{<%= appName %>_home}}/registry/k8s/{{ item }}"
       mode: 0700
     with_items:
-#     - registry.yml
       - registry-pvc.yml
       - registry-daemon.yml
       - registry-rc.yml
       - registry-svc.yml
-      
-#  - name: Launch the Kubernetes registry
-#    command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s/registry.yml"
-
+ 
   - name: Launch the Kubernetes registry
     command : "kubectl create -f {{<%= appName %>_home}}/registry/k8s"
 
@@ -53,19 +49,4 @@
   - name: set up a port-forward from our local node to a running Pod
     shell : kubectl port-forward --namespace kube-system $POD 5000:5000 &        
 <% } %>
-<% if (defaultMicroService && !ownRegistry) { %>
-#  - name: Build jenkins image
-#    command: docker build -t "<%= appName %>_jenkins" .
-#    args:
-#      chdir: "{{<%= appName %>_home}}/dockerfiles/jenkins"
-
-#  - name: Tag jenkins image
-#    command: docker tag <%= appName %>_jenkins localhost:5000/jenkins
-
-#  - name: Push jenkins image to local registry
-#    command: docker push localhost:5000/jenkins
-#    args:
-#      chdir: "{{<%= appName %>_home}}/dockerfiles/jenkins"    
-<% } %>
-
 

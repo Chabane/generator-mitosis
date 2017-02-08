@@ -32,6 +32,7 @@
         docker network create -d overlay elk-net
 #  when: item not in docker_current_networks
 
+<% if (tools.indexOf("viz") > -1) { %> 
 - name: Start vizualizer only on managers
   run_once: true
   shell: >
@@ -45,7 +46,9 @@
        manomarks/visualizer
   tags:
         - viz          
+<% } %>
 
+<% if (tools.indexOf("portainer") > -1) { %> 
 - name: Start portainer on manager
   run_once: true
   shell: >
@@ -57,3 +60,4 @@
       --constraint=node.role==manager \
       --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
       portainer/portainer:1.11.3
+<% } %>

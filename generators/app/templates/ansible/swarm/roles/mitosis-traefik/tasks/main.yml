@@ -1,5 +1,6 @@
 ---
 
+<% if (tools.indexOf("traefik") > -1) { %> 
  - name: Create Traefik service
    shell: >
            docker service create \
@@ -15,3 +16,4 @@
             --docker.domain=<%= appName %> \
             --docker.watch \
             --web
+<% } %>            

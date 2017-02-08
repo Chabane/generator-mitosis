@@ -1,8 +1,9 @@
 ---
  - name: Copy elk configuration directory
    copy: src="{{ role_path }}/files/elk" dest={{<%= appName %>_home}}
+   
+<% if (tools.indexOf("elk") > -1) { %> 
 
-# --mount type=volume,src=/opt/<%= appName %>/elk/elasticsearch/elasticsearch.yml,dst=/usr/share/elasticsearch/config/elasticsearch.yml \
  - name: Create Elasticsearch service
    shell: >
            docker service create \
@@ -16,6 +17,7 @@
             --network <%= appName %>-net \
             --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
             --reserve-memory 100m \
+            --env ES_JAVA_OPTS="-Xms1g -Xmx1g" \
             elasticsearch:5.2.0
 
  - name: Create Logstash service
@@ -26,10 +28,12 @@
             --label traefik.port=5555 \
             --mount "type=bind,source=/opt/<%= appName %>/elk/logstash,target=/conf" \
             --constraint=node.role==manager \
-            --publish 5555:5000 \
+            --publish 5555:5555 \
+            --publish 12201:12201/udp \
+            --publish 12201:12201 \
             --network <%= appName %>-net \
             --network elk-net -e LOGSPOUT=ignore \
-            --reserve-memory 100m \
+            --reserve-memory 50m \
             logstash:5.2.0 -f /conf/logstash.conf
 
  - name: Create Kibana service
@@ -46,5 +50,6 @@
             --label com.df.distribute=true \
             --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch,/api,/plugins,/app/timelion \
             --label com.df.port=5601 \
-            --reserve-memory 10m \
+            --reserve-memory 50m \
             kibana:5.2.0
+<% } %>            
