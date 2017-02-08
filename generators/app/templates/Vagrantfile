@@ -67,6 +67,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       manager.vm.network :forwarded_port, host: 8082, guest: 8082
       manager.vm.network :forwarded_port, host: 9000, guest: 9000
       manager.vm.network :forwarded_port, host: 9999, guest: 9999
+      manager.vm.network "forwarded_port", guest: 80, host: 80
+      manager.vm.network "forwarded_port", guest: 5555, host: 5555
+      manager.vm.network "forwarded_port", guest: 5000, host: 5000
+      manager.vm.network "forwarded_port", guest: 5601, host: 5601
+      manager.vm.network "forwarded_port", guest: 9200, host: 9200
+      manager.vm.network "forwarded_port", guest: 9300, host: 9300
+      manager.vm.network "forwarded_port", guest: 12201, host: 12201
       manager.vm.synced_folder '.', '/vagrant', disabled: true
       manager.vm.provider "virtualbox" do |v|
         v.memory = <%= memoryManager %>
