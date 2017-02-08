@@ -70,14 +70,14 @@ class gen extends Generator {
 
     this.log(name);
   
-    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.11! (Do not use in Production) \n');
+    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.12! (Do not use in Production) \n');
     this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
     this.log('Infrastructure files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
     return this.prompt([{
       type    : 'input',
       name    : 'appName',
-      message : '(1/7) Name of my infrastructure',
+      message : '(1/8) Name of my infrastructure',
       validate: name => {
                     if (!name) {
                         return 'Project name cannot be empty';
@@ -102,7 +102,7 @@ class gen extends Generator {
               { value: 'ubuntu', name:'Ubuntu'} 
            //   ,{ value: 'centos', name:'CentOS'}
           ],
-      message : '(2/7) Operating System of my infrastructure',
+      message : '(2/8) Operating System of my infrastructure',
       default : 'ubuntu',
     }, 
     {
@@ -112,19 +112,34 @@ class gen extends Generator {
               { value: 'swarm', name:'Docker Swarm mode (Recommended)'}, 
               { value: 'k8s', name:'Kubernetes'}
           ],
-      message : '(3/7) Container cluster manager',
+      message : '(3/8) Container cluster manager',
       default : 'swarm',
     }, 
     {
+      type    : 'checkbox',
+      name    : 'tools',
+      choices : [
+              { value: 'jenkins', name:'Jenkins (Recommended)', checked: true}, 
+              { value: 'artifactory', name:'Artifactory', checked: true},
+              { value: 'sonarqube', name:'Sonarqube', checked: true},
+              { value: 'viz', name:'Viz', checked: false},
+              { value: 'portainer', name:'Portainer', checked: false},
+              { value: 'elk', name:'Elastic Stack (Elastic search, Logstash, Kibana)', checked: true},
+              { value: 'traefik', name:'Traefik', checked: true},
+              { value: 'registry', name:'Local private Docker registry', checked: false}
+          ],
+      message : '(4/8) I want to install',
+    },
+    {
       type    : 'confirm',
       name    : 'scheduleManager',
-      message : '(4/7) Schedule the manager',
+      message : '(5/8) Schedule the manager',
       default : true 
     },
     {
       type    : 'confirm',
       name    : 'ownRegistry',
-      message : '(5/7) Push the images to my own docker registry',
+      message : '(6/8) Push the images to my own docker registry',
       default : true 
     },
     {
@@ -181,13 +196,13 @@ class gen extends Generator {
     {
         type    : 'confirm',
         name    : 'defaultMicroService',
-        message : '(6/7) Deploy the defaults micro-services',
+        message : '(7/8) Deploy the defaults micro-services',
         default : true 
     },
     {
       type    : 'confirm',
       name    : 'initVms',
-      message : '(7/7) Test my infrastructure locally in a virtual machines',
+      message : '(8/8) Test my infrastructure locally in a virtual machines',
       default : true,
     },
     {
@@ -234,7 +249,7 @@ class gen extends Generator {
                      }
                     return true;
                 }
-    },
+    }
     ]).then((answers) => {
       require('date-util');
       this.answers = answers;
@@ -329,7 +344,8 @@ class gen extends Generator {
           ownRegistry: this.answers.ownRegistry,
           defaultMicroService: this.answers.defaultMicroService,
           defaultIp: defaultIp,
-          caasMode: this.answers.caasMode
+          caasMode: this.answers.caasMode,
+          tools: this.answers.tools
         }
       );
 
@@ -427,7 +443,8 @@ class gen extends Generator {
           os: this.answers.os,
           scheduleManager: this.answers.scheduleManager,
           ownRegistry: this.answers.ownRegistry,
-          docker_registry_repository_name: this.answers.docker_registry_repository_name
+          docker_registry_repository_name: this.answers.docker_registry_repository_name,
+          tools: this.answers.tools
         }
       );
       this.fs.copyTpl(
@@ -556,7 +573,8 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/roles/mitosis-swarm-network/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-network/tasks/main.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          tools: this.answers.tools
         }
       );
       this.fs.copyTpl(
@@ -566,21 +584,24 @@ class gen extends Generator {
           appName: this.answers.appName,
           ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
-          defaultMicroService: this.answers.defaultMicroService
+          defaultMicroService: this.answers.defaultMicroService,
+          tools: this.answers.tools
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-traefik/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-traefik/tasks/main.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          tools: this.answers.tools
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-elk/tasks/main.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/tasks/main.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          tools: this.answers.tools
         }
       );
       this.fs.copyTpl(
