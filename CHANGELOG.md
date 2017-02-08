@@ -1,3 +1,13 @@
+<a name="1.0.0-alpha.12"></a>
+1.0.0-alpha.12  (2017-02-08)
+
+#### Bugs
+* **ELK** Fix bug on elastic search url
+
+#### Features
+* **Yeoman** Add question : I want to install
+* **Yarn** Add yarn.lock
+
 <a name="1.0.0-alpha.11"></a>
 1.0.0-alpha.11  (2017-02-05)
 

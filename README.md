@@ -46,7 +46,7 @@ You need the following installed to use this playground.
 with the Vagrant Ubuntu 16.04 box and network configuration.
 - [`Ansible`](http://docs.ansible.com/ansible/intro_installation.html), tested with Version 2.2.0. 
 - `Docker registry` (optional), at least a docker hub account.
-- Internet access, this demonstartion pulls Vagrant boxes from the Internet as well
+- Internet access, this generator pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
 
 ### Generate a project
@@ -80,6 +80,8 @@ For Docker-swarm
 ```
 vagrant ssh appname-manager1
 docker service ls 
+```
+```
 ID            NAME            REPLICAS  IMAGE                COMMAND
 654jtwzg8n8k  jenkins        replicated  2/2       mitosis/jenkins:1.0.0-alpha.0
 7xrhx2d74b3l  sonarqube      replicated  2/2       mitosis/sonarqube:1.0.0-alpha.0
@@ -94,6 +96,8 @@ wmgihhys4z9j  elasticsearch  replicated  1/1       elasticsearch:5.2.0
 ```
 ```
 docker service inspect --pretty artifactory 
+```
+```
 ID:		3ou58zc7xlrwwegyh40xxcuq0
 Name:		artifactory
 Mode:		Replicated
@@ -103,7 +107,7 @@ UpdateConfig:
  Parallelism:	1
  On failure:	pause
 ContainerSpec:
- Image:		mitosis/artifactory
+ Image:		mitosis/artifactory:1.0.0-alpha.0
 Resources:
 Networks: atqmyyz6jctr34t64o69tyolu
 Ports:
@@ -116,7 +120,8 @@ For Kubernetes
 ```
 vagrant ssh appname-manager1
 kubectl -n appname get service 
-
+```
+```
 NAME             CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
 artifactory      10.108.148.112   <nodes>       9999:30003/TCP   35m
 jenkins          10.105.77.103    <nodes>       8082:30001/TCP   35m
@@ -125,7 +130,8 @@ traefik          10.107.95.12     <nodes>       8080:30004/TCP   35m
 ```
 ```
 kubectl describe svc artifactory -n appname 
-
+```
+```
 Name:                   artifactory
 Namespace:              appname
 Labels:                 name=artifactory
