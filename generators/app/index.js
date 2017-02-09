@@ -1,3 +1,5 @@
+'use strict';
+
 var Generator = require('yeoman-generator'),
  util = require('util'),
  yosay = require('yosay'),
@@ -70,7 +72,7 @@ class gen extends Generator {
 
     this.log(name);
   
-    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.12! (Do not use in Production) \n');
+    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.13! (Do not use in Production) \n');
     this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
     this.log('Infrastructure files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
