@@ -17,6 +17,7 @@
             --network <%= appName %>-net \
             --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
             --reserve-memory 100m \
+            --limit-cpu 0.5 \
             --env ES_JAVA_OPTS="-Xms1g -Xmx1g" \
             elasticsearch:5.2.0
 
@@ -24,16 +25,16 @@
    shell: >
            docker service create \
             --name logstash \
-            --label traefik.frontend.rule=Host:logstash.<%= appName %> \
-            --label traefik.port=5555 \
             --mount "type=bind,source=/opt/<%= appName %>/elk/logstash,target=/conf" \
             --constraint=node.role==manager \
             --publish 5555:5555 \
+            --publish 5044:5044 \
             --publish 12201:12201/udp \
             --publish 12201:12201 \
             --network <%= appName %>-net \
-            --network elk-net -e LOGSPOUT=ignore \
+            --network elk-net -e LOGSPOUT=ignore -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
             --reserve-memory 50m \
+            --limit-cpu 0.5 \
             logstash:5.2.0 -f /conf/logstash.conf
 
  - name: Create Kibana service
@@ -51,5 +52,16 @@
             --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch,/api,/plugins,/app/timelion \
             --label com.df.port=5601 \
             --reserve-memory 50m \
+            --limit-cpu 0.5 \
             kibana:5.2.0
+
+ - name: Create Filebeat service
+   shell: >
+           docker service create \
+            --name filebeat \
+            --mount "type=bind,source=/opt/<%= appName %>/elk/filebeat/filebeat.yml,target=/filebeat.yml" \
+            --constraint=node.role==manager \
+            --network <%= appName %>-net \
+            --network elk-net \
+            prima/filebeat:5
 <% } %>            
