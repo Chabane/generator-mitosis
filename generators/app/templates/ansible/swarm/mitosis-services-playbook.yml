@@ -3,6 +3,8 @@
   hosts: <%= appName %>_managers[0]
   become: yes
   become_user: root
+  vars:
+    manager_ip: <%= defaultIp %>.21
   roles:
     - <%= appName %>-services
 

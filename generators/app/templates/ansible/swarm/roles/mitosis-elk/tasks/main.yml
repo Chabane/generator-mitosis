@@ -8,9 +8,6 @@
    shell: >
            docker service create \
             --name elasticsearch \
-            --label traefik.frontend.rule=Host:elasticsearch.<%= appName %> \
-            --label traefik.port=9200 \
-            --label traefik.port=9300 \
             --constraint=node.role==manager \
             --publish 9200:9200 \
             --publish 9300:9300 \
@@ -27,12 +24,11 @@
             --name logstash \
             --mount "type=bind,source=/opt/<%= appName %>/elk/logstash,target=/conf" \
             --constraint=node.role==manager \
-            --publish 5555:5555 \
             --publish 5044:5044 \
             --publish 12201:12201/udp \
             --publish 12201:12201 \
             --network <%= appName %>-net \
-            --network elk-net -e LOGSPOUT=ignore -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
+            --network elk-net -e LOGSPOUT=ignore \
             --reserve-memory 50m \
             --limit-cpu 0.5 \
             logstash:5.2.0 -f /conf/logstash.conf
@@ -47,10 +43,6 @@
             --publish 5601:5601 \
             --network <%= appName %>-net \
             --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
-            --label com.df.notify=true \
-            --label com.df.distribute=true \
-            --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch,/api,/plugins,/app/timelion \
-            --label com.df.port=5601 \
             --reserve-memory 50m \
             --limit-cpu 0.5 \
             kibana:5.2.0

@@ -5,5 +5,6 @@
   become_user: root
   vars:
     <%= appName %>_home: /opt/<%= appName %>
+    manager_ip: <%= defaultIp %>.21
   roles:
     - <%= appName %>-elk
