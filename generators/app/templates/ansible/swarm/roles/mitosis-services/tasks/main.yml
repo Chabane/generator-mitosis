@@ -5,9 +5,9 @@
   shell: >
          docker service create \
            --name sonarqube \
-           --log-driver=gelf \
+           --log-driver gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \
-           --label traefik.port=80 \
+           --label traefik.port=9000 \
            --label traefik.frontend.rule=Host:sonarqube.<%= appName %> \
            --publish 9000:9000 \
            --network <%= appName %>-net \
@@ -21,10 +21,10 @@
   shell: >
          docker service create \
            --name artifactory \
-           --log-driver=gelf \
+           --log-driver gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \           
            --label traefik.frontend.rule=Host:artifactory.<%= appName %> \
-           --label traefik.port=80 \
+           --label traefik.port=9999 \
            --publish 9999:8080 \
            --network <%= appName %>-net \
            --replicas 2 \
@@ -37,9 +37,9 @@
   shell: >
          docker service create \
            --name jenkins \
-           --log-driver=gelf \
+           --log-driver gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \           
-           --label traefik.port=80 \
+           --label traefik.port=8082 \
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
@@ -56,9 +56,9 @@
   shell: >
          docker service create \
            --name sonarqube \
-           --log-driver=gelf \
+           --log-driver gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \           
-           --label traefik.port=80 \
+           --label traefik.port=9000 \
            --label traefik.frontend.rule=Host:sonarqube.<%= appName %> \
            --publish 9000:9000 \
            --network <%= appName %>-net \
@@ -71,10 +71,10 @@
 - name: "Create service artifactory"
   shell: >
          docker service create \
-           --log-driver=gelf \
+           --log-driver gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name artifactory \
-           --label traefik.port=80 \
+           --label traefik.port=9999 \
            --label traefik.frontend.rule=Host:artifactory.<%= appName %> \
            --publish 9999:8080 \
            --network <%= appName %>-net \
@@ -87,10 +87,10 @@
 - name: "Create service jenkins master"
   shell: >
          docker service create \
-           --log-driver=gelf \
+           --log-driver gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name jenkins \
-           --label traefik.port=80 \
+           --label traefik.port=8082 \
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
@@ -104,10 +104,10 @@
 - name: "Create service jenkins master"
   shell: >
          docker service create \
-           --log-driver=gelf \
+           --log-driver gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name jenkins \
-           --label traefik.port=80 \
+           --label traefik.port=8082 \
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
