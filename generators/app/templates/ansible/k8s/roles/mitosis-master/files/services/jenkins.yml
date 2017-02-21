@@ -15,15 +15,12 @@ spec:
     spec:
       containers:
       - name: jenkins
-        <% if (!ownRegistry && defaultMicroService) { %>  
+        <% if (defaultMicroService) { %>  
         image: mitosis/jenkins:1.0.0-alpha.0
         <% } %>  
-        <% if (!ownRegistry && !defaultMicroService) { %>  
+        <% if (!defaultMicroService) { %>  
         image: mitosis/jenkins:default1.0.0-alpha.0
         <% } %>  
-        <% if (ownRegistry) { %>  
-        image: <%= docker_registry_repository_name %>/jenkins:1.0.0
-        <% } %>   
         ports:
         - name: jenkins
           containerPort: 8080

@@ -9,7 +9,7 @@
     manager_ip: <%= defaultIp %>.21
   tasks:
 
-<% if (!ownRegistry && caasMode === 'swarm' && tools.indexOf("registry") > -1) { %>
+<% if (caasMode === 'swarm' && tools.indexOf("registry") > -1) { %>
   - name: Create local registry
     run_once: true
     shell: >
@@ -22,7 +22,7 @@
            --mode global \
            registry:2
 <% } %>
-<% if (!ownRegistry && caasMode === 'k8s' && tools.indexOf("registry") > -1) { %>
+<% if (caasMode === 'k8s' && tools.indexOf("registry") > -1) { %>
   - name: Ensure <%= appName %> registry
     file:
       path: "{{<%= appName %>_home}}/registry/k8s"
