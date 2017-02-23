@@ -23,7 +23,7 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 - Spring 5/Apache Tomcat/Gradle/MongoDB
 - NodeJS express/Redis
 - Angular - Material 
-- iOT - Akka Actors - Raspberry Pi
+- iOT - Akka Actors - Arduino
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
 
