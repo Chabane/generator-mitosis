@@ -1,3 +1,9 @@
+<a name="1.0.0-alpha.14"></a>
+
+## Actions
+* **Docker** Remove dockerfiles directory
+* **Jenkins** Add defaults microservices using pipeline Job
+
 <a name="1.0.0-alpha.13"></a>
 
 #### Bugs
