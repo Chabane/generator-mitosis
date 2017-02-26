@@ -47,7 +47,7 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:default1.0.0-alpha.0
+           --replicas 2 mitosis/jenkins:default1.0.0-alpha.1
 <% } %>   
 <% if (defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
 - name: "Create service jenkins master"
@@ -64,9 +64,7 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:1.0.0-alpha.0
-<% } %>
-<% if (defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
+           --replicas 2 mitosis/jenkins:1.0.0-alpha.1
 
 - name: "Create service zookeeper"
   shell: > 
@@ -76,7 +74,7 @@
          --name zookeeper \
          --publish 2181:2181 \
          --network <%= appName %>-net \
-         --reserve-memory 100m \
+         --network microservices-net \
          --mode global \
          zookeeper:3.4
 
@@ -92,7 +90,7 @@
          --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
          --env KAFKA_CREATE_TOPICS=topic-mitosis:1:1 \
          --network <%= appName %>-net \
-         --reserve-memory 100m \
+         --network microservices-net \
          --mode global \
          wurstmeister/kafka:0.10.1.0
 <% } %>
