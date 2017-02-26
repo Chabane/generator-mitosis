@@ -12,8 +12,6 @@
   - name: Configure docker group 
     command : usermod -aG docker vagrant
 
-  - name: Copy dockerfiles directory
-    copy: src=dockerfiles dest={{<%= appName %>_home}}
 <% if (ownRegistry) { %>
   - name: Login to docker registry
     command : docker login --username <%= docker_registry_username %> --password <%= docker_registry_password %> <%= docker_registry_server %> 

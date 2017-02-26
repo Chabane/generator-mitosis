@@ -330,6 +330,7 @@ class gen extends Generator {
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
           defaultMicroService: this.answers.defaultMicroService,
           defaultIp: defaultIp,
+          ownRegistry: this.answers.ownRegistry,
           caasMode: this.answers.caasMode
         }
       );
@@ -346,63 +347,6 @@ class gen extends Generator {
           defaultIp: defaultIp,
           caasMode: this.answers.caasMode,
           tools: this.answers.tools
-        }
-      );
-
-      /**
-       * copy dockerfiles
-       */
-       this.fs.copy(
-        this.templatePath('ansible/images/registry/**/*'),
-        this.destinationPath('ansible/images/registry')
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/registry/k8s/registry.yml'),
-        this.destinationPath('ansible/images/registry/k8s/registry.yml'),
-        {
-          appName: this.answers.appName
-        }
-      );
-
-      /**
-       * copy dockerfiles
-       */
-       this.fs.copy(
-        this.templatePath('ansible/images/dockerfiles/**/*'),
-        this.destinationPath('ansible/images/dockerfiles')
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/artifactory/Dockerfile'),
-        this.destinationPath('ansible/images/dockerfiles/artifactory/Dockerfile'),
-        {
-          appName: this.answers.appName
-        }
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/sonarqube/Dockerfile'),
-        this.destinationPath('ansible/images/dockerfiles/sonarqube/Dockerfile'),
-        {
-          appName: this.answers.appName
-        }
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/jenkins/Dockerfile'),
-        this.destinationPath('ansible/images/dockerfiles/jenkins/Dockerfile'),
-        {
-          appName: this.answers.appName,
-          defaultMicroService: this.answers.defaultMicroService
-        }
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/makefile'),
-        this.destinationPath('ansible/images/dockerfiles/makefile'),
-        {
-          docker_registry_repository_name: this.answers.docker_registry_repository_name ? this.answers.docker_registry_repository_name : 'mitosis'
         }
       );
 
