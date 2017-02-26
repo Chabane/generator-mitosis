@@ -196,6 +196,9 @@ class gen extends Generator {
                 }   
     },
     {
+        when: function(response) {
+          return response.tools.indexOf("jenkins") > -1
+        },
         type    : 'confirm',
         name    : 'defaultMicroService',
         message : '(7/8) Deploy the defaults micro-services',
@@ -517,7 +520,8 @@ class gen extends Generator {
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-network/tasks/main.yml'),
         {
           appName: this.answers.appName,
-          tools: this.answers.tools
+          tools: this.answers.tools,
+          defaultMicroService: this.answers.defaultMicroService,
         }
       );
       this.fs.copyTpl(
