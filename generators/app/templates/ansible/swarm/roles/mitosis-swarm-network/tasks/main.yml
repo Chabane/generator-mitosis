@@ -32,6 +32,13 @@
         docker network create -d overlay elk-net
 #  when: item not in docker_current_networks
 
+<% if (defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
+
+- name: Create overlay networks default-microservices
+  shell: >
+        docker network create -d overlay microservices-net
+<% } %>
+
 <% if (tools.indexOf("viz") > -1) { %> 
 - name: Start vizualizer only on managers
   run_once: true
