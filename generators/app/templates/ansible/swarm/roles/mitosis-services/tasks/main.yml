@@ -5,7 +5,7 @@
   shell: >
          docker service create \
            --name sonarqube \
-           --log-driver gelf \
+           --log-driver=gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \           
            --label traefik.port=9000 \
            --label traefik.frontend.rule=Host:sonarqube.<%= appName %> \
@@ -20,7 +20,7 @@
 - name: "Create service artifactory"
   shell: >
          docker service create \
-           --log-driver gelf \
+           --log-driver=gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name artifactory \
            --label traefik.port=9999 \
@@ -36,7 +36,7 @@
 - name: "Create service jenkins master"
   shell: >
          docker service create \
-           --log-driver gelf \
+           --log-driver=gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name jenkins \
            --label traefik.port=8082 \
@@ -53,7 +53,7 @@
 - name: "Create service jenkins master"
   shell: >
          docker service create \
-           --log-driver gelf \
+           --log-driver=gelf \
            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name jenkins \
            --label traefik.port=8082 \
@@ -64,12 +64,12 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:1.0.0-alpha.1
+           --replicas 2 mitosis/jenkins:1.0.0-alpha.3
 
 - name: "Create service zookeeper"
   shell: > 
          docker service create \
-         --log-driver gelf \
+         --log-driver=gelf \
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
          --name zookeeper \
          --publish 2181:2181 \
@@ -81,7 +81,7 @@
 - name: "Create service kafka"
   shell: > 
          docker service create \
-         --log-driver gelf \
+         --log-driver=gelf \
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
          --name kafka \
          --publish 9092:9092 \
