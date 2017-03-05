@@ -6,7 +6,7 @@
   vars:
     <%= appName %>_home: /opt/<%= appName %>
     manager_ip: <%= defaultIp %>.21
-    worker_token : 2f1a31.00f66dec74fd53f3 
+    worker_token : <%= workerToken %>
   roles:
     - <%= appName %>-master
 
@@ -19,6 +19,6 @@
   vars:
     <%= appName %>_home: /opt/<%= appName %>
     manager_ip: <%= defaultIp %>.21
-    worker_token : 2f1a31.00f66dec74fd53f3 
+    worker_token : <%= workerToken %> 
   roles:
     - <%= appName %>-worker

@@ -4,6 +4,7 @@ var Generator = require('yeoman-generator'),
  util = require('util'),
  yosay = require('yosay'),
  chalk = require('chalk'),
+ uuidV1 = require('uuid/v1'),
  exec = require('child_process').exec;
 
 class gen extends Generator {
@@ -13,37 +14,6 @@ class gen extends Generator {
 
   initializing() {
 
-      // check if virtualbox is installed
-      var virtualBoxInstalled = true;
-      exec('vboxmanage --version', function (err, stdout, stderr) {
-        if (err) {
-           this.log.error('Virtualbox is not found on your computer. Download and install : https://www.virtualbox.org/wiki/Downloads');
-           virtualBoxInstalled = false;
-        } 
-      }.bind(this));
-
-      // check if vagrant is installed
-      var vagrantInstalled = true;
-      exec('vagrant --version', function (err, stdout, stderr) {
-        if (err) {
-           this.log.error('Vagrant is not found on your computer. Download and install: https://www.vagrantup.com/docs/installation/');
-           virtualBoxInstalled = false;
-        } 
-      }.bind(this));
-
-      // check if ansible is installed
-      var ansibleInstalled = true;
-      exec('ansible --version', function (err, stdout, stderr) {
-        if (err) {
-           this.log.error('Ansible is not found on your computer. Download and install : http://docs.ansible.com/ansible/intro_installation.html');
-           virtualBoxInstalled = false;
-        } 
-      }.bind(this));
-
-     // if any one not installed then exit the process
-     if(!virtualBoxInstalled || !vagrantInstalled || !ansibleInstalled) {
-      process.exit(1);
-     }
    }
 
   prompting() {
@@ -205,6 +175,37 @@ class gen extends Generator {
         default : true 
     },
     {
+      when: function(response) {
+        // check if virtualbox is installed
+        var virtualBoxInstalled = true;
+        exec('vboxmanage --version', function (err, stdout, stderr) {
+          if (err) {
+            this.log.error('Virtualbox is not found on your computer. Download and install : https://www.virtualbox.org/wiki/Downloads');
+            virtualBoxInstalled = false;
+          } 
+        }.bind(this));
+
+        // check if vagrant is installed
+        var vagrantInstalled = true;
+        exec('vagrant --version', function (err, stdout, stderr) {
+          if (err) {
+            this.log.error('Vagrant is not found on your computer. Download and install: https://www.vagrantup.com/docs/installation/');
+            virtualBoxInstalled = false;
+          } 
+        }.bind(this));
+
+        // check if ansible is installed
+        var ansibleInstalled = true;
+        exec('ansible --version', function (err, stdout, stderr) {
+          if (err) {
+            this.log.error('Ansible is not found on your computer. Download and install : http://docs.ansible.com/ansible/intro_installation.html');
+            virtualBoxInstalled = false;
+          } 
+        }.bind(this));
+
+        // if all installed then suggest the question
+        return virtualBoxInstalled && vagrantInstalled && ansibleInstalled
+      },
       type    : 'confirm',
       name    : 'initVms',
       message : '(8/8) Test my infrastructure locally in a virtual machines',
@@ -282,6 +283,7 @@ class gen extends Generator {
       const _ = require('lodash');
       const defaultIp = "192.168.77";
       const defaultManagerIp = "192.168.77.21";
+      const workerToken = uuidV1();
 
       // copy vagrantfile
       this.fs.copyTpl(
@@ -362,7 +364,7 @@ class gen extends Generator {
         {
           appName: this.answers.appName,
           os: this.answers.os,
-          defaultIp: defaultIp 
+          defaultIp: defaultIp
         }
       );
       this.fs.copyTpl(
@@ -370,7 +372,8 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/'+this.answers.appName+'-k8s-playbook.yml'),
         {
           appName: this.answers.appName,
-          defaultIp: defaultIp
+          defaultIp: defaultIp,
+          workerToken: workerToken 
         }
       );
       /** k8s roles */

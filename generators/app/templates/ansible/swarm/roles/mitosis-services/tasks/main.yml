@@ -100,8 +100,8 @@
          --name mongo \
          --publish 27017:27017 \
          --network microservices-net \
-         --mount "type=volume,target=/data/db,src=~/data/db" \
-         --mode global \
+         --mount "type=volume,target=/data/db,src=mongo" \
+         --replicas 2 \
          mongo:3.2        
 
 - name: "Create service cassandra"
@@ -113,7 +113,7 @@
          --publish 9042:9042 \
          --network microservices-net \
          --env CASSANDRA_BROADCAST_ADDRESS=cassandra \
-         --mount "type=volume,target=/var/lib/cassandra,src=/var/lib/cassandra" \
-         --mode global \
+         --mount "type=volume,target=/var/lib/cassandra,src=cassandra" \
+         --replicas 2 \
          cassandra:3.0              
 <% } %>
