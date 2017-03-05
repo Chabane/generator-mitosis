@@ -60,11 +60,12 @@
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
+           --mount "type=volume,target=/var/jenkins_home,src=jenkins" \
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:1.0.0-alpha.5
+           --replicas 2 mitosis/jenkins:1.0.0-alpha.6
 
 - name: "Create service zookeeper"
   shell: > 
