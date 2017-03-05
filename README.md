@@ -20,8 +20,8 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 
 2 consumers & 2 producers
 
-- Spring 5/Apache Tomcat/Gradle/MongoDB
-- NodeJS express/Redis
+- Spring 5/Apache Tomcat/Gradle/Cassandra
+- NodeJS express/MongoDB
 - Angular - Material 
 - iOT - Akka Actors - Arduino
 

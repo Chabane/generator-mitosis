@@ -93,4 +93,31 @@
          --network microservices-net \
          --mode global \
          wurstmeister/kafka:0.10.1.0
+
+- name: "Create service mongo"
+  shell: > 
+         docker service create \
+         --log-driver=gelf \
+         --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
+         --name mongo \
+         --publish 27017:27017 \
+         --network <%= appName %>-net \
+         --network microservices-net \
+         --mount "type=volume,target=~/data/db,src=/data/db" \
+         --mode global \
+         mongo:3.2        
+
+- name: "Create service cassandra"
+  shell: > 
+         docker service create \
+         --log-driver=gelf \
+         --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
+         --name cassandra \
+         --publish 9042:9042 \
+         --network <%= appName %>-net \
+         --network microservices-net \
+         --env CASSANDRA_BROADCAST_ADDRESS=cassandra \
+         --mount "type=volume,target=/var/lib/cassandra,src=/var/lib/cassandra" \
+         --mode global \
+         cassandra:3.0              
 <% } %>
