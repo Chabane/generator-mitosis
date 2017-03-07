@@ -65,7 +65,7 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:1.0.0-alpha.6
+           --replicas 2 mitosis/jenkins:1.0.0-alpha.3
 
 - name: "Create service zookeeper"
   shell: > 
