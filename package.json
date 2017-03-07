@@ -3,7 +3,7 @@
   "files": [
     "generators"
   ],
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.14",
   "description": "A micro services infrastructure yeoman generator based on Kubernetes/Docker Swarm, Elastic Stack, Ansible, Jenkins, Kafka, Spark Streaming... It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.",
   "main": "index.js",
   "scripts": {
@@ -59,11 +59,12 @@
   "homepage": "https://github.com/NirbyApp/generator-mitosis#readme",
   "dependencies": {
     "chalk": "1.1.3",
-    "yeoman-generator": "1.0.0",
-    "yosay": "1.2.1",
     "date-util": "1.2.1",
     "lodash": "4.17.4",
-    "shelljs": "0.7.4"
+    "shelljs": "0.7.4",
+    "uuid": "3.0.1",
+    "yeoman-generator": "1.0.0",
+    "yosay": "1.2.1"
   },
   "devDependencies": {
     "eslint": "3.4.0",

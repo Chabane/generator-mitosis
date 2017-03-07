@@ -1,56 +1,13 @@
 ---      
 
-<% if (ownRegistry && tools.indexOf("sonarqube") > -1) { %>  
+<% if (tools.indexOf("sonarqube") > -1) { %>  
 - name: "Create service sonarqube"
   shell: >
          docker service create \
            --name sonarqube \
-           --label traefik.port=80 \
-           --label traefik.frontend.rule=Host:sonarqube.<%= appName %> \
-           --publish 9000:9000 \
-           --network <%= appName %>-net \
-           --replicas 2 \
-           --reserve-memory 50m \
-           <%= docker_registry_repository_name %>/sonarqube:1.0.0
-<% } %>   
-
-<% if (ownRegistry && tools.indexOf("artifactory") > -1) { %>             
-- name: "Create service artifactory"
-  shell: >
-         docker service create \
-           --name artifactory \
-           --label traefik.frontend.rule=Host:artifactory.<%= appName %> \
-           --label traefik.port=80 \
-           --publish 9999:8080 \
-           --network <%= appName %>-net \
-           --replicas 2 \
-           --reserve-memory 50m \
-           <%= docker_registry_repository_name %>/artifactory:1.0.0
-<% } %>   
-
-<% if (ownRegistry && tools.indexOf("jenkins") > -1) { %>  
-- name: "Create service jenkins master"
-  shell: >
-         docker service create \
-           --name jenkins \
-           --label traefik.port=80 \
-           --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
-           --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
-           --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
-           --publish 50000:50000 \
-           --publish 8082:8080 \
-           --network <%= appName %>-net \
-           --replicas 2 \
-           --reserve-memory 100m \
-           <%= docker_registry_repository_name %>/jenkins:1.0.0
-<% } %>         
-
-<% if (!ownRegistry && tools.indexOf("sonarqube") > -1) { %>  
-- name: "Create service sonarqube"
-  shell: >
-         docker service create \
-           --name sonarqube \
-           --label traefik.port=80 \
+           --log-driver=gelf \
+           --log-opt gelf-address=udp://{{ manager_ip }}:12201 \           
+           --label traefik.port=9000 \
            --label traefik.frontend.rule=Host:sonarqube.<%= appName %> \
            --publish 9000:9000 \
            --network <%= appName %>-net \
@@ -59,12 +16,14 @@
            mitosis/sonarqube:1.0.0-alpha.0
 <% } %>     
 
-<% if (!ownRegistry && tools.indexOf("artifactory") > -1) { %>                        
+<% if (tools.indexOf("artifactory") > -1) { %>                        
 - name: "Create service artifactory"
   shell: >
          docker service create \
+           --log-driver=gelf \
+           --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name artifactory \
-           --label traefik.port=80 \
+           --label traefik.port=9999 \
            --label traefik.frontend.rule=Host:artifactory.<%= appName %> \
            --publish 9999:8080 \
            --network <%= appName %>-net \
@@ -73,12 +32,14 @@
            mitosis/artifactory:1.0.0-alpha.0
 <% } %>  
 
-<% if (!defaultMicroService && !ownRegistry && tools.indexOf("jenkins") > -1) { %>
+<% if (!defaultMicroService && tools.indexOf("jenkins") > -1) { %>
 - name: "Create service jenkins master"
   shell: >
          docker service create \
+           --log-driver=gelf \
+           --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name jenkins \
-           --label traefik.port=80 \
+           --label traefik.port=8082 \
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
@@ -86,20 +47,74 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:default1.0.0-alpha.0
+           --replicas 2 mitosis/jenkins:default1.0.0-alpha.1
 <% } %>   
-<% if (!ownRegistry && defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
+<% if (defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
 - name: "Create service jenkins master"
   shell: >
          docker service create \
+           --log-driver=gelf \
+           --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
            --name jenkins \
-           --label traefik.port=80 \
+           --label traefik.port=8082 \
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
+           --mount "type=volume,target=/var/jenkins_home,src=jenkins" \
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:1.0.0-alpha.0
+           --replicas 2 mitosis/jenkins:1.0.0-alpha.3
+
+- name: "Create service zookeeper"
+  shell: > 
+         docker service create \
+         --log-driver=gelf \
+         --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
+         --name zookeeper \
+         --publish 2181:2181 \
+         --network microservices-net \
+         --mode global \
+         zookeeper:3.4
+
+- name: "Create service kafka"
+  shell: > 
+         docker service create \
+         --log-driver=gelf \
+         --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
+         --name kafka \
+         --publish 9092:9092 \
+         --env KAFKA_ADVERTISED_HOST_NAME=kafka \
+         --env KAFKA_ADVERTISED_PORT=9092 \
+         --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
+         --env KAFKA_CREATE_TOPICS=topic-mitosis:1:1 \
+         --network microservices-net \
+         --mode global \
+         wurstmeister/kafka:0.10.1.0
+
+- name: "Create service mongo"
+  shell: > 
+         docker service create \
+         --log-driver=gelf \
+         --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
+         --name mongo \
+         --publish 27017:27017 \
+         --network microservices-net \
+         --mount "type=volume,target=/data/db,src=mongo" \
+         --replicas 2 \
+         mongo:3.2        
+
+- name: "Create service cassandra"
+  shell: > 
+         docker service create \
+         --log-driver=gelf \
+         --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
+         --name cassandra \
+         --publish 9042:9042 \
+         --network microservices-net \
+         --env CASSANDRA_BROADCAST_ADDRESS=cassandra \
+         --mount "type=volume,target=/var/lib/cassandra,src=cassandra" \
+         --replicas 2 \
+         cassandra:3.0              
 <% } %>

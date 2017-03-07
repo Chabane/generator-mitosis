@@ -1,3 +1,18 @@
+<a name="1.0.0-alpha.14"></a>
+
+## Actions
+* **Docker** Remove dockerfiles directory
+* **Jenkins** Add defaults microservices using pipeline Job
+
+#### Features
+* Add kafka and zookeeper for default microservices
+* Add mongo & cassandra for default microservices
+
+<a name="1.0.0-alpha.13"></a>
+
+#### Bugs
+* **Yeoman** add 'use strict'
+
 <a name="1.0.0-alpha.12"></a>
 1.0.0-alpha.12  (2017-02-08)
 

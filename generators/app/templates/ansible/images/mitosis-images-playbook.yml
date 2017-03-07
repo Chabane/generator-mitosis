@@ -12,47 +12,10 @@
   - name: Configure docker group 
     command : usermod -aG docker vagrant
 
-  - name: Ensure <%= appName %> dockerfiles
-    file:
-      path: "{{<%= appName %>_home}}/dockerfiles"
-      state: directory
-      mode: 0700
-
-  - name: Copy dockerfiles directory
-    copy: src=dockerfiles dest={{<%= appName %>_home}}
 <% if (ownRegistry) { %>
   - name: Login to docker registry
     command : docker login --username <%= docker_registry_username %> --password <%= docker_registry_password %> <%= docker_registry_server %> 
     no_log: True
-
-  - name: Build images with docker-compose
-    command: docker-compose -p <%= docker_registry_repository_name %> build
-    args:
-      chdir: "{{<%= appName %>_home}}/dockerfiles"
-
-  - name: Tag jenkins image
-    command: docker tag <%= docker_registry_repository_name %>_jenkins <%= docker_registry_repository_name %>/jenkins:1.0.0
-
-  - name: Push jenkins image to docker registry
-    command: docker push <%= docker_registry_repository_name %>/jenkins:1.0.0
-    args:
-      chdir: "{{<%= appName %>_home}}/dockerfiles/jenkins"
-
-  - name: Tag sonarqube image
-    command: docker tag <%= docker_registry_repository_name %>_sonarqube <%= docker_registry_repository_name %>/sonarqube:1.0.0
- 
-  - name: Push sonarqube image to docker registry
-    command: docker push <%= docker_registry_repository_name %>/sonarqube:1.0.0
-    args:
-      chdir: "{{<%= appName %>_home}}/dockerfiles/sonarqube"
-
-  - name: Tag artifactory image
-    command: docker tag <%= docker_registry_repository_name %>_artifactory <%= docker_registry_repository_name %>/artifactory:1.0.0
-
-  - name: Push artifactory image to docker registry
-    command: docker push <%= docker_registry_repository_name %>/artifactory:1.0.0
-    args:
-      chdir: "{{<%= appName %>_home}}/dockerfiles/artifactory"    
 <% } %>
 
 

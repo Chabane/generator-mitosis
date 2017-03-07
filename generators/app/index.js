@@ -1,7 +1,10 @@
+'use strict';
+
 var Generator = require('yeoman-generator'),
  util = require('util'),
  yosay = require('yosay'),
  chalk = require('chalk'),
+ uuidV1 = require('uuid/v1'),
  exec = require('child_process').exec;
 
 class gen extends Generator {
@@ -11,37 +14,6 @@ class gen extends Generator {
 
   initializing() {
 
-      // check if virtualbox is installed
-      var virtualBoxInstalled = true;
-      exec('vboxmanage --version', function (err, stdout, stderr) {
-        if (err) {
-           this.log.error('Virtualbox is not found on your computer. Download and install : https://www.virtualbox.org/wiki/Downloads');
-           virtualBoxInstalled = false;
-        } 
-      }.bind(this));
-
-      // check if vagrant is installed
-      var vagrantInstalled = true;
-      exec('vagrant --version', function (err, stdout, stderr) {
-        if (err) {
-           this.log.error('Vagrant is not found on your computer. Download and install: https://www.vagrantup.com/docs/installation/');
-           virtualBoxInstalled = false;
-        } 
-      }.bind(this));
-
-      // check if ansible is installed
-      var ansibleInstalled = true;
-      exec('ansible --version', function (err, stdout, stderr) {
-        if (err) {
-           this.log.error('Ansible is not found on your computer. Download and install : http://docs.ansible.com/ansible/intro_installation.html');
-           virtualBoxInstalled = false;
-        } 
-      }.bind(this));
-
-     // if any one not installed then exit the process
-     if(!virtualBoxInstalled || !vagrantInstalled || !ansibleInstalled) {
-      process.exit(1);
-     }
    }
 
   prompting() {
@@ -70,7 +42,7 @@ class gen extends Generator {
 
     this.log(name);
   
-    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.12! (Do not use in Production) \n');
+    this.log('\nWelcome to the ' + chalk.red('Mitosis') + ' generator v.1.0.0-alpha.14! (Do not use in Production) \n');
     this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
     this.log('Infrastructure files will be generated in folder: ' + chalk.yellow(process.cwd())+"\n");
 
@@ -140,7 +112,7 @@ class gen extends Generator {
       type    : 'confirm',
       name    : 'ownRegistry',
       message : '(6/8) Push the images to my own docker registry',
-      default : true 
+      default : false 
     },
     {
       when: function (response) {
@@ -194,12 +166,46 @@ class gen extends Generator {
                 }   
     },
     {
+        when: function(response) {
+          return response.tools.indexOf("jenkins") > -1
+        },
         type    : 'confirm',
         name    : 'defaultMicroService',
         message : '(7/8) Deploy the defaults micro-services',
         default : true 
     },
     {
+      when: function(response) {
+        // check if virtualbox is installed
+        var virtualBoxInstalled = true;
+        exec('vboxmanage --version', function (err, stdout, stderr) {
+          if (err) {
+            this.log.error('Virtualbox is not found on your computer. Download and install : https://www.virtualbox.org/wiki/Downloads');
+            virtualBoxInstalled = false;
+          } 
+        }.bind(this));
+
+        // check if vagrant is installed
+        var vagrantInstalled = true;
+        exec('vagrant --version', function (err, stdout, stderr) {
+          if (err) {
+            this.log.error('Vagrant is not found on your computer. Download and install: https://www.vagrantup.com/docs/installation/');
+            virtualBoxInstalled = false;
+          } 
+        }.bind(this));
+
+        // check if ansible is installed
+        var ansibleInstalled = true;
+        exec('ansible --version', function (err, stdout, stderr) {
+          if (err) {
+            this.log.error('Ansible is not found on your computer. Download and install : http://docs.ansible.com/ansible/intro_installation.html');
+            virtualBoxInstalled = false;
+          } 
+        }.bind(this));
+
+        // if all installed then suggest the question
+        return virtualBoxInstalled && vagrantInstalled && ansibleInstalled
+      },
       type    : 'confirm',
       name    : 'initVms',
       message : '(8/8) Test my infrastructure locally in a virtual machines',
@@ -277,6 +283,7 @@ class gen extends Generator {
       const _ = require('lodash');
       const defaultIp = "192.168.77";
       const defaultManagerIp = "192.168.77.21";
+      const workerToken = uuidV1();
 
       // copy vagrantfile
       this.fs.copyTpl(
@@ -326,9 +333,9 @@ class gen extends Generator {
           docker_registry_username: this.answers.docker_registry_username,
           docker_registry_password: this.answers.docker_registry_password,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
-          ownRegistry: this.answers.ownRegistry,
           defaultMicroService: this.answers.defaultMicroService,
           defaultIp: defaultIp,
+          ownRegistry: this.answers.ownRegistry,
           caasMode: this.answers.caasMode
         }
       );
@@ -341,68 +348,10 @@ class gen extends Generator {
         this.destinationPath('ansible/images/'+this.answers.appName+'-registry-playbook.yml'),
         {
           appName: this.answers.appName,
-          ownRegistry: this.answers.ownRegistry,
           defaultMicroService: this.answers.defaultMicroService,
           defaultIp: defaultIp,
           caasMode: this.answers.caasMode,
           tools: this.answers.tools
-        }
-      );
-
-      /**
-       * copy dockerfiles
-       */
-       this.fs.copy(
-        this.templatePath('ansible/images/registry/**/*'),
-        this.destinationPath('ansible/images/registry')
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/registry/k8s/registry.yml'),
-        this.destinationPath('ansible/images/registry/k8s/registry.yml'),
-        {
-          appName: this.answers.appName
-        }
-      );
-
-      /**
-       * copy dockerfiles
-       */
-       this.fs.copy(
-        this.templatePath('ansible/images/dockerfiles/**/*'),
-        this.destinationPath('ansible/images/dockerfiles')
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/artifactory/Dockerfile'),
-        this.destinationPath('ansible/images/dockerfiles/artifactory/Dockerfile'),
-        {
-          appName: this.answers.appName
-        }
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/sonarqube/Dockerfile'),
-        this.destinationPath('ansible/images/dockerfiles/sonarqube/Dockerfile'),
-        {
-          appName: this.answers.appName
-        }
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/jenkins/Dockerfile'),
-        this.destinationPath('ansible/images/dockerfiles/jenkins/Dockerfile'),
-        {
-          appName: this.answers.appName,
-          defaultMicroService: this.answers.defaultMicroService
-        }
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('ansible/images/dockerfiles/makefile'),
-        this.destinationPath('ansible/images/dockerfiles/makefile'),
-        {
-          docker_registry_repository_name: this.answers.docker_registry_repository_name ? this.answers.docker_registry_repository_name : 'mitosis'
         }
       );
 
@@ -415,7 +364,7 @@ class gen extends Generator {
         {
           appName: this.answers.appName,
           os: this.answers.os,
-          defaultIp: defaultIp 
+          defaultIp: defaultIp
         }
       );
       this.fs.copyTpl(
@@ -423,7 +372,8 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/'+this.answers.appName+'-k8s-playbook.yml'),
         {
           appName: this.answers.appName,
-          defaultIp: defaultIp
+          defaultIp: defaultIp,
+          workerToken: workerToken 
         }
       );
       /** k8s roles */
@@ -442,7 +392,6 @@ class gen extends Generator {
           appName: this.answers.appName,
           os: this.answers.os,
           scheduleManager: this.answers.scheduleManager,
-          ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
           tools: this.answers.tools
         }
@@ -468,7 +417,6 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/sonarqube.yml'),
         {
           appName: this.answers.appName,
-          ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
       );
@@ -484,7 +432,6 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/artifactory.yml'),
         {
           appName: this.answers.appName,
-          ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name
         }
       );
@@ -493,7 +440,6 @@ class gen extends Generator {
         this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/jenkins.yml'),
         {
           appName: this.answers.appName,
-          ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
           defaultMicroService: this.answers.defaultMicroService,
           defaultIp: defaultManagerIp
@@ -528,21 +474,24 @@ class gen extends Generator {
         this.templatePath('ansible/swarm/mitosis-services-playbook.yml'),
         this.destinationPath('ansible/swarm/'+this.answers.appName+'-services-playbook.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          defaultIp: defaultIp
         }
       );
        this.fs.copyTpl(
         this.templatePath('ansible/swarm/mitosis-traefik-playbook.yml'),
         this.destinationPath('ansible/swarm/'+this.answers.appName+'-traefik-playbook.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          defaultIp: defaultIp
         }
       );
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/mitosis-elk-playbook.yml'),
         this.destinationPath('ansible/swarm/'+this.answers.appName+'-elk-playbook.yml'),
         {
-          appName: this.answers.appName
+          appName: this.answers.appName,
+          defaultIp: defaultIp
         }
       );
       /** swarm roles */
@@ -574,7 +523,8 @@ class gen extends Generator {
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-network/tasks/main.yml'),
         {
           appName: this.answers.appName,
-          tools: this.answers.tools
+          tools: this.answers.tools,
+          defaultMicroService: this.answers.defaultMicroService,
         }
       );
       this.fs.copyTpl(
@@ -582,7 +532,6 @@ class gen extends Generator {
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-services/tasks/main.yml'),
         {
           appName: this.answers.appName,
-          ownRegistry: this.answers.ownRegistry,
           docker_registry_repository_name: this.answers.docker_registry_repository_name,
           defaultMicroService: this.answers.defaultMicroService,
           tools: this.answers.tools
@@ -614,6 +563,13 @@ class gen extends Generator {
       this.fs.copyTpl(
         this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/kibana/kibana.yml'),
         this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/kibana/kibana.yml'),
+        {
+          appName: this.answers.appName
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/filebeat/filebeat.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/filebeat/filebeat.yml'),
         {
           appName: this.answers.appName
         }

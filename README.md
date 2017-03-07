@@ -20,8 +20,8 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 
 2 consumers & 2 producers
 
-- Spring 5/Apache Tomcat/Gradle/MongoDB
-- NodeJS express/Redis
+- Spring 5/Apache Tomcat/Gradle/Cassandra
+- NodeJS express/MongoDB
 - Angular - Material 
 - iOT - Akka Actors - Arduino
 
@@ -39,12 +39,12 @@ Expected for the beta version :
  - Add new solutions like : Apache Mesos, Chef, Puppet, Terraform, Travis, etc.
 
 ### Prerequisites
-You need the following installed to use this playground.
+You need the following installed to use this generator.
 - [`NodeJS`](https://nodejs.org/en/download/), Node 4 or higher, together with NPM 3 or higher.
-- [`VirtualBox`](https://www.virtualbox.org/wiki/Downloads), tested with Version 5.1.14 r112924.
-- [`Vagrant`](https://www.vagrantup.com/docs/installation/), version 1.9.1 or better. Earlier versions of vagrant may not work.
+- [`VirtualBox`](https://www.virtualbox.org/wiki/Downloads) (optional), tested with Version 5.1.14 r112924.
+- [`Vagrant`](https://www.vagrantup.com/docs/installation/) (optional), version 1.9.1 or better. Earlier versions of vagrant may not work.
 with the Vagrant Ubuntu 16.04 box and network configuration.
-- [`Ansible`](http://docs.ansible.com/ansible/intro_installation.html), tested with Version 2.2.0. 
+- [`Ansible`](http://docs.ansible.com/ansible/intro_installation.html) (optional), tested with Version 2.2.0. 
 - `Docker registry` (optional), at least a docker hub account.
 - Internet access, this generator pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
