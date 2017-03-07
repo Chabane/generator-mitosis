@@ -4,6 +4,10 @@
 * **Docker** Remove dockerfiles directory
 * **Jenkins** Add defaults microservices using pipeline Job
 
+#### Features
+* Add kafka and zookeeper for default microservices
+* Add mongo & cassandra for default microservices
+
 <a name="1.0.0-alpha.13"></a>
 
 #### Bugs
