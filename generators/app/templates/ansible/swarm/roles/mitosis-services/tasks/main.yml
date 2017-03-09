@@ -65,7 +65,7 @@
            --publish 8082:8080 \
            --network <%= appName %>-net \
            --reserve-memory 100m \
-           --replicas 2 mitosis/jenkins:1.0.0-alpha.2
+           --replicas 2 mitosis/jenkins:1.0.0-alpha.3
 
 - name: "Create service zookeeper"
   shell: > 
@@ -103,7 +103,7 @@
          --network microservices-net \
          --mount "type=volume,target=/data/db,src=mongo" \
          --replicas 2 \
-         mongo:3.2        
+         mongo:3.4
 
 - name: "Create service cassandra"
   shell: > 
@@ -116,5 +116,5 @@
          --env CASSANDRA_BROADCAST_ADDRESS=cassandra \
          --mount "type=volume,target=/var/lib/cassandra,src=cassandra" \
          --replicas 2 \
-         cassandra:3.0              
+         cassandra:3.0
 <% } %>
