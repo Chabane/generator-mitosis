@@ -85,10 +85,10 @@
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
          --name kafka \
          --publish 9092:9092 \
-         --env KAFKA_ADVERTISED_HOST_NAME=kafka \
+         --env KAFKA_ADVERTISED_HOST_NAME={{ manager_ip }} \
          --env KAFKA_ADVERTISED_PORT=9092 \
          --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
-         --env KAFKA_CREATE_TOPICS=topic-mitosis:1:1 \
+         --env KAFKA_CREATE_TOPICS=topic-mitosis:2:1 \
          --network microservices-net \
          --mode global \
          wurstmeister/kafka:0.10.1.0
