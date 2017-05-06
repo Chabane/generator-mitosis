@@ -85,14 +85,15 @@
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
          --name kafka \
          --publish 9092:9092 \
+         --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
          --env KAFKA_ADVERTISED_HOST_NAME={{ manager_ip }} \
          --env KAFKA_ADVERTISED_PORT=9092 \
          --env KAFKA_LISTENERS="PLAINTEXT://:9092" \
          --env KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://{{ manager_ip }}:9092" \
          --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
-         --env KAFKA_CREATE_TOPICS=topic-mitosis:2:1 \
+         --env KAFKA_CREATE_TOPICS=topic-mitosis:1:1 \
          --network microservices-net \
-         --mode global \
+         --replicas 1 \
          wurstmeister/kafka:0.10.1.0
 
 - name: "Create service mongo"
@@ -104,7 +105,7 @@
          --publish 27017:27017 \
          --network microservices-net \
          --mount "type=volume,target=/data/db,src=mongo" \
-         --replicas 2 \
+         --replicas 1 \
          mongo:3.4
 
 - name: "Create service cassandra"
