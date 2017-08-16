@@ -18,11 +18,10 @@ And It takes advantage of the following solutions/technologies (alpha):
 ### Availables soon
 To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka
 
-2 consumers & 2 producers
+1 consumer & 2 producer
 
-- Spring 5/Apache Tomcat/Gradle/Cassandra
-- NodeJS express/MongoDB
-- Angular - Material 
+- [Spring 5/Reactor/Apache Tomcat/Gradle/Cassandra](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
+- [NodeJS Angular/express/MongoDB](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular)
 - iOT - Akka Actors - Arduino
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
