@@ -40,7 +40,7 @@
            --label traefik.port=8082 \
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --env MANAGER_IP="{{ manager_ip }}" \
-           --env APP_NAME="{{ appName }}" \
+           --env APP_NAME="<%= appName %>" \
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
            --publish 50000:50000 \
