@@ -12,7 +12,7 @@
             --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
             --network <%= appName %>-net \
             --network elk-net \
-            traefik:v1.1.2 \
+            traefik:v1.4 \
             --docker \
             --docker.swarmmode \
             --docker.domain=<%= appName %> \
