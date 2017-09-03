@@ -554,22 +554,29 @@ class gen extends Generator {
         }
       );
       this.fs.copyTpl(
-        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/logstash.conf'),
-        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/logstash/logstash.conf'),
+        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/elasticsearch/config/elasticsearch.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/elasticsearch/config/elasticsearch.yml'),
         {
           appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
-        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/kibana/kibana.yml'),
-        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/kibana/kibana.yml'),
+        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/config/logstash.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/logstash/config/logstash.yml'),
         {
           appName: this.answers.appName
         }
       );
       this.fs.copyTpl(
-        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/filebeat/filebeat.yml'),
-        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/filebeat/filebeat.yml'),
+        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/pipeline/logstash.conf'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/logstash/pipeline/logstash.conf'),
+        {
+          appName: this.answers.appName
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/kibana/config/kibana.yml'),
+        this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/kibana/config/kibana.yml'),
         {
           appName: this.answers.appName
         }
