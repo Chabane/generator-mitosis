@@ -17,10 +17,7 @@ And It takes advantage of the following solutions/technologies (alpha):
 
 To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka
 
-1 consumer & 1 producer
-
-- [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
-- [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular)
+1 consumer [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular) & 1 producer [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
 
