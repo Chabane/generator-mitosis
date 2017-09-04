@@ -22,7 +22,6 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 
 - [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
 - [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular)
-- iOT - Akka Actors - Arduino
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
 
