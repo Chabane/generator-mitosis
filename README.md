@@ -18,10 +18,10 @@ And It takes advantage of the following solutions/technologies (alpha):
 ### Availables soon
 To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka
 
-1 consumer & 2 producer
+1 consumer & 1 producer
 
-- [Spring 5/Reactor/Apache Tomcat/Gradle/Cassandra](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
-- [NodeJS Angular/express/MongoDB](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular)
+- [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
+- [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular)
 - iOT - Akka Actors - Arduino
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
@@ -29,13 +29,12 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 Expected for the beta version :
  - Provisioning of a single server (Docker-compose/MiniKube)
  - Deployment on AWS, GCE, OpenStack, CloudStack, etc.
- - Registering/unregistering of micro services 
- ```
- mi create/delete my_micro_service.yml
- ```
+ - Registering/unregistering of micro services `mi create/delete my_micro_service.yml`
  - Add security (SSL/TLS, SELinux, etc.)
  - UI Responsiveness Monitoring
- - Add new solutions like : Apache Mesos, Chef, Puppet, Terraform, Travis, etc.
+ - Apache Hadoop infrastructure : Yarn, Apache Spark Stack, etc.
+ - Add new default microservices : Rocket (Rust), Iris (Go), Django (Python), Play Framework (Scala), iOT (Akka Actors)
+ - Add new solutions like : Apache Mesos, Rancher, Chef, Puppet, Terraform, Travis, HAProxy, etc.
 
 ### Prerequisites
 You need the following installed to use this generator.

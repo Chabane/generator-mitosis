@@ -12,26 +12,23 @@
             --publish 9200:9200 \
             --publish 9300:9300 \
             --network <%= appName %>-net \
-            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
-            --reserve-memory 100m \
-            --limit-cpu 0.5 \
-            --env ES_JAVA_OPTS="-Xms1g -Xmx1g" \
-            elasticsearch:5.2.0
+            --network elk-net \
+            --env ES_JAVA_OPTS="-Xmx256m -Xms256m" \
+            docker.elastic.co/elasticsearch/elasticsearch:5.5.2
 
  - name: Create Logstash service
    shell: >
            docker service create \
             --name logstash \
-            --mount "type=bind,source=/opt/<%= appName %>/elk/logstash,target=/conf" \
+            --mount "type=bind,source=/opt/<%= appName %>/elk/logstash/config/logstash.yml,target=/usr/share/logstash/config/logstash.yml" \
+            --mount "type=bind,source=/opt/<%= appName %>/elk/logstash/config/pipeline,target=/usr/share/logstash/pipeline" \
             --constraint=node.role==manager \
             --publish 5044:5044 \
             --publish 12201:12201/udp \
             --publish 12201:12201 \
             --network <%= appName %>-net \
-            --network elk-net -e LOGSPOUT=ignore \
-            --reserve-memory 50m \
-            --limit-cpu 0.5 \
-            logstash:5.2.0 -f /conf/logstash.conf
+            --network elk-net \
+            docker.elastic.co/logstash/logstash:5.5.2
 
  - name: Create Kibana service
    shell: >
@@ -39,21 +36,10 @@
             --name kibana \
             --label traefik.frontend.rule=Host:kibana.<%= appName %> \
             --label traefik.port=5601 \
+            --mount "type=bind,source=/opt/<%= appName %>/elk/kibana/config,target=/usr/share/kibana/config" \
             --constraint=node.role==manager \
             --publish 5601:5601 \
             --network <%= appName %>-net \
-            --network elk-net -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
-            --reserve-memory 50m \
-            --limit-cpu 0.5 \
-            kibana:5.2.0
-
- - name: Create Filebeat service
-   shell: >
-           docker service create \
-            --name filebeat \
-            --mount "type=bind,source=/opt/<%= appName %>/elk/filebeat/filebeat.yml,target=/filebeat.yml" \
-            --constraint=node.role==manager \
-            --network <%= appName %>-net \
             --network elk-net \
-            prima/filebeat:5
+            docker.elastic.co/kibana/kibana:5.5.2
 <% } %>            

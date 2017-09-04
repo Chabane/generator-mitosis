@@ -61,12 +61,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       manager.vm.hostname = "<%= appName %>-manager#{manager_id}"
       manager.ssh.forward_agent = true
       manager.ssh.insert_key = true
-      manager.vm.provision :shell, :path => "scripts/setup_ubuntu.sh"
+      #manager.vm.provision :shell, :path => "scripts/setup_ubuntu.sh"
       manager.vm.network "private_network", ip: "<%= defaultIp %>.#{20+manager_id}"
-      manager.vm.network :forwarded_port, guest: 22, host: "122#{20+manager_id}", id: 'ssh'
-      manager.vm.network :forwarded_port, host: 8082, guest: 8082
-      manager.vm.network :forwarded_port, host: 9000, guest: 9000
-      manager.vm.network :forwarded_port, host: 9999, guest: 9999
+      manager.vm.network "forwarded_port", host: "122#{20+manager_id}", guest: 22, id: 'ssh'
+      manager.vm.network "forwarded_port", host: 8082, guest: 8082
+      manager.vm.network "forwarded_port", host: 9000, guest: 9000
+      manager.vm.network "forwarded_port", host: 9999, guest: 9999
       manager.vm.network "forwarded_port", guest: 80, host: 80
       manager.vm.network "forwarded_port", guest: 5044, host: 5044
       manager.vm.network "forwarded_port", guest: 5000, host: 5000
@@ -90,7 +90,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       worker.vm.hostname = "<%= appName %>-worker#{worker_id}"
       worker.ssh.forward_agent = true
       worker.ssh.insert_key = true
-      worker.vm.provision :shell, :path => "scripts/setup_ubuntu.sh"
+      #worker.vm.provision :shell, :path => "scripts/setup_ubuntu.sh"
       worker.vm.network "private_network", ip: "<%= defaultIp %>.#{30+worker_id}"
       worker.vm.network :forwarded_port, guest: 22, host: "122#{30+worker_id}", id: 'ssh'
       worker.vm.synced_folder '.', '/vagrant', disabled: true
@@ -145,7 +145,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               ansible.verbose = "vv"
               ansible.limit = "all"
             end
-
 
             worker.vm.provision "registry", type: "ansible" do |ansible|
               ansible.playbook = "ansible/images/<%= appName %>-registry-playbook.yml"
