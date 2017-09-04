@@ -7,6 +7,7 @@
 #### Features
 * Add kafka and zookeeper for default microservices
 * Add mongo & cassandra for default microservices
+* Add X-Pack
 
 <a name="1.0.0-alpha.13"></a>
 
