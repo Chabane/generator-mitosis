@@ -8,6 +8,7 @@
    shell: >
            docker service create \
             --name elasticsearch \
+            --mount "type=bind,source=/opt/<%= appName %>/elk/elasticsearch/config/elasticsearch.yml,target=/usr/share/elasticsearch/config/elasticsearch.yml" \
             --constraint=node.role==manager \
             --publish 9200:9200 \
             --publish 9300:9300 \
