@@ -51,10 +51,10 @@
 <% if (defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
 - name: "Create service jenkins master"
   shell: >
-         docker service create \
-           --log-driver=gelf \
-           --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
+         docker service create \     
            --name jenkins \
+           --log-driver=gelf \
+           --log-opt gelf-address=udp://{{ manager_ip }}:12201 \
            --label traefik.port=8082 \
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --env MANAGER_IP="{{ manager_ip }}" \
@@ -70,9 +70,9 @@
 - name: "Create service zookeeper"
   shell: > 
          docker service create \
+         --name zookeeper \
          --log-driver=gelf \
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
-         --name zookeeper \
          --publish 2181:2181 \
          --network microservices-net \
          --replicas 1 \
@@ -81,9 +81,9 @@
 - name: "Create service kafka"
   shell: > 
          docker service create \
+         --name kafka \
          --log-driver=gelf \
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
-         --name kafka \
          --publish 9092:9092 \
          --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
          --env KAFKA_ADVERTISED_HOST_NAME={{ manager_ip }} \
@@ -99,9 +99,9 @@
 - name: "Create service mongo"
   shell: > 
          docker service create \
+         --name mongo \
          --log-driver=gelf \
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
-         --name mongo \
          --publish 27017:27017 \
          --network microservices-net \
          --mount "type=volume,target=/data/db,src=mongo" \
@@ -111,9 +111,9 @@
 - name: "Create service cassandra"
   shell: > 
          docker service create \
+         --name cassandra \
          --log-driver=gelf \
          --log-opt gelf-address=udp://{{ manager_ip }}:12201 \         
-         --name cassandra \
          --publish 9042:9042 \
          --network microservices-net \
          --env CASSANDRA_BROADCAST_ADDRESS=cassandra \
