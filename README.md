@@ -1,3 +1,4 @@
+# Mitosis - Micro services infrastructure generator
 <img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
 
 [![npm version](https://badge.fury.io/js/generator-mitosis.svg)](https://badge.fury.io/js/generator-mitosis)
