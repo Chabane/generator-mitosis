@@ -25,18 +25,6 @@ To prove it efficiency, mitosis generates 2 default micro-services, connected to
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
 
-### Availables soon
-
-Expected for the beta version :
- - Provisioning of a single server (Docker-compose/MiniKube)
- - Deployment on AWS, GCE, OpenStack, CloudStack, etc.
- - Registering/unregistering of micro services `mi create/delete my_micro_service.yml`
- - Add security (SSL/TLS, SELinux, etc.)
- - UI Responsiveness Monitoring
- - Apache Hadoop infrastructure : Yarn, Apache Spark Stack, etc.
- - Add new default microservices : Rocket (Rust), Iris (Go), Django (Python), Play Framework (Scala), iOT (Akka Actors)
- - Add new solutions like : Apache Mesos, Rancher, Chef, Puppet, Terraform, Travis, HAProxy, etc.
-
 ### Prerequisites
 You need the following installed to use this generator.
 - [`NodeJS`](https://nodejs.org/en/download/), Node 4 or higher, together with NPM 3 or higher.
@@ -48,7 +36,8 @@ with the Vagrant Ubuntu 16.04 box and network configuration.
 - Internet access, this generator pulls Vagrant boxes from the Internet as well
 as installs Ubuntu application packages from the Internet.
 
-### Generate a project
+### Getting started
+
 ```
 npm install -g yo
 npm install -g generator-mitosis
@@ -147,6 +136,17 @@ Session Affinity:       None
 ```
 vagrant destroy -f && vagrant --caas-mode=swarm up // or vagrant --caas-mode=k8s up
 ```
+### Availables soon
+
+Expected for the beta version :
+ - Provisioning of a single server (Docker-compose/MiniKube)
+ - Deployment on AWS, GCE, OpenStack, CloudStack, etc.
+ - Registering/unregistering of micro services `mi create/delete my_micro_service.yml`
+ - Add security (SSL/TLS, SELinux, etc.)
+ - UI Responsiveness Monitoring
+ - Apache Hadoop infrastructure : Yarn, Apache Spark Stack, etc.
+ - Add new default microservices : Rocket (Rust), Iris (Go), Django (Python), Play Framework (Scala), iOT (Akka Actors)
+ - Add new solutions like : Apache Mesos, Rancher, Chef, Puppet, Terraform, Travis, HAProxy, etc.
 
 ### Follow the development
 You can follow the development of Mitosis via the public Mitosis board on [`Trello`](https://trello.com/b/TCgfbNXK/mitosis)
