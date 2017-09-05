@@ -1,4 +1,6 @@
 <img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
+[![npm version](https://badge.fury.io/js/generator-mitosis.svg)](https://www.npmjs.com/package/generator-mitosis)
+[![Build Status](https://travis-ci.org/NirbyApp/generator-mitosis.svg?branch=master)](https://travis-ci.org/NirbyApp/generator-mitosis)
 
 A micro services infrastructure yeoman generator. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
