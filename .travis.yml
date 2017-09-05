@@ -2,4 +2,5 @@ language: node_js
 node_js:
   - 7
   - 6
+  - 4
 cache: yarn  
