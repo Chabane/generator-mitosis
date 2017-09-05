@@ -12,7 +12,7 @@
            --publish 9000:9000 \
            --network <%= appName %>-net \
            --replicas 2 \
-           mitosis/sonarqube:1.0.0-alpha.0
+           mitosis/sonarqube:1.0.0-alpha.1
 <% } %>     
 
 <% if (tools.indexOf("artifactory") > -1) { %>                        
@@ -46,7 +46,7 @@
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
-           --replicas 2 mitosis/jenkins:default1.0.0-alpha.1
+           --replicas 2 mitosis/jenkins:default1.0.0-alpha.2
 <% } %>   
 <% if (defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
 - name: "Create service jenkins master"
@@ -65,7 +65,7 @@
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
-           --replicas 1 mitosis/jenkins:1.0.0-alpha.3
+           --replicas 1 mitosis/jenkins:1.0.0-alpha.4
 
 - name: "Create service zookeeper"
   shell: > 
