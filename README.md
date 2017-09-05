@@ -1,12 +1,12 @@
-# Mitosis - Micro services infrastructure generator
+# Mitosis - Microservices infrastructure generator
 <img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
 
 [![npm version](https://badge.fury.io/js/generator-mitosis.svg)](https://badge.fury.io/js/generator-mitosis)
 [![Build Status](https://travis-ci.org/NirbyApp/generator-mitosis.svg?branch=master)](https://travis-ci.org/NirbyApp/generator-mitosis)
 
-A micro services infrastructure yeoman generator. Mitosis is inspired from CAAS solutions like EC2 and GKE.
+A microservices infrastructure yeoman generator. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
-It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.
+It allows developers to load, organize, execute, evolve, administrate and stop microservices using few mitosis commands lines.
 
 And It takes advantage of the following solutions/technologies (alpha):
 
@@ -15,11 +15,11 @@ And It takes advantage of the following solutions/technologies (alpha):
 - `Kubernetes/docker swarm` orchestrate and replicate docker containers
 - `ELK Stack` log analytics
 - `Traefik` HTTP reverse proxy
-- `Jenkins 2` CI/CD of micro-services using Job DSL and Pipeline Job
+- `Jenkins 2` CI/CD of microservices using Job DSL and Pipeline Job
 - `Aritfactory` artefacts deployment
 - `Sonarqube` quality
 
-To prove it efficiency, mitosis generates 2 default micro-services, connected to an event's bus using kafka
+To prove it efficiency, mitosis generates 2 default microservices, connected to an event's bus using kafka
 
 1 consumer [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular) & 1 producer [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
 
@@ -150,3 +150,9 @@ Expected for the beta version :
 
 ### Follow the development
 You can follow the development of Mitosis via the public Mitosis board on [`Trello`](https://trello.com/b/TCgfbNXK/mitosis)
+
+## Contributing
+[Pull requests][] are welcome; see the [contributor guidelines][] for details.
+
+## License
+Mitosis generator is released under version 2.0 of the [Apache License][].
