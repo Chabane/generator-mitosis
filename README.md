@@ -155,4 +155,4 @@ You can follow the development of Mitosis via the public Mitosis board on [`Trel
 `Pull requests` are welcome; see the [contributor guidelines](CONTRIBUTING.md) for details.
 
 ## License
-Mitosis generator is released under version 2.0 of the [Apache License][].
+Mitosis generator is released under version 2.0 of the [Apache License](LICENSE).
