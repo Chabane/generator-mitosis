@@ -1,3 +1,6 @@
+<a name="1.0.0-alpha.16"></a>
+# [1.0.0-alpha.16](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.15...1.0.0-alpha.16) (2017-09-07)
+
 <a name="1.0.0-alpha.15"></a>
 # [1.0.0-alpha.15](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.14...1.0.0-alpha.15) (2017-09-07)
 

@@ -3,7 +3,7 @@
   "files": [
     "generators"
   ],
-  "version": "1.0.0-alpha.15",
+  "version": "1.0.0-alpha.16",
   "description": "A micro services infrastructure yeoman generator based on Kubernetes/Docker Swarm, Elastic Stack, Ansible, Jenkins, Kafka, Spark Streaming... It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.",
   "main": "index.js",
   "scripts": {
