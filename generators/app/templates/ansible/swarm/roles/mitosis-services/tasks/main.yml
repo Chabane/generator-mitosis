@@ -48,7 +48,7 @@
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network <%= appName %>-net \
-           --replicas 2 mitosis/jenkins:default1.0.0-alpha.2
+           --replicas 2 mitosis/jenkins:default1.0.0-alpha.3
 <% } %>   
 <% if (defaultMicroService && tools.indexOf("jenkins") > -1) { %> 
 - name: "Create service jenkins master"
