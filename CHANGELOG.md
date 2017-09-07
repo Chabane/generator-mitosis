@@ -1,5 +1,10 @@
 <a name="1.0.0-alpha.15"></a>
-# [1.0.0-alpha.15](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.14...1.0.0-alpha.15) (2017-09-05)
+# [1.0.0-alpha.15](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.14...1.0.0-alpha.15) (2017-09-07)
+
+## Actions
+* **Jenkins** Configure Gradle, Artifactory, Sonarqube
+* **Yeoman** Fixing lint using husky
+* **Travis** Configure
 
 <a name="1.0.0-alpha.14"></a>
 # [1.0.0-alpha.14](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.13...1.0.0-alpha.14) (2017-09-04)
