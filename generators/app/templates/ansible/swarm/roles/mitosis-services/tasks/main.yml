@@ -41,6 +41,8 @@
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --env MANAGER_IP="{{ manager_ip }}" \
            --env APP_NAME="<%= appName %>" \
+           --env JENKINS_USER="admin" \ 
+           --env JENKINS_PASSWORD="admin" \ 
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
            --publish 50000:50000 \
@@ -59,6 +61,13 @@
            --label traefik.frontend.rule=Host:jenkins.<%= appName %> \
            --env MANAGER_IP="{{ manager_ip }}" \
            --env APP_NAME="<%= appName %>" \
+           --env JENKINS_USER="admin" \
+           --env JENKINS_PASSWORD="admin" \
+           --env ARTIFACTORY_USER="admin" \
+           --env ARTIFACTORY_PASSWORD="password" \
+           --env SONAR_USER="admin" \
+           --env SONAR_PASSWORD="admin" \
+           --env SONAR_URL="http://sonarqube:9000" \ 
            --mount "type=bind,target=/var/run/docker.sock,src=/var/run/docker.sock" \
            --mount "type=bind,target=/usr/bin/docker,src=/usr/bin/docker" \
            --mount "type=volume,target=/var/jenkins_home,src=jenkins" \
