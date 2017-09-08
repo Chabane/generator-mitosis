@@ -1,3 +1,4 @@
+'use strict';
 /* global describe, beforeEach, it */
 
 const path = require('path');
@@ -11,10 +12,11 @@ describe('Simple infrastructure', () => {
     describe('Default generation', () => {
         beforeEach((done) => {
             helpers
-                .run(path.join(__dirname, '../generators/app'))
+                .run(require.resolve('../generators/app/'))
                 .inTmpDir((dir) => {
-                    fse.copySync(path.join(__dirname, './templates'), dir);
+                    fse.copySync(path.join(__dirname, './templates/default/'), dir);
                 })
+                .withOptions({ skipChecks: true })
                 .withPrompts({
                     appName: 'mitosis',
                     os: 'ubuntu',
@@ -36,9 +38,9 @@ describe('Simple infrastructure', () => {
                 })
                 .on('end', done);
         });
-    });   
+    });
 
     it('creates expected files for default generation', () => {
         assert.file(expectedFiles.ansible.swarm.base.playbook);
-    }); 
+    });
 });
