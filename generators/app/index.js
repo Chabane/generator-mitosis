@@ -283,7 +283,7 @@ class gen extends Generator {
 
         // copy vagrantfile
         this.fs.copyTpl(
-            this.templatePath('Vagrantfile'),
+            this.templatePath('_Vagrantfile'),
             this.destinationPath('Vagrantfile'),
             {
                 appName: this.answers.appName,
@@ -299,7 +299,7 @@ class gen extends Generator {
 
         // copy ansible hosts
         this.fs.copyTpl(
-            this.templatePath('ansible/mitosis-hosts'),
+            this.templatePath('ansible/_mitosis-hosts'),
             this.destinationPath('ansible/'+this.answers.appName+'-hosts'),
             {
                 appName: this.answers.appName,
@@ -313,7 +313,7 @@ class gen extends Generator {
          * copy ansible images
          */
         this.fs.copyTpl(
-            this.templatePath('ansible/images/mitosis-images-playbook.yml'),
+            this.templatePath('ansible/images/_mitosis-images-playbook.yml'),
             this.destinationPath('ansible/images/'+this.answers.appName+'-images-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -332,7 +332,7 @@ class gen extends Generator {
          * copy ansible images registry
          */
         this.fs.copyTpl(
-            this.templatePath('ansible/images/mitosis-registry-playbook.yml'),
+            this.templatePath('ansible/images/_mitosis-registry-playbook.yml'),
             this.destinationPath('ansible/images/'+this.answers.appName+'-registry-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -347,7 +347,7 @@ class gen extends Generator {
         * copy ansible k8s 
         */
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/mitosis-base-playbook.yml'),
+            this.templatePath('ansible/k8s/_mitosis-base-playbook.yml'),
             this.destinationPath('ansible/k8s/'+this.answers.appName+'-base-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -356,7 +356,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/mitosis-k8s-playbook.yml'),
+            this.templatePath('ansible/k8s/_mitosis-k8s-playbook.yml'),
             this.destinationPath('ansible/k8s/'+this.answers.appName+'-k8s-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -366,7 +366,7 @@ class gen extends Generator {
         );
         /** k8s roles */
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-base/tasks/main.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-base/tasks/_main.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-base/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -374,7 +374,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-master/tasks/main.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-master/tasks/_main.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -385,7 +385,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-worker/tasks/main.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-worker/tasks/_main.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-worker/tasks/main.yml'),
             {
                 appName: this.answers.appName
@@ -401,7 +401,7 @@ class gen extends Generator {
         );
         /** k8s services*/
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/sonarqube.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/_sonarqube.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/sonarqube.yml'),
             {
                 appName: this.answers.appName,
@@ -409,14 +409,14 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/traefik.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/_traefik.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/traefik.yml'),
             {
                 appName: this.answers.appName
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/artifactory.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/_artifactory.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/artifactory.yml'),
             {
                 appName: this.answers.appName,
@@ -424,7 +424,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/jenkins.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/_jenkins.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/jenkins.yml'),
             {
                 appName: this.answers.appName,
@@ -434,7 +434,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/namespace.yml'),
+            this.templatePath('ansible/k8s/roles/mitosis-master/files/services/_namespace.yml'),
             this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/services/namespace.yml'),
             {
                 appName: this.answers.appName
@@ -444,14 +444,14 @@ class gen extends Generator {
         * copy ansible swarm 
         */
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/mitosis-base-playbook.yml'),
+            this.templatePath('ansible/swarm/_mitosis-base-playbook.yml'),
             this.destinationPath('ansible/swarm/'+this.answers.appName+'-base-playbook.yml'),
             {
                 appName: this.answers.appName
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/mitosis-swarm-playbook.yml'),
+            this.templatePath('ansible/swarm/_mitosis-swarm-playbook.yml'),
             this.destinationPath('ansible/swarm/'+this.answers.appName+'-swarm-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -459,7 +459,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/mitosis-services-playbook.yml'),
+            this.templatePath('ansible/swarm/_mitosis-services-playbook.yml'),
             this.destinationPath('ansible/swarm/'+this.answers.appName+'-services-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -467,7 +467,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/mitosis-traefik-playbook.yml'),
+            this.templatePath('ansible/swarm/_mitosis-traefik-playbook.yml'),
             this.destinationPath('ansible/swarm/'+this.answers.appName+'-traefik-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -475,7 +475,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/mitosis-elk-playbook.yml'),
+            this.templatePath('ansible/swarm/_mitosis-elk-playbook.yml'),
             this.destinationPath('ansible/swarm/'+this.answers.appName+'-elk-playbook.yml'),
             {
                 appName: this.answers.appName,
@@ -484,7 +484,7 @@ class gen extends Generator {
         );
         /** swarm roles */
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-base/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-base/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-base/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -492,14 +492,14 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-common/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-common/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-common/tasks/main.yml'),
             {
                 appName: this.answers.appName
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-swarm-manager/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-swarm-manager/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-manager/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -507,7 +507,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-swarm-network/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-swarm-network/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-network/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -516,7 +516,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-services/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-services/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-services/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -526,7 +526,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-traefik/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-traefik/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-traefik/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -534,7 +534,7 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-elk/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-elk/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/tasks/main.yml'),
             {
                 appName: this.answers.appName,
@@ -542,35 +542,35 @@ class gen extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/elasticsearch/config/elasticsearch.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/elasticsearch/config/_elasticsearch.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/elasticsearch/config/elasticsearch.yml'),
             {
                 appName: this.answers.appName
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/config/logstash.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/config/_logstash.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/logstash/config/logstash.yml'),
             {
                 appName: this.answers.appName
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/pipeline/logstash.conf'),
+            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/logstash/pipeline/_logstash.conf'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/logstash/pipeline/logstash.conf'),
             {
                 appName: this.answers.appName
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/kibana/config/kibana.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-elk/files/elk/kibana/config/_kibana.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-elk/files/elk/kibana/config/kibana.yml'),
             {
                 appName: this.answers.appName
             }
         );
         this.fs.copyTpl(
-            this.templatePath('ansible/swarm/roles/mitosis-swarm-worker/tasks/main.yml'),
+            this.templatePath('ansible/swarm/roles/mitosis-swarm-worker/tasks/_main.yml'),
             this.destinationPath('ansible/swarm/roles/'+this.answers.appName+'-swarm-worker/tasks/main.yml'),
             {
                 appName: this.answers.appName
