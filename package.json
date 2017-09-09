@@ -11,6 +11,8 @@
     "prepush": "npm run coverage",
     "lint": "eslint .",
     "precoverage": "npm run lint",
+    "test": "npm run test:unit -- test/*.spec.js",
+    "test:unit": "mocha --timeout 20000 --slow 0 --reporter spec",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && codecov"
   },
   "repository": {
