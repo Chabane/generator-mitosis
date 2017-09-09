@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "precommit": "npm run lint",
-    "prepush": "npm run coverage",
+    "prepush": "npm run lint",
     "lint": "eslint .",
     "precoverage": "npm run lint",
     "test": "npm run test:unit -- test/*.spec.js",
