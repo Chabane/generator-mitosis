@@ -178,7 +178,7 @@ class gen extends Generator {
                 var virtualBoxInstalled = true;
                 exec('vboxmanage --version', function (err, stdout, stderr) {
                     if (err) {
-                        this.log.error('Virtualbox is not found on your computer. Download and install : https://www.virtualbox.org/wiki/Downloads');
+                        //this.log.error('Virtualbox is not found on your computer. Download and install : https://www.virtualbox.org/wiki/Downloads');
                         virtualBoxInstalled = false;
                     } 
                 }.bind(this));
@@ -187,7 +187,7 @@ class gen extends Generator {
                 var vagrantInstalled = true;
                 exec('vagrant --version', function (err, stdout, stderr) {
                     if (err) {
-                        this.log.error('Vagrant is not found on your computer. Download and install: https://www.vagrantup.com/docs/installation/');
+                        //this.log.error('Vagrant is not found on your computer. Download and install: https://www.vagrantup.com/docs/installation/');
                         virtualBoxInstalled = false;
                     } 
                 }.bind(this));
@@ -196,7 +196,7 @@ class gen extends Generator {
                 var ansibleInstalled = true;
                 exec('ansible --version', function (err, stdout, stderr) {
                     if (err) {
-                        this.log.error('Ansible is not found on your computer. Download and install : http://docs.ansible.com/ansible/intro_installation.html');
+                        //this.log.error('Ansible is not found on your computer. Download and install : http://docs.ansible.com/ansible/intro_installation.html');
                         virtualBoxInstalled = false;
                     } 
                 }.bind(this));
@@ -268,7 +268,7 @@ class gen extends Generator {
         const done = this.async();
         fs.exists(this.destinationPath(this.answers.appName), exists => {
             if (exists && fs.statSync(this.destinationPath(this.answers.appName)).isDirectory()) {
-                this.log.error(`Directory [${this.answers.appName}] exists`);
+                //this.log.error(`Directory [${this.answers.appName}] exists`);
                 process.exit(1);
             }
             this.destinationRoot(path.join(this.destinationRoot(), this.answers.appName));
