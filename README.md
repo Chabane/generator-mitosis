@@ -2,9 +2,9 @@
 <img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
 
 [![npm version](https://badge.fury.io/js/generator-mitosis.svg)](https://badge.fury.io/js/generator-mitosis)
-[![Build Status](https://travis-ci.org/NirbyApp/generator-mitosis.svg?branch=master)](https://travis-ci.org/NirbyApp/generator-mitosis)
-[![codecov](https://codecov.io/gh/NirbyApp/generator-mitosis/branch/demo/graph/badge.svg)](https://codecov.io/gh/NirbyApp/generator-mitosis)
-[![Dependency Status](https://david-dm.org/NirbyApp/generator-mitosis.svg?theme=shields.io)](https://david-dm.org/NirbyApp/generator-mitosis)
+[![build](https://travis-ci.org/NirbyApp/generator-mitosis.svg?branch=master)](https://travis-ci.org/NirbyApp/generator-mitosis)
+[![coverage](https://codecov.io/gh/NirbyApp/generator-mitosis/branch/master/graph/badge.svg)](https://codecov.io/gh/NirbyApp/generator-mitosis)
+[![dependency](https://david-dm.org/NirbyApp/generator-mitosis.svg?theme=shields.io)](https://david-dm.org/NirbyApp/generator-mitosis)
 
 A microservices infrastructure yeoman generator. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
