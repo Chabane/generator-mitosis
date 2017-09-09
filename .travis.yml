@@ -4,3 +4,5 @@ node_js:
   - 6
   - 4
 cache: yarn  
+script: 
+  - npm run coverage
