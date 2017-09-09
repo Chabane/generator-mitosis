@@ -143,7 +143,7 @@ vagrant destroy -f && vagrant --caas-mode=swarm up // or vagrant --caas-mode=k8s
 Expected for the beta version :
  - Provisioning of a single server (Docker-compose/MiniKube)
  - Deployment on AWS, GCE, OpenStack, CloudStack, etc.
- - Registering/unregistering of micro services `mi create/delete my_micro_service.yml`
+ - Registering/unregistering of micro services `mi create/delete my_microservice.yml`
  - Add security (SSL/TLS, SELinux, etc.)
  - UI Responsiveness Monitoring
  - Apache Hadoop infrastructure : Yarn, Apache Spark Stack, etc.
