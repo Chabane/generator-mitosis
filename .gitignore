@@ -6,6 +6,7 @@
 **/.gradle
 **/.nb-gradle
 **/build
+**/coverage
 
 .git
 CVS
