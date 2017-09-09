@@ -207,7 +207,7 @@ class gen extends Generator {
             type    : 'confirm',
             name    : 'initVms',
             message : '(8/8) Test my infrastructure locally in a virtual machines',
-            default : true,
+            default : false,
         },
         {
             type    : 'input',
@@ -393,8 +393,8 @@ class gen extends Generator {
         );
         /** k8s networks */
         this.fs.copy(
-            this.templatePath('ansible/k8s/roles/mitosis-master/files/networks', '*'),
-            this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/networks'),
+            this.templatePath('ansible/k8s/roles/mitosis-master/files/networks/_kube-flannel.yml'),
+            this.destinationPath('ansible/k8s/roles/'+this.answers.appName+'-master/files/networks/kube-flannel.yml'),
             {
                 appName: this.answers.appName
             }
