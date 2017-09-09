@@ -46,7 +46,7 @@
   - name: set up a port-forward from our local node to a running Pod
     script : registry/port-forward.sh
 
-  - name: set up a port-forward from our local node to a running Pod
+  - name: kubectl port-forward
     shell : kubectl port-forward --namespace kube-system $POD 5000:5000 &        
 <% } %>
 

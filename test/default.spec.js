@@ -144,7 +144,7 @@ describe('Simple infrastructure', () => {
             assert.noFileContent(expectedFiles.ansible.images.registry.playbook, /Copy mitosis registry/);
             assert.noFileContent(expectedFiles.ansible.images.registry.playbook, /Launch the Kubernetes registry/);
             assert.noFileContent(expectedFiles.ansible.images.registry.playbook, /set up a port-forward from our local node to a running Pod/);
-            assert.noFileContent(expectedFiles.ansible.images.registry.playbook, /set up a port-forward from our local node to a running Pod/);
+            assert.noFileContent(expectedFiles.ansible.images.registry.playbook, /kubectl port-forward/);
             assert.noFile(expectedFiles.ansible.images.registry.k8s.script);
             assert.noFile(expectedFiles.ansible.images.registry.k8s.files.daemon);
             assert.noFile(expectedFiles.ansible.images.registry.k8s.files.default);
