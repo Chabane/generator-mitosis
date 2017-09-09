@@ -16,6 +16,12 @@ describe('Simple infrastructure', () => {
                 .inTmpDir((dir) => {
                     fse.copySync(path.join(__dirname, './templates/default/'), dir);
                 })
+                .withOptions({
+                    log:
+                    {
+                        error: (str) => { }
+                    }
+                })
                 .withPrompts({
                     appName: 'mitosis',
                     os: 'ubuntu',
@@ -29,7 +35,7 @@ describe('Simple infrastructure', () => {
                     ],
                     scheduleManager: true,
                     ownRegistry: false,
-                    defaultMicroService: false,
+                    defaultMicroService: true,
                     initVms: false
                 })
                 .on('end', done);
