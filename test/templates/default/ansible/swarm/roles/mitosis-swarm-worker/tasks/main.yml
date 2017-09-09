@@ -1,0 +1,8 @@
+---
+
+- name: "Starting swarm workers"
+  shell: >
+        docker swarm join \
+          --token {{ hostvars['mitosis-manager1']['worker_token'] }} \
+          {{ manager_ip }}:{{ swarm_bind_port }}
+  register: init_result

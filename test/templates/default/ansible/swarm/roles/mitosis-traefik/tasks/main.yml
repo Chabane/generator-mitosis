@@ -1,0 +1,21 @@
+---
+
+ 
+ - name: Create Traefik service
+   shell: >
+           docker service create \
+            --name traefik \
+            --log-driver=gelf \
+            --log-opt gelf-address=udp://{{ manager_ip }}:12201 \
+            --constraint=node.role==manager \
+            --publish 80:80 --publish 8080:8080 \
+            --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+            --network mitosis-net \
+            --network elk-net \
+            traefik:v1.4 \
+            --docker \
+            --docker.swarmmode \
+            --docker.domain=mitosis \
+            --docker.watch \
+            --web
+            

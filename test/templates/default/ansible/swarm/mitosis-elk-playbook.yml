@@ -1,0 +1,10 @@
+---
+- name: Deploy elk
+  hosts: mitosis_managers[0]
+  become: yes
+  become_user: root
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+  roles:
+    - mitosis-elk

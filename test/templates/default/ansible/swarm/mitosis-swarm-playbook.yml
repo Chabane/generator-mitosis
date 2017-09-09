@@ -1,0 +1,32 @@
+---
+- hosts: mitosis_managers[0]
+  name: "** mitosis Manager **"
+  become: yes
+  become_user: root
+  vars:
+    docker_service: /usr/lib/systemd/system/docker.service
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+    swarm_bind_port: 2377
+  roles:
+    - mitosis-swarm-manager
+
+- hosts: mitosis_workers
+  name: "** mitosis Worker **"
+  become: yes
+  become_user: root
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+    swarm_bind_port: 2377
+    docker_service: /usr/lib/systemd/system/docker.service
+  roles:
+    - mitosis-swarm-worker       
+
+- hosts: mitosis_managers[0]
+  name: "** mitosis Network **"
+  become: yes
+  become_user: root
+  roles:
+    - mitosis-swarm-network         
+  

@@ -1,0 +1,24 @@
+- hosts: mitosis_managers[0]
+  name: "** mitosis k8s Master  **"
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+    worker_token : 3e569910-94df-11e7-81d3-190cece9c0d8
+  roles:
+    - mitosis-master
+
+- hosts: mitosis_workers
+  name: "** mitosis k8s Worker **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+    worker_token : 3e569910-94df-11e7-81d3-190cece9c0d8 
+  roles:
+    - mitosis-worker

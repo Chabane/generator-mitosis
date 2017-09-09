@@ -1,0 +1,3 @@
+---
+- name: Join Kubernetes Cluster
+  command: "kubeadm join --token {{worker_token}} {{manager_ip}}"

@@ -1,0 +1,17 @@
+- hosts: mitosis_managers[0]
+  name: "** mitosis images base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+  tasks:
+
+  - name: Configure docker group 
+    command : usermod -aG docker vagrant
+
+
+
+

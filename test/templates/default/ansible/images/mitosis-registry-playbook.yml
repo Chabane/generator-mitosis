@@ -1,0 +1,14 @@
+- hosts: mitosis_managers[0]
+  name: "** mitosis registry base **"
+  gather_facts: false
+  become: yes
+  become_user: root
+  serial: 1
+  vars:
+    mitosis_home: /opt/mitosis
+    manager_ip: 192.168.77.21
+  tasks:
+
+
+
+

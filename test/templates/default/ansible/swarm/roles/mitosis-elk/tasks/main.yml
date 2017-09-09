@@ -1,0 +1,46 @@
+---
+ - name: Copy elk configuration directory
+   copy: src="{{ role_path }}/files/elk" dest={{mitosis_home}}
+   
+ 
+
+ - name: Create Elasticsearch service
+   shell: >
+           docker service create \
+            --name elasticsearch \
+            --mount "type=bind,source=/opt/mitosis/elk/elasticsearch/config/elasticsearch.yml,target=/usr/share/elasticsearch/config/elasticsearch.yml" \
+            --constraint=node.role==manager \
+            --publish 9200:9200 \
+            --publish 9300:9300 \
+            --network mitosis-net \
+            --network elk-net \
+            --env ES_JAVA_OPTS="-Xmx256m -Xms256m" \
+            docker.elastic.co/elasticsearch/elasticsearch:5.5.2
+
+ - name: Create Logstash service
+   shell: >
+           docker service create \
+            --name logstash \
+            --mount "type=bind,source=/opt/mitosis/elk/logstash/config/logstash.yml,target=/usr/share/logstash/config/logstash.yml" \
+            --mount "type=bind,source=/opt/mitosis/elk/logstash/config/pipeline,target=/usr/share/logstash/pipeline" \
+            --constraint=node.role==manager \
+            --publish 5044:5044 \
+            --publish 12201:12201/udp \
+            --publish 12201:12201 \
+            --network mitosis-net \
+            --network elk-net \
+            docker.elastic.co/logstash/logstash:5.5.2
+
+ - name: Create Kibana service
+   shell: >
+           docker service create \
+            --name kibana \
+            --label traefik.frontend.rule=Host:kibana.mitosis \
+            --label traefik.port=5601 \
+            --mount "type=bind,source=/opt/mitosis/elk/kibana/config,target=/usr/share/kibana/config" \
+            --constraint=node.role==manager \
+            --publish 5601:5601 \
+            --network mitosis-net \
+            --network elk-net \
+            docker.elastic.co/kibana/kibana:5.5.2
+            

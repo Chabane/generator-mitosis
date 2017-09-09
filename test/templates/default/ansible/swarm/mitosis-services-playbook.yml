@@ -1,0 +1,10 @@
+---
+- name: Create swarm services
+  hosts: mitosis_managers[0]
+  become: yes
+  become_user: root
+  vars:
+    manager_ip: 192.168.77.21
+  roles:
+    - mitosis-services
+
