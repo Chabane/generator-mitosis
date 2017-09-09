@@ -1,10 +1,8 @@
 'use strict';
 /* global describe, beforeEach, it */
 
-const path = require('path');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
-const fse = require('fs-extra');
 
 const expectedFiles = require('./utils/expected-files');
 
@@ -13,9 +11,6 @@ describe('Simple infrastructure', () => {
         beforeEach((done) => {
             helpers
                 .run(require.resolve('../generators/app'))
-                .inTmpDir((dir) => {
-                    fse.copySync(path.join(__dirname, './templates/default/'), dir);
-                })
                 .withOptions({ skipChecks: true })
                 .withPrompts({
                     appName: 'mitosis',
