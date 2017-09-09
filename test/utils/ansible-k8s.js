@@ -10,7 +10,7 @@ const ansible_k8s = {
         }
     },
     master: {
-        playbook: `${ANSIBLE_K8S_DIR}/mitosis-k8-playbook.yml`,
+        playbook: `${ANSIBLE_K8S_DIR}/mitosis-k8s-playbook.yml`,
         roles: {
             tasks: {
                 main: `${ANSIBLE_K8S_DIR}/roles/mitosis-master/tasks/main.yml`

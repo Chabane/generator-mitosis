@@ -10,7 +10,7 @@ const ansible_images = {
             script: `${ANSIBLE_IMAGES_DIR}/registry/port-forward.sh`,
             files: {
                 daemon: `${ANSIBLE_IMAGES_DIR}/registry/k8s/registry-daemon.yml`,
-                defaul: `${ANSIBLE_IMAGES_DIR}/registry/k8s/registry.yml`,
+                default: `${ANSIBLE_IMAGES_DIR}/registry/k8s/registry.yml`,
                 pvc: `${ANSIBLE_IMAGES_DIR}/registry/k8s/registry-pvc.yml`,
                 rc: `${ANSIBLE_IMAGES_DIR}/registry/k8s/registry-rc.yml`,
                 svc: `${ANSIBLE_IMAGES_DIR}/rregistry/k8s/registry-svc.yml`

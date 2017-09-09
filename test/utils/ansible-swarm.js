@@ -18,8 +18,9 @@ const ansible_swarm = {
     },
     consul: {
         manager: {
+            playbook: `${ANSIBLE_SWARM_DIR}/mitosis-consul-playbook.yml`,
             roles: {
-                playbook: `${ANSIBLE_SWARM_DIR}/mitosis-consul-playbook.yml`,
+
                 tasks: {
                     main: `${ANSIBLE_SWARM_DIR}/roles/mitosis-consult-manager/tasks/main.yml`
                 }
@@ -41,14 +42,14 @@ const ansible_swarm = {
             },
             files: {
                 elasticsearch: {
-                    config : `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/elasticsearch/config/elasticsearch.yml`
+                    config: `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/elasticsearch/config/elasticsearch.yml`
                 },
                 kibana: {
-                    config : `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/kibana/config/kibana.yml`
+                    config: `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/kibana/config/kibana.yml`
                 },
                 logstash: {
-                    config : `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/logstash/config/logstash.yml`,
-                    pipeline : `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/pipeline/config/logstash.conf`
+                    config: `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/logstash/config/logstash.yml`,
+                    pipeline: `${ANSIBLE_SWARM_DIR}/roles/mitosis-elk/files/elk/logstash/pipeline/logstash.conf`
                 }
             }
         }
