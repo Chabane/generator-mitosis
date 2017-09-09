@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: sonarqube
-        image: mitosis/sonarqube:1.0.0-alpha.0
+        image: mitosis/sonarqube:1.0.0-alpha.1
         ports:
         - containerPort: 9000
 ---

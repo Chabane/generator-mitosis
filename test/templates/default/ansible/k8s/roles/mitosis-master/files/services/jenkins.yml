@@ -16,7 +16,7 @@ spec:
       containers:
       - name: jenkins
           
-        image: mitosis/jenkins:1.0.0-alpha.0
+        image: mitosis/jenkins:1.0.0-alpha.5
           
           
         ports:
