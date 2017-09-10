@@ -29,7 +29,7 @@ To prove it efficiency, mitosis generates 2 default microservices, connected to 
 
 ### Prerequisites
 You need the following installed to use this generator.
-- [`NodeJS`](https://nodejs.org/en/download/), Node 4 or higher, together with NPM 3 or higher.
+- [`NodeJS`](https://nodejs.org/en/download/), Node 6 or higher, together with NPM 3 or higher.
 - [`VirtualBox`](https://www.virtualbox.org/wiki/Downloads) (optional), tested with Version 5.1.14 r112924.
 - [`Vagrant`](https://www.vagrantup.com/docs/installation/) (optional), version 1.9.1 or better. Earlier versions of vagrant may not work.
 with the Vagrant Ubuntu 16.04 box and network configuration.
@@ -147,7 +147,7 @@ Expected for the beta version :
  - Add security (SSL/TLS, SELinux, etc.)
  - UI Responsiveness Monitoring
  - Apache Hadoop infrastructure : Yarn, Apache Spark Stack, etc.
- - Add new default microservices : Rocket (Rust), Iris (Go), Django (Python), Play Framework (Scala), iOT (Akka Actors)
+ - Add new default microservices : Rocket (Rust), Iris (Go), Django (Python), iOT (Akka Actors)
  - Add new solutions like : Apache Mesos, Rancher, Chef, Puppet, Terraform, Travis, HAProxy, etc.
 
 ### Follow the development
