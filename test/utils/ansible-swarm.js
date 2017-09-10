@@ -1,6 +1,6 @@
 const ANSIBLE_SWARM_DIR = 'ansible/swarm';
 
-const ansible_swarm = {
+const ansibleSwarm = {
     base: {
         playbook: `${ANSIBLE_SWARM_DIR}/mitosis-base-playbook.yml`,
         roles: {
@@ -99,4 +99,4 @@ const ansible_swarm = {
     }
 };
 
-module.exports = ansible_swarm;
+module.exports = ansibleSwarm;

@@ -1,6 +1,6 @@
 const ANSIBLE_IMAGES_DIR = 'ansible/images';
 
-const ansible_images = {
+const ansibleImages = {
     default: {
         playbook: `${ANSIBLE_IMAGES_DIR}/mitosis-images-playbook.yml`
     },
@@ -19,4 +19,4 @@ const ansible_images = {
     }
 };
 
-module.exports = ansible_images;
+module.exports = ansibleImages;

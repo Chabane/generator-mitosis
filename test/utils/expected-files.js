@@ -1,13 +1,14 @@
-const ansible_swarm = require('./ansible-swarm');
-const ansible_k8s = require('./ansible-k8s');
-const ansible_images = require('./ansible-images');
+const ansibleSwarm = require('./ansible-swarm');
+const ansibleK8s = require('./ansible-k8s');
+const ansibleImages = require('./ansible-images');
+
 const ANSIBLE_DIR = 'ansible';
 
 const expectedFiles = {
     ansible: {
-        images: ansible_images,
-        k8s: ansible_k8s,
-        swarm: ansible_swarm,
+        images: ansibleImages,
+        k8s: ansibleK8s,
+        swarm: ansibleSwarm,
         hosts: {
             default: `${ANSIBLE_DIR}/mitosis-hosts`
         }

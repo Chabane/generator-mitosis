@@ -10,6 +10,7 @@
     "precommit": "npm run lint",
     "prepush": "npm run lint",
     "lint": "eslint .",
+    "lint-fix": "npm run lint -- --fix",
     "precoverage": "npm run lint",
     "test": "npm run test:unit -- test/*.spec.js",
     "test:unit": "mocha --timeout 20000 --slow 0 --reporter spec",

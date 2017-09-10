@@ -1,6 +1,6 @@
 const ANSIBLE_K8S_DIR = 'ansible/k8s';
 
-const ansible_k8s = {
+const ansibleK8s = {
     base: {
         playbook: `${ANSIBLE_K8S_DIR}/mitosis-base-playbook.yml`,
         roles: {
@@ -38,4 +38,4 @@ const ansible_k8s = {
     }
 };
 
-module.exports = ansible_k8s;
+module.exports = ansibleK8s;
