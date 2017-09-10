@@ -28,7 +28,7 @@ Before you submit your issue search the archive, maybe your question was already
 
 If your issue appears to be a bug, and has not been reported, open a new issue.
 Help us to maximize the effort we can spend fixing issues and adding new
-features, by not reporting duplicate issues.  Providing the following information will increase the
+features, by not reporting duplicate issues. Providing the following information will increase the
 chances of your issue being dealt with quickly:
 
 * **Overview of the issue** - if an error is being thrown a stack trace helps
@@ -37,15 +37,6 @@ chances of your issue being dealt with quickly:
 * **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be
   causing the problem (line of code or commit)
 * **Mitosis Version(s)** - is it a regression?
-* **Mitosis configuration, a `.yo-rc.json` file generated in the root folder** - this will help us to replicate the scenario, you can remove the rememberMe key.
-
-You can use `yo mitosis:info` to provide us the information we need.
-
-Click [here](https://github.com/NirbyApp/generator-mitosis/issues/new) to open a bug issue with a pre-filled template. For feature requests and enquiries you can use [this template][feature-template].
-
-You can run `yo NirbyApp:info` in your project folder to get most of the above required info.
-
-Issues opened without any of these info will be **closed** without any explanation.
 
 ### Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
@@ -82,7 +73,7 @@ Before you submit your pull request consider the following guidelines:
     git push origin my-fix-branch
     ```
 
-* In GitHub, send a pull request to `Mitosis/generator-mitosis:master`.
+* In GitHub, send a pull request to `NirbyApp/generator-mitosis:master`.
 * If we suggest changes then
   * Make the required updates.
   * Re-run the Mitosis tests on your sample generated project to ensure tests are still passing.
