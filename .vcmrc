@@ -1,0 +1,15 @@
+{
+  "types": ["feature", "fix", "docs", "refactor", "perf", "test", "build", "ci", "bugfix", "revert"],
+  "scope": {
+    "required": false,
+    "allowed": ["*"],
+    "validate": false,
+    "multiple": false
+  },
+  "warnOnFail": false,
+  "maxSubjectLength": 100,
+  "subjectPattern": ".+",
+  "subjectPatternErrorMsg": "subject does not match subject pattern!",
+  "helpMessage": "",
+  "autoFix": false
+}
