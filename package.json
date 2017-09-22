@@ -7,14 +7,15 @@
   "description": "A micro services infrastructure yeoman generator based on Kubernetes/Docker Swarm, Elastic Stack, Ansible, Jenkins, Kafka, Spark Streaming... It allows developers to load, organize, execute, evolve, administrate and stop micro-services using few mitosis commands lines.",
   "main": "index.js",
   "scripts": {
-    "precommit": "npm run lint",
-    "prepush": "npm run lint",
+    "commit-msg": "validate-commit-msg",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && codecov",
     "lint": "eslint .",
     "lint-fix": "npm run lint -- --fix",
+    "precommit": "npm run lint",
+    "prepush": "npm run lint",
     "precoverage": "npm run lint",
     "test": "npm run test:unit -- test/*.spec.js",
-    "test:unit": "mocha --timeout 20000 --slow 0 --reporter spec",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && codecov"
+    "test:unit": "mocha --timeout 20000 --slow 0 --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -80,6 +81,7 @@
     "husky": "0.14.3",
     "istanbul": "0.4.5",
     "mocha": "3.5.0",
+    "validate-commit-msg": "2.14.0",
     "yeoman-assert": "3.0.0",
     "yeoman-test": "1.7.0"
   },
