@@ -23,7 +23,7 @@ And It takes advantage of the following solutions/technologies (alpha):
 
 To prove it efficiency, mitosis generates 2 default microservices, connected to an event's bus using kafka
 
-1 consumer [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular) & 1 producer [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
+1 consumer [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular) & 1 consumer [Apache Spark](https://github.com/NirbyApp/mitosis-microservice-spark-cassandra) & 1 producer [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
 
@@ -143,7 +143,7 @@ vagrant destroy -f && vagrant --caas-mode=swarm up // or vagrant --caas-mode=k8s
 Expected for the beta version :
  - Provisioning of a single server (Docker-compose/MiniKube)
  - Deployment on AWS, GCE, OpenStack, CloudStack, etc.
- - Registering/unregistering of micro services `mi create/delete my_micro_service.yml`
+ - Registering/unregistering of micro services `mi create/delete my_microservice.yml`
  - Add security (SSL/TLS, SELinux, etc.)
  - UI Responsiveness Monitoring
  - Apache Hadoop infrastructure : Yarn, Apache Spark Stack, etc.
