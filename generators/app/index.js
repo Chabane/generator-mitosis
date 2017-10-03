@@ -37,7 +37,7 @@ class gen extends Generator {
       '\n                      .:,       ';
 
         this.log(name);
-        this.log(`\nWelcome to the ${chalk.red('Mitosis')} generator v.1.0.0-alpha.17! (Do not use in Production) \n`);
+        this.log(`\nWelcome to the ${chalk.red('Mitosis')} generator v.1.0.0-alpha.18! (Do not use in Production) \n`);
         this.log('Documentation for creating an infrastructure: https://github.com/NirbyApp/generator-mitosis');
         this.log(`Infrastructure files will be generated in folder: ${chalk.yellow(process.cwd())}\n`);
 
