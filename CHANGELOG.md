@@ -1,5 +1,9 @@
 <a name="1.0.0-alpha.17"></a>
-# [1.0.0-alpha.17](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.16...1.0.0-alpha.17) (2017-09-09)
+# [1.0.0-alpha.17](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.16...1.0.0-alpha.17) (2017-10-03)
+
+## Features
+* **Yeoman** Add validate-commit-msg
+* **Jenkins** Add apache spark microservice
 
 <a name="1.0.0-alpha.16"></a>
 # [1.0.0-alpha.16](https://github.com/NirbyApp/generator-mitosis/compare/1.0.0-alpha.15...1.0.0-alpha.16) (2017-09-09)
