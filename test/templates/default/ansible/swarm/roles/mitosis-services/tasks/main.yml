@@ -55,7 +55,7 @@
            --publish 50000:50000 \
            --publish 8082:8080 \
            --network mitosis-net \
-           --replicas 1 mitosis/jenkins:1.0.0-alpha.5
+           --replicas 1 mitosis/jenkins:1.0.0-alpha.6
 
 - name: "Create service zookeeper"
   shell: > 
@@ -109,5 +109,5 @@
          --env CASSANDRA_BROADCAST_ADDRESS=cassandra \
          --mount "type=volume,target=/var/lib/cassandra,src=cassandra" \
          --replicas 1 \
-         cassandra:3
+         mitosis/cassandra:1.0.0-alpha.0
 
