@@ -9,6 +9,7 @@ metadata:
 spec:
   replicas: 1
   selector:
+    app: mitosis
     matchLabels:
       k8s-app: traefik-ingress-lb
   template:

@@ -34,3 +34,4 @@ spec:
     targetPort: 9999
     nodePort: 30003
   selector:
+    app: mitosis

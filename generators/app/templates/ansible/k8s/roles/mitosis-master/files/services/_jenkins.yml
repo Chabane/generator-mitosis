@@ -52,4 +52,4 @@ spec:
     targetPort: 8082
     nodePort: 30001
   selector:
-    name: jenkins
+    app: mitosis
