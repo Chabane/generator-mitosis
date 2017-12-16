@@ -2,9 +2,9 @@
 <img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
 
 [![npm version](https://badge.fury.io/js/generator-mitosis.svg)](https://badge.fury.io/js/generator-mitosis)
-[![build](https://travis-ci.org/chabane/generator-mitosis.svg?branch=master)](https://travis-ci.org/NirbyApp/generator-mitosis)
+[![build](https://travis-ci.org/chabane/generator-mitosis.svg?branch=master)](https://travis-ci.org/chabane/generator-mitosis)
 [![coverage](https://codecov.io/gh/chabane/generator-mitosis/branch/master/graph/badge.svg)](https://codecov.io/gh/chabane/generator-mitosis)
-[![dependency](https://david-dm.org/chabane/generator-mitosis.svg?theme=shields.io)](https://david-dm.org/NirbyApp/generator-mitosis)
+[![dependency](https://david-dm.org/chabane/generator-mitosis.svg?theme=shields.io)](https://david-dm.org/chabane/generator-mitosis)
 
 A microservices infrastructure yeoman generator. Mitosis is inspired from CAAS solutions like EC2 and GKE.
 
@@ -23,7 +23,7 @@ And It takes advantage of the following solutions/technologies (alpha):
 
 To prove it efficiency, mitosis generates 2 default microservices, connected to an event's bus using kafka
 
-1 consumer [NodeJS](https://github.com/NirbyApp/mitosis-microservice-nodejs-angular) & 1 consumer [Apache Spark](https://github.com/NirbyApp/mitosis-microservice-spark-cassandra) & 1 producer [Java](https://github.com/NirbyApp/mitosis-microservice-spring-reactor)
+1 consumer [NodeJS](https://github.com/chabane/mitosis-microservice-nodejs-angular) & 1 consumer [Apache Spark](https://github.com/chabane/mitosis-microservice-spark-cassandra) & 1 producer [Java](https://github.com/chabane/mitosis-microservice-spring-reactor)
 
 <img src="http://chabanerefes.info/prez_1/images/swarm_diagramme.png"/>
 
