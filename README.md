@@ -154,7 +154,7 @@ Expected for the beta version :
 You can follow the development of Mitosis via the public Mitosis board on [`Trello`](https://trello.com/b/TCgfbNXK/mitosis)
 
 ## Contributing
-`Pull requests` are welcome; see the [contributor guidelines](CONTRIBUTING.md) for details.
+`Pull requests` are welcome;
 
 ## License
 Mitosis generator is released under version 2.0 of the [Apache License](LICENSE).
