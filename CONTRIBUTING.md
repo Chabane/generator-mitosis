@@ -10,12 +10,12 @@ Are you ready to contribute to Mitosis? We'd love to have you on board, and we w
  - [Git Commit Guidelines](#commit)
 
 ## <a name="issue"></a> Issues and Bugs
-If you find a bug in the source code or a mistake in the documentation, you can help us by submitting a ticket to our [GitHub  issues](https://github.com/NirbyApp/generator-mitosis/issues). Even better, you can submit a Pull Request to our [Mitosis generator project](https://github.com/NirbyApp/generator-mitosis).
+If you find a bug in the source code or a mistake in the documentation, you can help us by submitting a ticket to our [GitHub  issues](https://github.com/chabane/generator-mitosis/issues). Even better, you can submit a Pull Request to our [Mitosis generator project](https://github.com/chabane/generator-mitosis).
 
 **Please see the Submission Guidelines below**.
 
 ## <a name="feature"></a> Feature Requests
-You can request a new feature by submitting a ticket to our [GitHub issues](https://github.com/NirbyApp/generator-mitosis/issues). If you
+You can request a new feature by submitting a ticket to our [GitHub issues](https://github.com/chabane/generator-mitosis/issues). If you
 would like to implement a new feature then consider what kind of change it is:
 
 * **Major Changes** that you wish to contribute to the project should be discussed first. Please open a ticket which clearly states that it is a feature request in the title and explain clearly what you want to achieve in the description, and the Mitosis team will discuss with you what should be done in that ticket. You can then start working on a Pull Request.
@@ -41,7 +41,7 @@ chances of your issue being dealt with quickly:
 ### Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
 
-* Search [GitHub](https://github.com/NirbyApp/generator-mitosis/pulls) for an open or closed Pull Request
+* Search [GitHub](https://github.com/chabane/generator-mitosis/pulls) for an open or closed Pull Request
   that relates to your submission.
 * If you want to modify the Mitosis generator, read our [Generator development setup](#setup)
 * Make your changes in a new git branch
@@ -73,7 +73,7 @@ Before you submit your pull request consider the following guidelines:
     git push origin my-fix-branch
     ```
 
-* In GitHub, send a pull request to `NirbyApp/generator-mitosis:master`.
+* In GitHub, send a pull request to `chabane/generator-mitosis:master`.
 * If we suggest changes then
   * Make the required updates.
   * Re-run the Mitosis tests on your sample generated project to ensure tests are still passing.
@@ -153,7 +153,7 @@ Here are the most important steps.
 
 ### Fork the generator-mitosis project
 
-Go to the [generator-mitosis project](https://github.com/NirbyApp/generator-mitosis) and click on the "fork" button. You can then clone your own fork of the project, and start working on it.
+Go to the [generator-mitosis project](https://github.com/chabane/generator-mitosis) and click on the "fork" button. You can then clone your own fork of the project, and start working on it.
 
 [Please read the Github forking documentation for more information](https://help.github.com/articles/fork-a-repo)
 
