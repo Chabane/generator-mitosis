@@ -146,9 +146,9 @@ Expected for the beta version :
  - Registering/unregistering of micro services `mi create/delete my_microservice.yml`
  - Add security (SSL/TLS, SELinux, etc.)
  - UI Responsiveness Monitoring
- - Apache Hadoop infrastructure : Yarn, Apache Spark Stack, etc.
+ - Big Data infrastructure (sub project : [`bigdata-boilerplate`](https://github.com/Chabane/bigdata-boilerplate)).
  - Add new default microservices : Rocket (Rust), Iris (Go), Django (Python), iOT (Akka Actors)
- - Add new solutions like : Apache Mesos, Rancher, Chef, Puppet, Terraform, Travis, HAProxy, etc.
+ - Add new solutions like : Rancher, Chef, Puppet, Terraform, HAProxy, etc.
 
 ### Follow the development
 You can follow the development of Mitosis via the public Mitosis board on [`Trello`](https://trello.com/b/TCgfbNXK/mitosis)
