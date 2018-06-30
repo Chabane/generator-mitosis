@@ -6,7 +6,7 @@
 [![coverage](https://codecov.io/gh/Chabane/generator-mitosis/branch/master/graph/badge.svg)](https://codecov.io/gh/Chabane/generator-mitosis)
 [![dependency](https://david-dm.org/Chabane/generator-mitosis.svg?theme=shields.io)](https://david-dm.org/Chabane/generator-mitosis)
 
-A microservices infrastructure yeoman generator. Mitosis is inspired from CAAS solutions like EC2 and GKE.
+A microservices infrastructure yeoman generator. Mitosis is inspired from solutions like AWS Cloudformation and Google Cloud Deployment Manager.
 
 It allows developers to load, organize, execute, evolve, administrate and stop microservices using few mitosis commands lines.
 
