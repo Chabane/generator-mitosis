@@ -146,6 +146,7 @@ Expected for the beta version :
  - Registering/unregistering of micro services `mi create/delete my_microservice.yml`
  - Add security (SSL/TLS, SELinux, etc.)
  - UI Responsiveness Monitoring
+ - Serverless infrastructure (sub project : [`serverless-playground`](https://github.com/Chabane/serverless-playground)).
  - Big Data infrastructure (sub project : [`bigdata-playground`](https://github.com/Chabane/bigdata-playground)).
  - Add new default microservices : Rocket (Rust), Iris (Go), Django (Python), iOT (Akka Actors)
  - Add new solutions like : Rancher, Chef, Puppet, Terraform, HAProxy, etc.
