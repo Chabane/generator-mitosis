@@ -1,5 +1,6 @@
 # Mitosis - Microservices infrastructure generator
-<img src="http://chabanerefes.info/prez_1/images/logo.svg" height="40" />
+
+<h1>This repo is severely outdated!</h1>
 
 [![npm version](https://badge.fury.io/js/generator-mitosis.svg)](https://badge.fury.io/js/generator-mitosis)
 [![build](https://travis-ci.org/Chabane/generator-mitosis.svg?branch=master)](https://travis-ci.org/Chabane/generator-mitosis)
