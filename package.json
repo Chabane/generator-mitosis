@@ -67,7 +67,7 @@
     "chalk": "2.4.1",
     "date-util": "1.2.1",
     "lodash": "4.17.10",
-    "shelljs": "0.8.2",
+    "shelljs": "0.8.5",
     "uuid": "3.3.2",
     "yeoman-generator": "1.1.1",
     "yosay": "2.0.2"
